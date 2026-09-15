@@ -1,0 +1,10 @@
+{
+  "name": "Vyapara Track",
+  "short_name": "Vyapara Track",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f766e",
+  "description": "Sales, pending payments, expenses, profit and cash tracking for a travelling business.",
+  "icons": []
+}
