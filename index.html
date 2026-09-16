@@ -255,7 +255,61 @@ window.addEventListener("input",e=>{if(e.target.closest("#live")){if(e.target.cl
 function ensureAccountFields(){db.account=db.account||{};if(!db.account.username)db.account.username="admin";if(!db.account.password)db.account.password="1234";if(!db.account.displayName)db.account.displayName=db.account.username;if(db.account.email===undefined)db.account.email="";if(db.account.phone===undefined)db.account.phone="";}
 ensureAccountFields();
 function authMode(m){auth=m;$("loginTab").classList.toggle("active",m==="login");$("signupTab").classList.toggle("active",m==="signup");$("authBtn").textContent=m==="login"?"Login":"Create Account";$("authPass2").classList.toggle("hidden",m!=="signup");$("authHint").textContent=m==="login"?"Enter your account details":"Create your Vyapara Track account";}
-function authSubmit(){ensureAccountFields();let u=$("authUser").value.trim(),p=$("authPass").value;if(auth==="signup"){let p2=$("authPass2").value;if(!u||!p||!p2)return notify("Enter username, password and retype password.");if(p!==p2)return notify("Passwords do not match.");db.account={username:u,password:p,displayName:u,email:"",phone:""};persist();$("authUser").value=u;$("authPass").value="";$("authPass2").value="";authMode("login");return notify("Account created successfully. Please login.")}if(u===db.account.username&&p===db.account.password){sessionStorage.vt="1";start()}else notify("Invalid username or password.")}
+async function authSubmit(){
+  let u=$("authUser").value.trim(),p=$("authPass").value;
+
+  if(auth==="signup"){
+    let p2=$("authPass2").value;
+    if(!u||!p||!p2)return notify("Enter username, password and retype password.");
+    if(p!==p2)return notify("Passwords do not match.");
+
+    try{
+      const r=await fetch("/api/signup",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({username:u,password:p,confirm:p2})
+      });
+      const x=await r.json();
+      if(!r.ok)return notify(x.error||"Account creation failed.");
+
+      // New accounts are created with an empty server-side state.
+      // Do not copy the previous browser account data into this account.
+      $("authUser").value=u;
+      $("authPass").value="";
+      $("authPass2").value="";
+      authMode("login");
+      return notify("Account created successfully. Please login.");
+    }catch(e){
+      console.error(e);
+      return notify("Account creation failed. Please try again.");
+    }
+  }
+
+  if(!u||!p)return notify("Enter username and password.");
+
+  try{
+    const r=await fetch("/api/login",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({username:u,password:p})
+    });
+    const x=await r.json();
+    if(!r.ok)return notify(x.error||"Invalid username or password.");
+
+    // The server returns only this account's state.
+    // Replace the browser copy so Account A data can never be shown for Account B.
+    if(x.state&&x.state.account){
+      db=x.state;
+      localStorage.setItem(KEY,JSON.stringify(db));
+    }
+
+    sessionStorage.vt="1";
+    await start();
+  }catch(e){
+    console.error(e);
+    notify("Login failed. Please try again.");
+  }
+}
 function renderUserProfile(){ensureAccountFields();let n=String(db.account.displayName||db.account.username||"User").trim(),u=String(db.account.username||"admin").trim(),email=db.account.email||"Email not added",phone=db.account.phone||"Phone not added";if($("homeGreeting"))$("homeGreeting").textContent="Hello, "+n+"!";if($("profileNameText"))$("profileNameText").textContent=n;if($("profileUserText"))$("profileUserText").textContent=u;if($("profileLoggedUser"))$("profileLoggedUser").textContent=u;if($("profileName")&&document.activeElement!==$("profileName"))$("profileName").value=n;if($("profileEmail")&&document.activeElement!==$("profileEmail"))$("profileEmail").value=db.account.email||"";if($("profilePhone")&&document.activeElement!==$("profilePhone"))$("profilePhone").value=db.account.phone||"";if($("topUserName"))$("topUserName").textContent=n;if($("dropDisplayName"))$("dropDisplayName").textContent=n;if($("dropEmail"))$("dropEmail").textContent=email;if($("dropPhone"))$("dropPhone").textContent=phone;if($("topAvatar"))$("topAvatar").textContent=(n.charAt(0)||"U").toUpperCase();}
 function saveProfile(){ensureAccountFields();let n=$("profileName").value.trim(),email=$("profileEmail").value.trim(),phone=$("profilePhone").value.trim();if(!n)return notify("Enter your name.");if(email&&!/^\S+@\S+\.\S+$/.test(email))return notify("Enter a valid email address.");if(phone&&!/^[0-9+()\- ]{7,15}$/.test(phone))return notify("Enter a valid phone number.");db.account.displayName=n;db.account.email=email;db.account.phone=phone;persist();renderUserProfile();notify("✓ Profile updated successfully.");}
 function toggleProfileDropdown(){$("profileDropdown").classList.toggle("hidden");renderUserProfile();}function closeProfileDropdown(){if($("profileDropdown"))$("profileDropdown").classList.add("hidden");}document.addEventListener("click",function(e){if(!e.target.closest(".profile-menu"))closeProfileDropdown()});
