@@ -1,9 +1,11 @@
-const CACHE = 'vyapara-track-v2';
+const CACHE = 'vyapara-track-v3';
 
 const ASSETS = [
   '/',
   '/index.html',
-  '/manifest.json'
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png'
 ];
 
 // Install new service worker
@@ -36,14 +38,54 @@ self.addEventListener('fetch', event => {
 
   const url = new URL(event.request.url);
 
-  // Never cache API / Supabase state requests
+  // Never cache API / Supabase requests
   if (url.pathname.startsWith('/api/')) return;
 
-  // Always get the latest HTML from the server
-  // This prevents old Login/Home pages from staying cached.
+  // Always get latest HTML
   if (
     url.pathname === '/' ||
     url.pathname === '/index.html'
+  ) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const copy = response.clone();
+
+          caches.open(CACHE).then(cache => {
+            cache.put(event.request, copy);
+          });
+
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+
+    return;
+  }
+
+  // Always get latest manifest
+  if (url.pathname === '/manifest.json') {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const copy = response.clone();
+
+          caches.open(CACHE).then(cache => {
+            cache.put(event.request, copy);
+          });
+
+          return response;
+        })
+        .catch(() => caches.match('/manifest.json'))
+    );
+
+    return;
+  }
+
+  // Always get latest app icons
+  if (
+    url.pathname === '/icon-192.png' ||
+    url.pathname === '/icon-512.png'
   ) {
     event.respondWith(
       fetch(event.request)
