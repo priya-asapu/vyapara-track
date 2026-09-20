@@ -372,8 +372,21 @@ function markStaticLanguage(){
   document.querySelectorAll("input[placeholder]").forEach(el=>{if(!el.dataset.phEn)el.dataset.phEn=el.placeholder});
   applyLanguage();
 }
-const vtObserver=new MutationObserver(()=>{if(window.__vtTranslating)return;window.__vtTranslating=true;try{markStaticLanguage()}finally{window.__vtTranslating=false}});
-window.addEventListener("load",()=>{setTimeout(markStaticLanguage,50);vtObserver.observe(document.body,{childList:true,subtree:true});});
+const vtObserver=new MutationObserver(()=>{
+  if(window.__vtObserverBusy)return;
+  window.__vtObserverBusy=true;
+  vtObserver.disconnect();
+  try{markStaticLanguage()}finally{
+    window.__vtObserverBusy=false;
+    vtObserver.observe(document.body,{childList:true,subtree:true});
+  }
+});
+window.addEventListener("load",()=>{
+  setTimeout(()=>{
+    markStaticLanguage();
+    vtObserver.observe(document.body,{childList:true,subtree:true});
+  },50);
+});
 </script>
 <!-- Account Features -->
 <div id="loginEditBox" class="hidden" style="position:fixed;inset:0;background:#0008;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;"><div style="background:#fff;width:100%;max-width:380px;padding:22px;border-radius:18px;box-shadow:0 10px 40px #0004;"><h2 style="margin-top:0">🔐 Change Login Details</h2><input id="oldLoginPass" type="password" placeholder="Current Password" style="width:100%;margin:7px 0"><input id="newLoginUser" type="text" placeholder="New Username" style="width:100%;margin:7px 0"><input id="newLoginPass" type="password" placeholder="New Password" style="width:100%;margin:7px 0"><input id="confirmLoginPass" type="password" placeholder="Confirm New Password" style="width:100%;margin:7px 0"><button class="green wide" onclick="saveLoginDetails()">Save Changes</button><button class="back wide" onclick="closeLoginEdit()">Cancel</button></div></div>
