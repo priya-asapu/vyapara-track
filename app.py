@@ -3,6 +3,7 @@ import sqlite3
 import json
 import os
 import traceback
+from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 
 BASE = os.path.dirname(os.path.abspath(__file__))
@@ -10,6 +11,7 @@ DB_PATH = os.path.join(BASE, "vyapara_track.db")
 
 app = Flask(__name__, static_folder=BASE, static_url_path="")
 app.secret_key = os.environ.get("SECRET_KEY", "vyapara-track-change-this-secret")
+app.permanent_session_lifetime = timedelta(days=365)
 
 DEFAULT = {
     "products": [],
@@ -637,6 +639,7 @@ def login():
             return jsonify({"error": "Invalid username or password."}), 401
 
         session.clear()
+        session.permanent = True
         session["username"] = real_username
 
         return jsonify({
@@ -898,4 +901,3 @@ if __name__ == "__main__":
         port=int(os.environ.get("PORT", 5000)),
         debug=False
     )
-app.py
