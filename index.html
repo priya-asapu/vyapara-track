@@ -98,26 +98,57 @@ function authMode(m){auth=m;$("loginTab").classList.toggle("active",m==="login")
 async function authSubmit(){
   const u=$("authUser").value.trim(), p=$("authPass").value;
   if(!u||!p){return notify("Enter username and password.")}
+
   if(auth==="signup"){
     const p2=$("authPass2").value;
     if(!p2)return notify("Retype your password.");
     if(p!==p2)return notify("Passwords do not match.");
+
     try{
-      const r=await fetch("/api/signup",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({username:u,password:p,displayName:u,email:"",phone:""})});
+      const r=await fetch("/api/signup",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        credentials:"same-origin",
+        body:JSON.stringify({username:u,password:p,confirm:p2})
+      });
       const x=await r.json();
       if(!r.ok)return notify(x.error||"Could not create account.");
-      db=x.state||db;localStorage.setItem(KEY,JSON.stringify(db));sessionStorage.vt="1";
-      await start();
-    }catch(e){notify("Unable to connect to server.")}
+
+      // Account is created on the server. Stay on the login screen.
+      // Do not automatically log in or copy another account's data.
+      localStorage.removeItem(KEY);
+      sessionStorage.removeItem("vt");
+      $("authUser").value=u;
+      $("authPass").value="";
+      $("authPass2").value="";
+      authMode("login");
+      notify("✓ Account created successfully. Please login.");
+    }catch(e){
+      console.error(e);
+      notify("Unable to connect to server.");
+    }
     return;
   }
+
   try{
-    const r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({username:u,password:p})});
+    const r=await fetch("/api/login",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      credentials:"same-origin",
+      body:JSON.stringify({username:u,password:p})
+    });
     const x=await r.json();
     if(!r.ok)return notify(x.error||"Invalid username or password.");
-    db=x.state||db;localStorage.setItem(KEY,JSON.stringify(db));sessionStorage.vt="1";
+
+    db=x.state||db;
+    localStorage.setItem(KEY,JSON.stringify(db));
+    sessionStorage.vt="1";
     await start();
-  }catch(e){notify("Unable to connect to server.")}
+    notify("✓ Login successful. Welcome, "+(db.account?.displayName||u)+"!");
+  }catch(e){
+    console.error(e);
+    notify("Unable to connect to server.");
+  }
 }
 async function start(){
   const ok=await loadServerState();
