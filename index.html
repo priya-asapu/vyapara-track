@@ -50,7 +50,7 @@ main{max-width:1050px;margin:auto;padding:20px 15px 90px}.page-title{display:fle
 <section id="live" class="screen hidden"><div class="page-title"><div><h2>Live Sales List</h2><p>Add sales and customer details</p></div><button class="chip">📅 <span id="liveDateText"></span></button></div>
 <div class="two"><label>Date<input id="liveDate" type="date" onchange="changeLiveDate(this.value)"></label><label>Place<input id="livePlace" placeholder="Enter place"></label></div>
 <div class="panel pending-panel"><div class="panel-head"><h3>👥 Baki / Pending <small>(If any)</small></h3><button class="blue" onclick="addBakiRow()">＋ Add Baki</button></div><div class="tablewrap"><table><thead><tr><th>S.No</th><th>Customer Name</th><th>Product Name</th><th>Quantity</th><th>Amount ₹</th><th>Place</th><th>Status</th><th>Action</th></tr></thead><tbody id="bakiRows"></tbody></table></div><button class="save-list" onclick="saveBaki()">✓ Save Baki</button><p id="bakiMsg" class="message"></p></div>
-<div class="panel"><div class="panel-head"><h3>🛒 Add Products Sold</h3><button class="blue" onclick="addSaleRow()">＋ Add Product</button></div><div class="tablewrap"><table><thead><tr><th>S.No</th><th>Product Name</th><th>Sale Type</th><th>Quantity</th><th>SP ₹</th><th>Amount ₹</th><th>Profit ₹</th><th>Action</th></tr></thead><tbody id="saleRows"></tbody></table></div><p class="mini logic-note">Complete Set: enter the actual piece count (example 6). If Qty is 12, that means 2 sets. SP is the whole-set price. Amount = number of sets × SP and Profit = number of sets × (SP − set cost). Individual Piece: SP is per piece, so Amount = Qty × SP and Profit uses per-piece cost.</p><button class="calc" onclick="toggleCalculation()">▣ &nbsp; Calculation</button><div id="calcbox" class="calcbox hidden"><div class="calcbuttons"><div class="calcitem"><button onclick="calcValue('qty')">Total Quantities</button><div id="calcQty" class="calcsmallvalue">—</div></div><div class="calcitem"><button onclick="calcValue('amount')">Total Amount</button><div id="calcAmount" class="calcsmallvalue">—</div></div><div class="calcitem"><button onclick="calcValue('profit')">Total Profit</button><div id="calcProfit" class="calcsmallvalue">—</div></div></div><button class="money" onclick="moneyCalc()">₹ &nbsp; Money Calculation</button><div id="moneyresult" class="moneyresult hidden"></div></div>
+<div class="panel"><div class="panel-head"><h3>🛒 Add Products Sold</h3><button class="blue" onclick="addSaleRow()">＋ Add Product</button></div><div class="tablewrap"><table><thead><tr><th>S.No</th><th>Product Name</th><th>Sale Type</th><th>Quantity</th><th>SP ₹</th><th>Amount ₹</th><th>Profit ₹</th><th>Action</th></tr></thead><tbody id="saleRows"></tbody></table></div><button class="calc" onclick="toggleCalculation()">▣ &nbsp; Calculation</button><div id="calcbox" class="calcbox hidden"><div class="calcbuttons"><div class="calcitem"><button onclick="calcValue('qty')">Total Quantities</button><div id="calcQty" class="calcsmallvalue">—</div></div><div class="calcitem"><button onclick="calcValue('amount')">Total Amount</button><div id="calcAmount" class="calcsmallvalue">—</div></div><div class="calcitem"><button onclick="calcValue('profit')">Total Profit</button><div id="calcProfit" class="calcsmallvalue">—</div></div></div><button class="money" onclick="moneyCalc()">₹ &nbsp; Money Calculation</button><div id="moneyresult" class="moneyresult hidden"></div></div>
 <button class="dash" onclick="todayDash()">▥ &nbsp; Today's Sales Dashboard</button></div><div class="panel"><h3>Saved Sales for This Date</h3><div id="savedSales"></div></div></section>
 
 <section id="expenses" class="screen hidden"><div class="page-title"><div><h2>Expenses</h2><p>Initial amount and expense list</p></div><button class="back" onclick="show('home')">Back</button></div><div class="panel"><h3>Initial Amount</h3><div class="two"><label>Date<input id="cashDate" type="date"></label><label>Initial Amount ₹<input id="initialAmount" type="number" min="0"></label><label>Notes<input id="cashNotes" placeholder="Optional"></label></div><button id="cashSaveBtn" class="green" onclick="saveCash()">Save Initial Amount</button><input id="cashEditId" type="hidden"></div><div class="panel"><div class="panel-head"><h3>Expenses List</h3><button class="green" onclick="addExpenseRow()">＋ Add Expense</button></div><div id="expenseEditor"></div><button class="save-list" onclick="saveExpenses()">✓ Save Expenses</button></div><div class="panel"><h3>Saved Expenses</h3><div id="expenseList"></div></div></section>
@@ -311,7 +311,61 @@ function todayBar(o,mode="qty"){let entries=Object.entries(o).filter(x=>Number(x
 function todayColumns(o){let entries=Object.entries(o).filter(x=>Number(x[1])>0).sort((a,b)=>b[1]-a[1]);if(!entries.length)return`<div class="today-empty">No profit data for today.</div>`;let max=Math.max(1,...entries.map(x=>Number(x[1]))),fills=["#8a61d1","#168653","#278fe0","#f0a52a","#e8666e","#16a89a"];return`<div class="today-columns">${entries.map(([k,v],i)=>`<div class="today-col"><div class="today-col-value">${money(v)}</div><div class="today-col-fill" style="height:${Math.max(8,Number(v)/max*165)}px;background:${fills[i%fills.length]}"></div><div class="today-col-label" title="${esc(k)}">${esc(k)}</div></div>`).join("")}</div>`}
 function todayDonut(items){let entries=Object.entries(items).filter(x=>Number(x[1])>0).sort((a,b)=>b[1]-a[1]);if(!entries.length)return`<div class="today-empty">No data for today.</div>`;let total=entries.reduce((a,x)=>a+Number(x[1]),0),colors=["#168653","#278fe0","#8a61d1","#f0a52a","#e8666e","#16a89a"],cur=0,segs=[];entries.forEach((x,i)=>{let a=cur/total*360,b=(cur+Number(x[1]))/total*360;segs.push(`${colors[i%colors.length]} ${a}deg ${b}deg`);cur+=Number(x[1])});return`<div class="today-donut-wrap"><div class="today-donut" style="background:conic-gradient(${segs.join(",")})"></div><div class="today-legend">${entries.map((x,i)=>`<div><span class="today-dot" style="background:${colors[i%colors.length]}"></span>${esc(x[0])} <b>${money(x[1])}</b></div>`).join("")}</div></div>`}
 function renderTodayDashboard(date){let d=liveData(date),pq={},pp={},pl={},ex={};d.items.forEach(i=>{pq[i.name]=(pq[i.name]||0)+i.qty;pp[i.name]=(pp[i.name]||0)+Number(i.profit||0);pl[i.place||"Unknown Place"]=(pl[i.place||"Unknown Place"]||0)+Number(i.amount||i.qty*i.sp)});d.expenses.forEach(x=>ex[x.cat]=(ex[x.cat]||0)+x.amount);let pendingCustomers=new Set((d.pending||[]).filter(x=>(x.status||"open")!=="cleared").map(x=>(x.name||"").trim().toLowerCase()).filter(Boolean)).size;let collectionPending={Collection:d.collection,Pending:d.pend};$("todayDashboardContent").innerHTML=`<div class="today-head"><div><h2>Today's Sales Dashboard</h2><p>Live sales performance for today</p></div><button class="back" onclick="show('live');renderLive()">Back</button></div><div class="today-kpis"><div class="today-kpi k-green"><div class="klabel">💰 Sales Amount</div><div class="kvalue">${money(d.salesA)}</div></div><div class="today-kpi k-blue"><div class="klabel">📦 Quantity Sold</div><div class="kvalue">${d.q}</div></div><div class="today-kpi k-purple"><div class="klabel">📈 Gross Profit</div><div class="kvalue">${money(d.profit)}</div></div><div class="today-kpi k-orange"><div class="klabel">💸 Today's Expenses</div><div class="kvalue">${money(d.exp)}</div></div><div class="today-kpi k-teal"><div class="klabel">💵 Collection Today</div><div class="kvalue">${money(d.collection)}</div></div><div class="today-kpi k-red"><div class="klabel">🔴 Pending Amount</div><div class="kvalue">${money(d.pend)}</div></div><div class="today-kpi k-indigo"><div class="klabel">✨ Net Profit</div><div class="kvalue">${money(d.net)}</div></div><div class="today-kpi k-yellow"><div class="klabel">💳 Cash Available</div><div class="kvalue">${money(d.available)}</div></div></div><div class="today-chart-grid"><div class="today-card"><h3>📦 Products Sold Today</h3><div class="desc">Highest quantity to lowest.</div>${todayBar(pq,"qty")}</div><div class="today-card"><h3>🏆 Highest Profit Products</h3><div class="desc">Highest profit to lowest.</div>${todayColumns(pp)}</div></div><div class="today-chart-grid"><div class="today-card"><h3>👥 Collection & Pending</h3><div class="desc">Today's collection versus outstanding customer credit.</div>${todayDonut(collectionPending)}<div class="mini" style="text-align:center">${pendingCustomers} pending customer${pendingCustomers===1?"":"s"}</div></div><div class="today-card"><h3>💸 Today's Expense Distribution</h3><div class="desc">Expense categories by share of today's spending.</div>${todayDonut(ex)}</div></div><div class="today-chart-grid"><div class="today-card today-full-card"><h3>📍 Sales by Place</h3><div class="desc">Today's sales contribution by travelling place.</div>${todayColumns(pl)}</div></div><div class="today-card today-save"><h3>💾 Save Today's Progress</h3><p class="mini">Review today's live entries, then save them.</p><button onclick="saveTodaysProgress('${date}')">✓ Save Today's Progress</button><p id="dashboardSaveMsg" class="message"></p></div>`}
-function saveTodaysProgress(date){let items=draftItems(),place=$("livePlace").value.trim();if(!date||!place){notify("Date and Place required.");return}if(!items.length){notify("Add at least one completed product sale before saving.");return}db.sales.push({id:Date.now()+Math.random(),date,place,items});delete db.drafts[date];persist();if($("dashboardSaveMsg"))$("dashboardSaveMsg").textContent="✓ Today's sales progress saved successfully.";notify("✓ Today's progress saved successfully.");refresh();renderTodayDashboard(date)}
+async function saveTodaysProgress(date){
+  const draft=collectLiveDraft();
+  const items=draft.sales||[];
+  const place=(draft.place||$("livePlace").value||"").trim();
+  const baki=draft.baki||[];
+  if(!date||!place){notify("Date and Place required.");return}
+  if(!items.length&&!baki.length){notify("Add at least one sale or pending entry before saving.");return}
+
+  const btn=document.querySelector(".today-save button");
+  if(btn){btn.disabled=true;btn.dataset.oldText=btn.textContent;btn.textContent="Saving…"}
+  try{
+    // Save today's sales as one date record without creating duplicates.
+    const existingSales=db.sales.filter(x=>x.date===date);
+    db.sales=db.sales.filter(x=>x.date!==date);
+    if(items.length){
+      db.sales.push({id:existingSales[0]?.id||Date.now()+Math.random(),date,place,items});
+    }else{
+      db.sales.push(...existingSales);
+    }
+
+    // Save the pending/baki entries from the same Live Sales List.
+    const oldPending=db.pending.filter(x=>x.date===date&&x.status==="cleared");
+    const newPending=baki.filter(x=>x.name||x.amount||x.product||x.qty).map(x=>({
+      id:x.id||Date.now()+Math.random(),date,name:x.name||"",product:x.product||"",qty:Number(x.qty)||0,
+      amount:Number(x.amount)||0,place:x.place||place,pendingProfit:Number(x.pendingProfit)||0,
+      mode:x.mode||"piece",status:"open",clearedDate:null,clearedAmount:0
+    }));
+    db.pending=db.pending.filter(x=>x.date!==date).concat(oldPending,newPending);
+
+    delete db.drafts[date];
+    localStorage.setItem(KEY,JSON.stringify(db));
+
+    // Wait for the server save so the success message is shown only after persistence.
+    const r=await fetch("/api/state",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      credentials:"same-origin",
+      body:JSON.stringify(db)
+    });
+    const x=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(x.error||"Server save failed");
+
+    refresh();
+    renderLive();
+    renderTodayDashboard(date);
+    if($("dashboardSaveMsg"))$("dashboardSaveMsg").textContent="✓ Today's sales and pending details saved successfully.";
+    notify("✓ Today's Live Sales List saved successfully.");
+  }catch(e){
+    console.error(e);
+    notify("Save failed. Please try again.");
+  }finally{
+    const b=document.querySelector(".today-save button");
+    if(b){b.disabled=false;b.textContent=b.dataset.oldText||"✓ Save Today's Progress"}
+  }
+}
 
 function renderPending(){let open=db.pending.filter(x=>(x.status||"open")!=="cleared"),t=open.reduce((a,x)=>a+(Number(x.amount)||0),0),p=open.reduce((a,x)=>a+(Number(x.pendingProfit)||0),0);$("pendingSummary").innerHTML=`<div class="metricgrid"><div class="metric">Total Pending<b>${money(t)}</b></div><div class="metric">Pending Profit<b>${money(p)}</b></div><div class="metric">Customers<b>${new Set(open.map(x=>x.name.toLowerCase())).size}</b></div></div>`;$("pendingList").innerHTML=db.pending.map(x=>`<div class="row"><span><b>${esc(x.name)}</b><div class="mini">${x.date} · ${esc(x.product||"")} · Qty ${x.qty||"-"} · ${esc(x.place||"")} · Profit ${money(x.pendingProfit||0)}</div></span><span><b>${money(x.amount)}</b> ${x.status==="cleared"?'<span class="status-cleared">Cleared</span>':'<span class="status-open">Pending</span>'} ${x.status!=="cleared"?`<button class="clear-btn" onclick="clearBaki('${x.id}')">✓ Clear</button>`:""} <button class="edit" onclick="openDate('${x.date}')">✎</button><button class="del" onclick="deleteBaki('${x.id}')">🗑</button></span></div>`).join("")||"<p>No pending customers.</p>"}
 let currentHistoryDate="";function renderHistory(){let hs=$("hs")?.value||"",he=$("he")?.value||"";let ds=[...new Set([...db.sales.map(x=>x.date),...db.pending.map(x=>x.date),...db.expenses.map(x=>x.date),...db.cash.map(x=>x.date)])].sort().reverse().filter(d=>(!hs||d>=hs)&&(!he||d<=he));$("historyList").innerHTML=ds.map(d=>{let x=data(d,d);return `<div class="row"><button class="chip" onclick="openHistoryDate('${d}')">${d}</button><span>Sales ${money(x.salesA)} · Pending ${money(x.pend)} · Profit ${money(x.profit)} · Expenses ${money(x.exp)}</span></div>`}).join("")||"<p>No history for this date range.</p>"}
