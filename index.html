@@ -1,9 +1,12 @@
 <!doctype html>
-<html lang="en" id="htmlRoot">
+<html lang="te" id="htmlRoot" class="vt-startup">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vyapara Track</title>
 <style>
+html.vt-startup body{visibility:hidden}
+html.vt-ready body{visibility:visible}
+
 *{box-sizing:border-box}body{margin:0;background:#f4faf7;color:#14392e;font-family:Arial,sans-serif}button,input{font:inherit}button{cursor:pointer;border:0}input,select{padding:11px;border:1px solid #d7e2dc;border-radius:9px;background:#fff;outline:0}select{min-width:130px}.hidden{display:none!important}
 .auth{min-height:100vh;display:grid;place-items:center;background:linear-gradient(#f5fbf6,#e1f2e6)}.auth-card{width:min(390px,92%);padding:30px;background:white;border-radius:26px;text-align:center;box-shadow:0 15px 45px #0001}.brand{width:62px;height:62px;margin:auto;border-radius:18px;background:#168653;color:white;font-size:40px;line-height:62px}.auth-card h1{color:#147947;margin:9px 0 3px}.auth-card p{color:#718078}.auth-card input{display:block;width:100%;margin:9px 0}.tabs{display:flex;background:#edf5ef;padding:4px;border-radius:10px}.tabs button{flex:1;background:transparent;padding:9px;border-radius:8px}.tabs .active{background:#fff;color:#168653;box-shadow:0 2px 8px #0001}.green{background:#168653;color:#fff;padding:11px 15px;border-radius:9px;font-weight:700}.wide{width:100%;margin-top:10px}
 header{height:68px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 max(12px,calc((100% - 1050px)/2));position:sticky;top:0;z-index:10;box-shadow:0 2px 10px #0001}.brandtitle{text-align:center}.brandtitle b{font-size:18px}.brandtitle small{display:block;color:#78877f;font-size:11px}.icon{background:transparent;font-size:29px;color:#24483b}
@@ -29,15 +32,15 @@ main{max-width:1050px;margin:auto;padding:20px 15px 90px}.page-title{display:fle
 .dashboard-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}.dkpi{border-radius:16px;padding:16px;min-height:96px;box-shadow:0 4px 15px #0000000b}.dkpi .klabel{font-size:12px;font-weight:700;opacity:.8}.dkpi .kvalue{font-size:24px;font-weight:900;margin-top:7px}.k-green{background:#dff5e8}.k-blue{background:#e2f0ff}.k-red{background:#ffe3e6}.k-purple{background:#eee6ff}.k-orange{background:#ffedd2}.k-teal{background:#dcf6f2}.k-indigo{background:#e6e9ff}.k-yellow{background:#fff3bf}.dashboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.dcard{background:#fff;border-radius:16px;padding:16px;box-shadow:0 4px 18px #0000000a;border:1px solid #edf1ee}.dcard h3{margin:0 0 4px;font-size:16px}.dcard .desc{font-size:11px;color:#7a8881;margin-bottom:13px}.baritem{margin:10px 0}.barline{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;gap:8px}.bartrack{height:11px;border-radius:20px;background:#edf1ee;overflow:hidden}.barfill{height:100%;border-radius:20px}.fill1{background:#168653}.fill2{background:#278fe0}.fill3{background:#8a61d1}.fill4{background:#f0a52a}.fill5{background:#e8666e}.fill6{background:#16a89a}.donutwrap{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}.donut{width:155px;height:155px;border-radius:50%;position:relative}.donut:after{content:"";position:absolute;inset:36px;background:#fff;border-radius:50%}.legend{font-size:12px}.legend div{margin:7px 0}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}.money-summary{display:grid;gap:9px}.money-line{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #edf1ee;font-size:13px}.money-final{padding:13px;border-radius:11px;background:#e4f6eb;display:flex;justify-content:space-between;font-weight:900;font-size:17px}.rank{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #edf1ee}.rank-left{display:flex;align-items:center;gap:9px}.medal{font-size:20px}.place-table{width:100%;border-collapse:collapse}.place-table th,.place-table td{padding:9px 6px;border-bottom:1px solid #edf1ee;font-size:12px}.place-table th{text-align:left;color:#65776e}.dashboard-note{padding:12px;border-radius:12px;background:#f1f7f3;font-size:12px;color:#53665c;margin-top:14px}@media(max-width:850px){.dashboard-kpis{grid-template-columns:repeat(2,1fr)}.dashboard-grid{grid-template-columns:1fr}}
 .mini-chart.columns{height:205px;display:flex;align-items:flex-end;justify-content:space-around;gap:18px;padding:10px 8px 4px}.mini-chart.columns>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px}.mini-chart.columns span{display:block;width:42px;border-radius:8px 8px 2px 2px;background:linear-gradient(180deg,#278fe0,#168653);min-height:8px}.mini-chart.columns b{font-size:11px;text-align:center}.mini-chart.columns em{font-size:10px;color:#65776e;font-style:normal}.mini-chart.small{height:190px}.profile-menu{position:relative}.profile-trigger{display:flex;align-items:center;gap:8px;background:#edf7f0;color:#176b48;padding:8px 11px;border-radius:12px;font-weight:700}.profile-avatar{width:34px;height:34px;border-radius:50%;background:#168653;color:#fff;display:grid;place-items:center;font-weight:800}.profile-dropdown{position:absolute;right:0;top:48px;width:250px;background:#fff;border:1px solid #e4ebe6;border-radius:15px;box-shadow:0 12px 35px #0002;padding:10px;z-index:100}.profile-dropdown button{display:flex;width:100%;gap:10px;align-items:center;padding:11px;border-radius:10px;background:#fff;text-align:left;color:#214638}.profile-dropdown button:hover{background:#f2f8f4}.profile-mini{padding:10px;border-bottom:1px solid #edf1ee;margin-bottom:5px}.profile-mini b,.profile-mini small{display:block}.profile-mini small{color:#718078;margin-top:3px;font-size:11px}.profile-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.profile-summary>div{padding:14px;border-radius:12px;background:#f3f8f5;border:1px solid #e7eee9}.profile-summary span{display:block;font-size:11px;color:#6c7d74}.profile-summary b{display:block;font-size:19px;margin-top:5px}@media(max-width:700px){.profile-summary{grid-template-columns:repeat(2,1fr)}}
 .toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#173f32;color:#fff;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:700;z-index:9999;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 20px #0002}.toast.show{opacity:1}
-</style>
+ .language-selector select{padding:11px;border:1px solid #d7e2dc;border-radius:9px;background:#fff;width:100%;font-weight:700;color:#214638}</style>
 <link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#0f766e"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"></head>
 <body>
 <div id="toast" class="toast"></div>
-<div id="auth" class="auth"><div class="auth-card"><div class="brand">↗</div><h1>Vyapara Track</h1><p>Track Today • Grow Tomorrow</p><div class="tabs"><button type="button" id="loginTab" class="active" onclick="authMode('login')">Login</button><button type="button" id="signupTab" onclick="authMode('signup')">Create Account</button></div><input id="authUser" value="" placeholder="Username"><input id="authPass" value="" type="password" placeholder="Password"><input id="authPass2" class="hidden" type="password" placeholder="Retype Password"><button type="button" id="authBtn" class="green wide" onclick="authSubmit()">Login</button>
-<button class="back wide" onclick="openForgotPassword()">Forgot Password?</button>
-<small id="authHint">Enter your account details</small></div></div>
+<div id="auth" class="auth"><div class="auth-card"><div class="brand">↗</div><h1>Vyapara Track</h1><p>Track Today • Grow Tomorrow</p><div class="language-selector" style="margin:12px 0 14px;text-align:left"><label style="display:block;font-size:12px;font-weight:700;color:#566a60;margin-bottom:6px">భాష / లాంగ్వేజ్</label><select id="startLanguage" onchange="setStartLanguage(this.value)" style="width:100%"><option value="te">తెలుగు</option><option value="en">English</option></select></div><div class="tabs"><button type="button" id="loginTab" class="active" onclick="authMode('login')">లాగిన్</button><button type="button" id="signupTab" onclick="authMode('signup')">క్రియేట్ అకౌంట్</button></div><input id="authUser" value="" placeholder="యూజర్ నేమ్"><input id="authPass" value="" type="password" placeholder="పాస్‌వర్డ్"><input id="authPass2" class="hidden" type="password" placeholder="రీటైప్ పాస్‌వర్డ్"><button type="button" id="authBtn" class="green wide" onclick="authSubmit()">లాగిన్</button>
+<button class="back wide" onclick="openForgotPassword()">ఫర్గాట్ పాస్‌వర్డ్?</button>
+<small id="authHint">ఎంటర్ యువర్ అకౌంట్ డీటెయిల్స్</small></div></div>
 <div id="app" class="hidden">
-<header><button class="icon" onclick="show('home')">‹</button><div class="brandtitle"><b>VYAPARA TRACK</b><small>Your Business Companion</small></div><button id="langToggle" class="chip" onclick="toggleLanguage()">తెలుగు</button><div class="profile-menu"><button class="profile-trigger" onclick="toggleProfileDropdown()"><span class="profile-avatar" id="topAvatar">U</span><span id="topUserName">User</span>⌄</button><div id="profileDropdown" class="profile-dropdown hidden"><div class="profile-mini"><b id="dropDisplayName">User</b><small id="dropEmail">Email not added</small><small id="dropPhone">Phone not added</small></div><button onclick="show('profile');closeProfileDropdown()">👤 <span>My Profile</span></button><button onclick="openLoginEdit();closeProfileDropdown()">🔐 <span>Change Login</span></button><button onclick="logoutAccount();closeProfileDropdown()">↪ <span>Logout</span></button></div></div></header>
+<header><button class="icon" onclick="show('home')">‹</button><div class="brandtitle"><b>VYAPARA TRACK</b><small>Your Business Companion</small></div><button id="langToggle" class="chip" onclick="toggleLanguage()">ఇంగ్లీష్</button><div class="profile-menu"><button class="profile-trigger" onclick="toggleProfileDropdown()"><span class="profile-avatar" id="topAvatar">U</span><span id="topUserName">User</span>⌄</button><div id="profileDropdown" class="profile-dropdown hidden"><div class="profile-mini"><b id="dropDisplayName">User</b><small id="dropEmail">Email not added</small><small id="dropPhone">Phone not added</small></div><button onclick="show('profile');closeProfileDropdown()">👤 <span>My Profile</span></button><button onclick="openLoginEdit();closeProfileDropdown()">🔐 <span>Change Login</span></button><button onclick="logoutAccount();closeProfileDropdown()">↪ <span>Logout</span></button></div></div></header>
 <main>
 <section id="home" class="screen"><div class="page-title"><div><h2 id="homeGreeting">Hello!</h2><p>Manage • Sell • Track • Grow</p></div><button class="back" onclick="show('profile')">👤 Profile</button></div><div class="home-menu">
 <button onclick="show('live')">🛒<span><b>Live Sales List</b><small>Add today's sales</small></span>›</button>
@@ -319,7 +322,7 @@ function openDate(d){show("live");$("liveDate").value=d;let s=db.sales.find(x=>x
 function openHistoryDate(d){currentHistoryDate=d;show("historyDetail");renderHistoryDetail(d)}
 function renderHistoryDetail(d){if(!d)return;let x=data(d,d);$("historyDetailDate").value=d;$("historyDetailPlace").value=[...new Set([...x.sales.map(s=>s.place),...x.pending.map(p=>p.place)].filter(Boolean))].join(", ");$("historyDetailText").textContent=`Saved sales for ${d}`;let rows=x.items.map((i,n)=>`<tr><td>${n+1}</td><td>${esc(i.name)}</td><td>${i.qty}</td><td>${money(i.sp)}</td><td>${money(i.profit)}</td></tr>`).join("");$("historySaleRows").innerHTML=rows||`<tr><td colspan="5">No sales saved.</td></tr>`;$("historyBakiRows").innerHTML=x.pending.map((p,n)=>`<tr><td>${n+1}</td><td>${esc(p.name)}</td><td>${esc(p.product||"")}</td><td>${p.qty||"-"}</td><td>${money(p.amount)}</td><td>${money(p.pendingProfit||0)}</td><td>${esc(p.place||"")}</td></tr>`).join("")||`<tr><td colspan="7">No pending entries.</td></tr>`;$("historyQty").textContent=x.q;$("historyAmount").textContent=money(x.salesA);$("historyProfit").textContent=money(x.profit);$("historyPending").textContent=money(x.pend)}
 function renderSummary(){renderSummaryCalendar()}
-function renderSummaryCalendar(){let y=calDate.getFullYear(),m=calDate.getMonth(),first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate(),biz=0,h=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(x=>`<div class="day"><b>${x}</b></div>`).join("");for(let i=0;i<first;i++)h+="<div></div>";for(let n=1;n<=days;n++){let d=y+"-"+String(m+1).padStart(2,"0")+"-"+String(n).padStart(2,"0"),yes=db.sales.some(x=>x.date===d)||db.pending.some(x=>x.date===d);if(yes)biz++;h+=`<div class="day ${yes?"biz":"off"}"><button onclick="openDate('${d}')">${n}</button></div>`}$("summaryCalendar").innerHTML=h;$("calTitle").textContent=calDate.toLocaleString("en",{month:"long",year:"numeric"});$("calStats").innerHTML=`<b>Business Days: ${biz}</b> &nbsp; <b>No Business Days: ${days-biz}</b> &nbsp; <b>Total Days: ${days}</b>`}
+function renderSummaryCalendar(){let y=calDate.getFullYear(),m=calDate.getMonth(),first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate(),biz=0,h=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(x=>`<div class="day"><b>${x}</b></div>`).join("");for(let i=0;i<first;i++)h+="<div></div>";for(let n=1;n<=days;n++){let d=y+"-"+String(m+1).padStart(2,"0")+"-"+String(n).padStart(2,"0"),yes=db.sales.some(x=>x.date===d)||db.pending.some(x=>x.date===d);if(yes)biz++;h+=`<div class="day ${yes?"biz":"off"}"><button onclick="openDate('${d}')">${n}</button></div>`}$("summaryCalendar").innerHTML=h;$("calTitle").textContent=calDate.toLocaleString(vtLanguage==="te"?"te-IN":"en-IN",{month:"long",year:"numeric"});$("calStats").innerHTML=`<b>Business Days: ${biz}</b> &nbsp; <b>No Business Days: ${days-biz}</b> &nbsp; <b>Total Days: ${days}</b>`}
 function moveMonth(n){calDate.setMonth(calDate.getMonth()+n);renderSummaryCalendar()}
 function refresh(){datalist();renderProducts();renderPending();renderExpenses();renderHistory();renderSummaryCalendar();let d=data(today(),today());$("homeStats").innerHTML=`<div class="metric">Today's Sales<b>${money(d.salesA)}</b></div><div class="metric">Collection<b>${money(d.collection)}</b></div><div class="metric">Pending<b>${money(d.pend)}</b></div><div class="metric">Profit<b>${money(d.profit)}</b></div>`}
 window.addEventListener("input",e=>{if(e.target.closest("#live")){if(e.target.closest("#bakiRows")) updateCalcCards(); clearTimeout(window._draftTimer);window._draftTimer=setTimeout(saveLiveDraft,150)}});window.addEventListener("change",e=>{if(e.target.closest("#live")){if(e.target.closest("#bakiRows")) updateCalcCards(); clearTimeout(window._draftTimer);window._draftTimer=setTimeout(saveLiveDraft,100)}});window.addEventListener("load",()=>{if(sessionStorage.vt==="1")start()})
@@ -329,64 +332,146 @@ window.addEventListener("input",e=>{if(e.target.closest("#live")){if(e.target.cl
 
 <!-- Bilingual UI -->
 <script>
-const VT_LANG={
-  te:{
-    "Login":"లాగిన్","Create Account":"ఖాతా సృష్టించండి","Forgot Password?":"పాస్‌వర్డ్ మర్చిపోయారా?","Username":"యూజర్ పేరు","Password":"పాస్‌వర్డ్","Retype Password":"పాస్‌వర్డ్ మళ్లీ నమోదు చేయండి","Enter your account details":"మీ ఖాతా వివరాలను నమోదు చేయండి","Create your Vyapara Track account":"మీ Vyapara Track ఖాతాను సృష్టించండి",
-    "Your Business Companion":"మీ వ్యాపార సహాయకుడు","Profile":"ప్రొఫైల్","Live Sales List":"లైవ్ అమ్మకాల జాబితా","Product Info":"ఉత్పత్తి వివరాలు","Expenses":"ఖర్చులు","Customer Pending":"కస్టమర్ బాకీ","Sales Dashboard":"అమ్మకాల డ్యాష్‌బోర్డ్","History":"చరిత్ర","Summary":"సారాంశం",
-    "Add today's sales":"ఈరోజు అమ్మకాలు నమోదు చేయండి","Manage products and prices":"ఉత్పత్తులు మరియు ధరలను నిర్వహించండి","Track daily expenses":"రోజువారీ ఖర్చులను నమోదు చేయండి","View pending amounts":"బాకీ మొత్తాలను చూడండి","View reports & analysis":"రిపోర్టులు & విశ్లేషణ చూడండి","Past records":"గత రికార్డులు","Business calendar & days":"వ్యాపార క్యాలెండర్ & రోజులు",
-    "Track every sale, build a better tomorrow!":"ప్రతి అమ్మకాన్ని నమోదు చేసి, మంచి రేపటిని నిర్మించండి!",
-    "Initial Amount":"ప్రారంభ మొత్తం","Expenses List":"ఖర్చుల జాబితా","Add Expense":"ఖర్చు జోడించండి","Save Expenses":"ఖర్చులను సేవ్ చేయండి","Saved Expenses":"సేవ్ చేసిన ఖర్చులు","Date":"తేదీ","Expense Type":"ఖర్చు రకం","Amount ₹":"మొత్తం ₹","Notes":"గమనికలు","Optional":"ఐచ్ఛికం","Remove":"తొలగించండి",
-    "Petrol / Snacks / Lunch / Tea / Others":"పెట్రోల్ / స్నాక్స్ / లంచ్ / టీ / ఇతరాలు","Enter amount":"మొత్తం నమోదు చేయండి",
-    "Total Sales":"మొత్తం అమ్మకాలు","Total Collection":"మొత్తం వసూళ్లు","Pending / Baki":"బాకీ / పెండింగ్","Gross Profit":"మొత్తం లాభం","Net Profit":"నికర లాభం","Quantity Sold":"అమ్మిన పరిమాణం","Available Cash":"అందుబాటులో నగదు",
-    "Start Date":"ప్రారంభ తేదీ","End Date":"ముగింపు తేదీ","Generate Dashboard":"డ్యాష్‌బోర్డ్ రూపొందించండి","Today":"ఈరోజు","This Week":"ఈ వారం","This Month":"ఈ నెల",
-    "Sales by Product":"ఉత్పత్తి వారీ అమ్మకాలు","Profit by Product":"ఉత్పత్తి వారీ లాభం","Sales by Month":"నెల వారీ అమ్మకాలు","Sales by Place":"ప్రదేశం వారీ అమ్మకాలు","Profit by Sales":"అమ్మకాల వారీ లాభం","Quantity":"పరిమాణం",
-    "Sorted from highest sales to lowest.":"అధిక అమ్మకాల నుంచి తక్కువ అమ్మకాల వరకు.","Column chart sorted from highest profit to lowest.":"అధిక లాభం నుంచి తక్కువ లాభం వరకు కాలమ్ చార్ట్.","Click a point to see that month's sales.":"నెల అమ్మకాలను చూడటానికి పాయింట్‌పై క్లిక్ చేయండి.","Place-wise sales contribution.":"ప్రదేశం వారీ అమ్మకాల వాటా.","Profit trend across saved sales dates.":"సేవ్ చేసిన అమ్మకాల తేదీల వారీ లాభ ట్రెండ్.","Quantity sold by product, highest to lowest.":"ఉత్పత్తి వారీ అమ్మిన పరిమాణం, అధికం నుంచి తక్కువ వరకు.",
-    "Today's Sales Dashboard":"ఈరోజు అమ్మకాల డ్యాష్‌బోర్డ్","Live sales performance for today":"ఈరోజు లైవ్ అమ్మకాల పనితీరు","Products Sold Today":"ఈరోజు అమ్మిన ఉత్పత్తులు","Highest Profit Products":"అధిక లాభం ఇచ్చిన ఉత్పత్తులు","Collection & Pending":"వసూళ్లు & బాకీ","Today's Expense Distribution":"ఈరోజు ఖర్చుల పంపిణీ","Save Today's Progress":"ఈరోజు పురోగతిని సేవ్ చేయండి",
-    "My Profile":"నా ప్రొఫైల్","Change Login":"లాగిన్ మార్చండి","Logout":"లాగ్ అవుట్","Back":"వెనక్కి"
-  }
+/* Full UI language switch: Telugu mode translates the complete application UI.
+   User-entered names/product names are intentionally kept as entered. */
+const VT_TE={
+  "Vyapara Track":"వ్యాపార ట్రాక్","VYAPARA TRACK":"వ్యాపార ట్రాక్","Track Today • Grow Tomorrow":"ట్రాక్ టుడే • గ్రో టుమారో",
+  "Login":"లాగిన్","Create Account":"క్రియేట్ అకౌంట్","Forgot Password?":"ఫర్గాట్ పాస్‌వర్డ్?",
+  "Username":"యూజర్ నేమ్","Password":"పాస్‌వర్డ్","Retype Password":"రీటైప్ పాస్‌వర్డ్",
+  "Current Password":"కరెంట్ పాస్‌వర్డ్","New Username":"న్యూ యూజర్ నేమ్","New Password":"న్యూ పాస్‌వర్డ్","Confirm New Password":"కన్ఫర్మ్ న్యూ పాస్‌వర్డ్",
+  "Enter your account details":"ఎంటర్ యువర్ అకౌంట్ డీటెయిల్స్","Create your Vyapara Track account":"క్రియేట్ యువర్ వ్యాపార ట్రాక్ అకౌంట్",
+  "Your Business Companion":"యువర్ బిజినెస్ కంపానియన్","Profile":"ప్రొఫైల్","My Profile":"మై ప్రొఫైల్","Change Login":"చేంజ్ లాగిన్","Logout":"లాగ్ అవుట్",
+  "Live Sales List":"లైవ్ సేల్స్ లిస్ట్","Product Info":"ప్రొడక్ట్ ఇన్ఫో","Expenses":"ఎక్స్‌పెన్సెస్","Customer Pending":"కస్టమర్ పెండింగ్",
+  "Sales Dashboard":"సేల్స్ డ్యాష్‌బోర్డ్","History":"హిస్టరీ","Summary":"సమ్మరీ",
+  "Add today's sales":"యాడ్ టుడేస్ సేల్స్","Manage products and prices":"మేనేజ్ ప్రొడక్ట్స్ అండ్ ప్రైసెస్","Track daily expenses":"ట్రాక్ డైలీ ఎక్స్‌పెన్సెస్",
+  "View pending amounts":"వ్యూ పెండింగ్ అమౌంట్స్","View reports & analysis":"వ్యూ రిపోర్ట్స్ అండ్ అనాలిసిస్","Past records":"పాస్ట్ రికార్డ్స్","Business calendar & days":"బిజినెస్ క్యాలెండర్ అండ్ డేస్",
+  "Track every sale, build a better tomorrow!":"ట్రాక్ ఎవరీ సేల్, బిల్డ్ ఎ బెటర్ టుమారో!",
+  "Back":"బ్యాక్","Save":"సేవ్","Edit":"ఎడిట్","Delete":"డిలీట్","Add":"యాడ్","Update":"అప్‌డేట్","Cancel":"క్యాన్సెల్","Search":"సెర్చ్",
+  "Product Name":"ప్రొడక్ట్ నేమ్","Quantity":"క్వాంటిటీ","Original Cost":"ఒరిజినల్ కాస్ట్","Selling Price":"సెల్లింగ్ ప్రైస్","Profit":"ప్రాఫిట్","Save Product":"సేవ్ ప్రొడక్ట్","Add Product":"యాడ్ ప్రొడక్ట్",
+  "Search product...":"సెర్చ్ ప్రొడక్ట్...","Sales Type":"సేల్స్ టైప్","Complete Set":"కంప్లీట్ సెట్","Individual Piece":"ఇండివిడ్యువల్ పీస్","Amount":"అమౌంట్","Profit ₹":"ప్రాఫిట్ ₹",
+  "Date":"డేట్","Place":"ప్లేస్","Customer Name":"కస్టమర్ నేమ్","Status":"స్టేటస్","Action":"యాక్షన్","Pending":"పెండింగ్","Cleared":"క్లియర్డ్","Clear":"క్లియర్",
+  "Add Baki":"యాడ్ బాకీ","Save Baki":"సేవ్ బాకీ","Baki":"బాకీ","Pending Amount":"పెండింగ్ అమౌంట్",
+  "Initial Amount":"ఇనిషియల్ అమౌంట్","Notes":"నోట్స్","Save Initial Amount":"సేవ్ ఇనిషియల్ అమౌంట్","Update Initial Amount":"అప్‌డేట్ ఇనిషియల్ అమౌంట్",
+  "Expenses List":"ఎక్స్‌పెన్సెస్ లిస్ట్","Add Expense":"యాడ్ ఎక్స్‌పెన్స్","Save Expenses":"సేవ్ ఎక్స్‌పెన్సెస్","Saved Expenses":"సేవ్డ్ ఎక్స్‌పెన్సెస్",
+  "Expense Type":"ఎక్స్‌పెన్స్ టైప్","Amount ₹":"అమౌంట్ ₹","Optional":"ఆప్షనల్","Remove":"రిమూవ్","Enter amount":"ఎంటర్ అమౌంట్",
+  "Petrol":"పెట్రోల్","Snacks":"స్నాక్స్","Lunch":"లంచ్","Tea":"టీ","Air/Tyre":"ఎయిర్ / టైర్","Others":"అదర్స్",
+  "Petrol / Snacks / Lunch / Tea / Others":"పెట్రోల్ / స్నాక్స్ / లంచ్ / టీ / అదర్స్",
+  "Total Expenses":"టోటల్ ఎక్స్‌పెన్సెస్","Initial Amount Records":"ఇనిషియల్ అమౌంట్ రికార్డ్స్","No initial amount records.":"నో ఇనిషియల్ అమౌంట్ రికార్డ్స్.",
+  "No pending customers.":"నో పెండింగ్ కస్టమర్స్.","No history for this date range.":"నో హిస్టరీ ఫర్ దిస్ డేట్ రేంజ్.","No sales saved.":"నో సేల్స్ సేవ్డ్.","No pending entries.":"నో పెండింగ్ ఎంట్రీస్.","No data.":"నో డేటా.","No place data.":"నో ప్లేస్ డేటా.",
+  "Start Date":"స్టార్ట్ డేట్","End Date":"ఎండ్ డేట్","Generate Dashboard":"జెనరేట్ డ్యాష్‌బోర్డ్","Today":"టుడే","This Week":"దిస్ వీక్","This Month":"దిస్ మంత్",
+  "Total Sales":"టోటల్ సేల్స్","Total Collection":"టోటల్ కలెక్షన్","Pending / Baki":"పెండింగ్ / బాకీ","Gross Profit":"గ్రాస్ ప్రాఫిట్","Net Profit":"నెట్ ప్రాఫిట్","Quantity Sold":"క్వాంటిటీ సోల్డ్","Available Cash":"అవైలబుల్ క్యాష్",
+  "Sales by Product":"సేల్స్ బై ప్రొడక్ట్","Profit by Product":"ప్రాఫిట్ బై ప్రొడక్ట్","Sales by Month":"సేల్స్ బై మంత్","Sales by Place":"సేల్స్ బై ప్లేస్","Profit by Sales":"ప్రాఫిట్ బై సేల్స్",
+  "Sorted from highest sales to lowest.":"సార్టెడ్ ఫ్రం హయ్యెస్ట్ సేల్స్ టు లోవెస్ట్.","Column chart sorted from highest profit to lowest.":"కాలమ్ చార్ట్ సార్టెడ్ ఫ్రం హయ్యెస్ట్ ప్రాఫిట్ టు లోవెస్ట్.",
+  "Click a point to see that month's sales.":"క్లిక్ ఎ పాయింట్ టు సీ దట్ మంత్స్ సేల్స్.","Place-wise sales contribution.":"ప్లేస్-వైజ్ సేల్స్ కాంట్రిబ్యూషన్.","Profit trend across saved sales dates.":"సేవ్డ్ సేల్స్ డేట్స్ అక్రాస్ ప్రాఫిట్ ట్రెండ్.","Quantity sold by product, highest to lowest.":"క్వాంటిటీ సోల్డ్ బై ప్రొడక్ట్, హయ్యెస్ట్ టు లోవెస్ట్.",
+  "Best Selling Products":"బెస్ట్ సెల్లింగ్ ప్రొడక్ట్స్","Highest Profit Products":"హయ్యెస్ట్ ప్రాఫిట్ ప్రొడక్ట్స్","Place Performance":"ప్లేస్ పెర్ఫార్మెన్స్","Performance Summary":"పెర్ఫార్మెన్స్ సమ్మరీ",
+  "Sales Amount":"సేల్స్ అమౌంట్","Collection":"కలెక్షన్","Gross":"గ్రాస్","Net":"నెట్","Total Sales Amount":"టోటల్ సేల్స్ అమౌంట్","Total Quantities":"టోటల్ క్వాంటిటీస్","Total Places Covered":"టోటల్ ప్లేసెస్ కవర్డ్",
+  "Today's Sales Dashboard":"టుడేస్ సేల్స్ డ్యాష్‌బోర్డ్","Live sales performance for today":"లైవ్ సేల్స్ పెర్ఫార్మెన్స్ ఫర్ టుడే","Products Sold Today":"ప్రొడక్ట్స్ సోల్డ్ టుడే",
+  "Today's Expenses":"టుడేస్ ఎక్స్‌పెన్సెస్","Collection Today":"కలెక్షన్ టుడే","Pending Amount":"పెండింగ్ అమౌంట్","Cash Available":"క్యాష్ అవైలబుల్",
+  "Collection & Pending":"కలెక్షన్ & పెండింగ్","Today's Expense Distribution":"టుడేస్ ఎక్స్‌పెన్స్ డిస్ట్రిబ్యూషన్","Save Today's Progress":"సేవ్ టుడేస్ ప్రోగ్రెస్",
+  "Highest quantity to lowest.":"హయ్యెస్ట్ క్వాంటిటీ టు లోవెస్ట్.","Highest profit to lowest.":"హయ్యెస్ట్ ప్రాఫిట్ టు లోవెస్ట్.","Today's collection versus outstanding customer credit.":"టుడేస్ కలెక్షన్ వెర్సస్ అవుట్‌స్టాండింగ్ కస్టమర్ క్రెడిట్.","Expense categories by share of today's spending.":"టుడేస్ స్పెండింగ్ ఎక్స్‌పెన్స్ కేటగిరీస్ బై షేర్.","Today's sales contribution by travelling place.":"టుడేస్ సేల్స్ కాంట్రిబ్యూషన్ బై ట్రావెలింగ్ ప్లేస్.",
+  "Review today's live entries, then save them.":"రివ్యూ టుడేస్ లైవ్ ఎంట్రీస్, దెన్ సేవ్ దెమ్.","No data for today.":"నో డేటా ఫర్ టుడే.","No profit data for today.":"నో ప్రాఫిట్ డేటా ఫర్ టుడే.",
+  "History Detail":"హిస్టరీ డీటెయిల్","Saved sales for":"సేవ్డ్ సేల్స్ ఫర్","Business Days":"బిజినెస్ డేస్","No Business Days":"నో బిజినెస్ డేస్","Total Days":"టోటల్ డేస్",
+  "Sun":"సన్","Mon":"మన్","Tue":"ట్యూ","Wed":"వెడ్","Thu":"థర్స్","Fri":"ఫ్రై","Sat":"శాట్",
+  "Name":"నేమ్","Email":"ఈమెయిల్","Phone Number":"ఫోన్ నంబర్","Save Profile":"సేవ్ ప్రొఫైల్",
+  "Change Login Details":"చేంజ్ లాగిన్ డీటెయిల్స్","Save Changes":"సేవ్ చేంజెస్","Forgot Password":"ఫర్గాట్ పాస్‌వర్డ్",
+  "Enter your username and create a new password.":"ఎంటర్ యువర్ యూజర్ నేమ్ అండ్ క్రియేట్ ఎ న్యూ పాస్‌వర్డ్.","Reset Password":"రీసెట్ పాస్‌వర్డ్",
+  "Logging in...":"లాగింగ్ ఇన్...","Creating...":"క్రియేటింగ్...","Unknown Place":"అన్‌నోన్ ప్లేస్","No expenses":"నో ఎక్స్‌పెన్సెస్","Collected":"కలెక్టెడ్","Sales":"సేల్స్",
+  "Expense Breakdown":"ఎక్స్‌పెన్స్ బ్రేక్‌డౌన్","Profit vs Expenses":"ప్రాఫిట్ వర్సెస్ ఎక్స్‌పెన్సెస్","Sales vs Collection vs Pending":"సేల్స్ వర్సెస్ కలెక్షన్ వర్సెస్ పెండింగ్",
+  "Collection vs Pending":"కలెక్షన్ వర్సెస్ పెండింగ్","Quantity Sold by Product":"క్వాంటిటీ సోల్డ్ బై ప్రొడక్ట్","Place":"ప్లేస్","Profit":"ప్రాఫిట్","1st":"1వ","2nd":"2వ","3rd":"3వ","4th":"4వ","5th":"5వ",
+  "Hello!":"హలో!","Hello,":"హలో,","Manage • Sell • Track • Grow":"మేనేజ్ • సెల్ • ట్రాక్ • గ్రో",
+  "Email not added":"ఈమెయిల్ యాడ్ చేయలేదు","Phone not added":"ఫోన్ నంబర్ యాడ్ చేయలేదు",
+  "Date and Initial Amount required.":"డేట్ మరియు ఇనిషియల్ అమౌంట్ అవసరం.","Date, category and amount required.":"డేట్, కేటగిరీ మరియు అమౌంట్ అవసరం.",
+  "Add expense first.":"ఫస్ట్ ఎక్స్‌పెన్స్ యాడ్ చేయండి.","Expense deleted.":"ఎక్స్‌పెన్స్ డిలీట్ అయింది.","Delete expense?":"ఎక్స్‌పెన్స్ డిలీట్ చేయాలా?",
+  "Logout from Vyapara Track?":"వ్యాపార ట్రాక్ నుంచి లాగ్ అవుట్ చేయాలా?"
 };
-let vtLanguage=localStorage.getItem("VT_LANGUAGE")||"en";
-function toggleLanguage(){vtLanguage=vtLanguage==="en"?"te":"en";localStorage.setItem("VT_LANGUAGE",vtLanguage);applyLanguage();}
-function applyLanguage(){
-  document.documentElement.lang=vtLanguage==="te"?"te":"en";
-  const dict=VT_LANG.te;
-  document.querySelectorAll("[data-en]").forEach(el=>{
-    el.textContent=vtLanguage==="te"?(dict[el.dataset.en]||el.dataset.en):el.dataset.en;
-  });
-  document.querySelectorAll("input[placeholder],input[data-ph-en]").forEach(el=>{
-    let en=el.dataset.phEn||el.placeholder; if(!el.dataset.phEn)el.dataset.phEn=en;
-    el.placeholder=vtLanguage==="te"?(dict[en]||en):en;
-  });
-  const b=$("langToggle");if(b)b.textContent=vtLanguage==="te"?"English":"తెలుగు";
-}
-function markStaticLanguage(){
-  const dict=VT_LANG.te;
-  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-  let n;while(n=walker.nextNode()){
-    let t=n.nodeValue.trim();
-    if(!t||!dict[t])continue;
-    let el=n.parentElement;
-    if(!el||["SCRIPT","STYLE"].includes(el.tagName))continue;
-    if(!el.dataset.en)el.dataset.en=t;
+
+let vtLanguage=localStorage.getItem("VT_LANGUAGE")||"te";
+let vtBusy=false;
+
+function vtTranslateText(text){
+  if(vtLanguage!=="te"||!text)return text;
+  let out=text;
+  const keys=Object.keys(VT_TE).sort((a,b)=>b.length-a.length);
+  for(const k of keys){
+    if(out.includes(k)) out=out.split(k).join(VT_TE[k]);
   }
-  document.querySelectorAll("input[placeholder]").forEach(el=>{if(!el.dataset.phEn)el.dataset.phEn=el.placeholder});
-  applyLanguage();
+  return out;
 }
-const vtObserver=new MutationObserver(()=>{
-  if(window.__vtObserverBusy)return;
-  window.__vtObserverBusy=true;
-  vtObserver.disconnect();
-  try{markStaticLanguage()}finally{
-    window.__vtObserverBusy=false;
+
+function vtTranslateNode(node){
+  if(vtLanguage!=="te")return;
+  if(node.nodeType===Node.TEXT_NODE){
+    const p=node.parentElement;
+    if(!p||["SCRIPT","STYLE","NOSCRIPT"].includes(p.tagName))return;
+    const old=node.nodeValue;
+    const next=vtTranslateText(old);
+    if(old!==next)node.nodeValue=next;
+    return;
+  }
+  if(node.nodeType===Node.ELEMENT_NODE){
+    if(node.matches("script,style,noscript"))return;
+    if(node.placeholder){node.placeholder=vtTranslateText(node.placeholder);}
+    if(node.title){node.title=vtTranslateText(node.title);}
+    if(node.getAttribute("aria-label"))node.setAttribute("aria-label",vtTranslateText(node.getAttribute("aria-label")));
+    for(const c of node.childNodes)vtTranslateNode(c);
+  }
+}
+
+function vtTranslateAll(){
+  if(vtBusy)return;
+  vtBusy=true;
+  try{
+    if(vtLanguage==="te"){
+      vtTranslateNode(document.body);
+      document.title="వ్యాపార ట్రాక్";
+      document.documentElement.lang="te";document.documentElement.classList.remove("vt-startup");document.documentElement.classList.add("vt-ready");
+      const b=$("langToggle");if(b)b.textContent="ఇంగ్లీష్";
+    }else{
+      location.reload();
+    }
+  }finally{vtBusy=false;}
+}
+
+function toggleLanguage(){
+  vtLanguage=vtLanguage==="en"?"te":"en";
+  localStorage.setItem("VT_LANGUAGE",vtLanguage);
+  if(vtLanguage==="en"){
+    location.reload();
+  }else{
+    vtTranslateAll();
+  }
+}
+
+/* Translate dynamically rendered dashboard/sales/expense text too. */
+const vtObserver=new MutationObserver(mutations=>{
+  if(vtLanguage!=="te"||vtBusy)return;
+  vtBusy=true;
+  try{
+    for(const m of mutations){
+      for(const n of m.addedNodes)vtTranslateNode(n);
+    }
+  }finally{vtBusy=false;}
+});
+
+window.addEventListener("DOMContentLoaded",()=>{
+  if(vtLanguage==="te"){
+    vtTranslateAll();
     vtObserver.observe(document.body,{childList:true,subtree:true});
+  }else{
+    document.documentElement.classList.remove("vt-startup");document.documentElement.classList.add("vt-ready");
   }
 });
-window.addEventListener("load",()=>{
-  setTimeout(()=>{
-    markStaticLanguage();
-    vtObserver.observe(document.body,{childList:true,subtree:true});
-  },50);
-});
+
+/* Native confirmation messages also follow Telugu mode. */
+const vtNativeConfirm=window.confirm.bind(window);
+window.confirm=function(message){
+  return vtNativeConfirm(vtLanguage==="te"?vtTranslateText(message):message);
+};
+
+const vtBaseNotify=notify;
+notify=function(message){
+  return vtBaseNotify(vtLanguage==="te"?vtTranslateText(String(message)):message);
+};
 </script>
 <!-- Account Features -->
 <div id="loginEditBox" class="hidden" style="position:fixed;inset:0;background:#0008;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;"><div style="background:#fff;width:100%;max-width:380px;padding:22px;border-radius:18px;box-shadow:0 10px 40px #0004;"><h2 style="margin-top:0">🔐 Change Login Details</h2><input id="oldLoginPass" type="password" placeholder="Current Password" style="width:100%;margin:7px 0"><input id="newLoginUser" type="text" placeholder="New Username" style="width:100%;margin:7px 0"><input id="newLoginPass" type="password" placeholder="New Password" style="width:100%;margin:7px 0"><input id="confirmLoginPass" type="password" placeholder="Confirm New Password" style="width:100%;margin:7px 0"><button class="green wide" onclick="saveLoginDetails()">Save Changes</button><button class="back wide" onclick="closeLoginEdit()">Cancel</button></div></div>
@@ -394,7 +479,7 @@ window.addEventListener("load",()=>{
 <script>
 function ensureAccountFields(){db.account=db.account||{};if(!db.account.username)db.account.username="admin";if(!db.account.password)db.account.password="1234";if(!db.account.displayName)db.account.displayName=db.account.username;if(db.account.email===undefined)db.account.email="";if(db.account.phone===undefined)db.account.phone="";}
 ensureAccountFields();
-function authMode(m){auth=m;$("loginTab").classList.toggle("active",m==="login");$("signupTab").classList.toggle("active",m==="signup");$("authBtn").textContent=m==="login"?"Login":"Create Account";$("authPass2").classList.toggle("hidden",m!=="signup");$("authHint").textContent=m==="login"?"Enter your account details":"Create your Vyapara Track account";}
+function authMode(m){auth=m;$("loginTab").classList.toggle("active",m==="login");$("signupTab").classList.toggle("active",m==="signup");let loginText=vtLanguage==="te"?"లాగిన్":"Login",signupText=vtLanguage==="te"?"క్రియేట్ అకౌంట్":"Create Account",hint=vtLanguage==="te"?(m==="login"?"ఎంటర్ యువర్ అకౌంట్ డీటెయిల్స్":"క్రియేట్ యువర్ వ్యాపార ట్రాక్ అకౌంట్"):(m==="login"?"Enter your account details":"Create your Vyapara Track account");$("loginTab").textContent=loginText;$("signupTab").textContent=signupText;$("authBtn").textContent=m==="login"?loginText:signupText;$("authPass2").classList.toggle("hidden",m!=="signup");$("authHint").textContent=hint;}
 async function authSubmit(){
   const btn=$("authBtn");
   if(btn.dataset.busy==="1")return;
@@ -435,5 +520,19 @@ function resetForgotPassword(){ensureAccountFields();let u=$("forgotUser").value
 function logoutAccount(){if(!confirm("Logout from Vyapara Track?"))return;sessionStorage.removeItem("vt");closeProfileDropdown();$("app").classList.add("hidden");$("auth").classList.remove("hidden");$("authUser").value=db.account.username||"";$("authPass").value="";$("authPass2").value="";authMode("login");}
 const __baseStart=start;start=async function(){await __baseStart();ensureAccountFields();renderUserProfile();};
 const __baseShow=show;show=function(id){__baseShow(id);if(id==="home"||id==="profile")renderUserProfile();};
+</script>
+
+<script>
+function setStartLanguage(lang){
+  localStorage.setItem("VT_LANGUAGE",lang);
+  if(typeof vtLanguage!=="undefined") vtLanguage=lang;
+  if(typeof applyLanguage==="function") applyLanguage();
+  const sel=document.getElementById("startLanguage");
+  if(sel) sel.value=lang;
+}
+window.addEventListener("load",()=>{
+  const sel=document.getElementById("startLanguage");
+  if(sel) sel.value=localStorage.getItem("VT_LANGUAGE")||"te";
+});
 </script>
 </body></html>
