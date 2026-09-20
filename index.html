@@ -1,12 +1,9 @@
 <!doctype html>
-<html lang="te" id="htmlRoot" class="vt-startup">
+<html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vyapara Track</title>
 <style>
-html.vt-startup body{visibility:hidden}
-html.vt-ready body{visibility:visible}
-
 *{box-sizing:border-box}body{margin:0;background:#f4faf7;color:#14392e;font-family:Arial,sans-serif}button,input{font:inherit}button{cursor:pointer;border:0}input,select{padding:11px;border:1px solid #d7e2dc;border-radius:9px;background:#fff;outline:0}select{min-width:130px}.hidden{display:none!important}
 .auth{min-height:100vh;display:grid;place-items:center;background:linear-gradient(#f5fbf6,#e1f2e6)}.auth-card{width:min(390px,92%);padding:30px;background:white;border-radius:26px;text-align:center;box-shadow:0 15px 45px #0001}.brand{width:62px;height:62px;margin:auto;border-radius:18px;background:#168653;color:white;font-size:40px;line-height:62px}.auth-card h1{color:#147947;margin:9px 0 3px}.auth-card p{color:#718078}.auth-card input{display:block;width:100%;margin:9px 0}.tabs{display:flex;background:#edf5ef;padding:4px;border-radius:10px}.tabs button{flex:1;background:transparent;padding:9px;border-radius:8px}.tabs .active{background:#fff;color:#168653;box-shadow:0 2px 8px #0001}.green{background:#168653;color:#fff;padding:11px 15px;border-radius:9px;font-weight:700}.wide{width:100%;margin-top:10px}
 header{height:68px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 max(12px,calc((100% - 1050px)/2));position:sticky;top:0;z-index:10;box-shadow:0 2px 10px #0001}.brandtitle{text-align:center}.brandtitle b{font-size:18px}.brandtitle small{display:block;color:#78877f;font-size:11px}.icon{background:transparent;font-size:29px;color:#24483b}
@@ -14,33 +11,26 @@ main{max-width:1050px;margin:auto;padding:20px 15px 90px}.page-title{display:fle
 .tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:800px}th,td{padding:9px;border-bottom:1px solid #edf1ee;text-align:left;font-size:12px}th{color:#65776e}td input{width:100%;padding:8px}.edit{background:#fff4dc;color:#b97900;padding:7px;border-radius:7px;margin-right:4px}.del{background:#fff0f0;color:#d33;padding:7px;border-radius:7px}.save-list{display:block;margin:12px auto 0;padding:12px 28px;background:#168653;color:#fff;border-radius:9px;font-weight:800}.pending-panel{background:#fffafa;border:1px solid #f0d8dc}.message{font-size:12px;color:#28704e}
 .product-add{padding:15px}.searchline{display:flex;gap:10px}.searchline input{flex:1}.product-form{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:9px;margin-top:12px}.product-table td:nth-child(5){font-weight:bold;color:#168653}
 .calc,.dash,.money{width:100%;padding:13px;border-radius:10px;font-weight:800;margin-top:10px}.calc{background:#1689e2;color:#fff}.dash{background:#18a267;color:#fff}.money{background:#713dd0;color:#fff}.calcbox{padding:12px;margin-top:10px;border-radius:11px;background:#f7fbf8;border:1px solid #dce8e1}.calcbuttons{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.calcitem{display:flex;flex-direction:column;gap:6px}.calcbuttons button{padding:12px;border-radius:9px;background:#e9f4ff;color:#1268a8;font-weight:bold}.calcsmallvalue{min-height:42px;display:grid;place-items:center;padding:8px;border-radius:9px;background:#f4f8fb;font-size:19px;font-weight:800;color:#173f32}.calcitem:nth-child(2) button{background:#fff4dc;color:#9d6700}.calcitem:nth-child(3) button{background:#e9f8ef;color:#167244}.calcbuttons button:nth-child(2){background:#fff4dc;color:#9d6700}.calcbuttons button:nth-child(3){background:#e9f8ef;color:#167244}.calcvalue{text-align:center;font-size:23px;font-weight:800;padding:12px}.moneyresult{margin-top:9px;padding:14px;border-radius:10px;background:#efe8ff;text-align:center}.moneyresult b{font-size:23px}.metricgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}.metric{background:#fff;padding:13px;border-radius:12px;box-shadow:0 3px 15px #00000008}.metric b{display:block;font-size:19px;margin-top:4px}.charts{display:grid;grid-template-columns:1fr 1fr;gap:12px}.chart{background:#fff;padding:14px;border-radius:14px;box-shadow:0 3px 15px #0001}.pie{width:145px;height:145px;margin:10px auto;border-radius:50%;background:conic-gradient(#268fe3 0 40%,#35b86d 40% 65%,#f2a524 65% 80%,#ef6d6d 80% 90%,#8e72cf 90%)}.barrow{margin:11px 0}.barhead{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}.bar{height:10px;background:#e8eee9;border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;background:#168653}.vbars{height:145px;display:flex;align-items:end;justify-content:center;gap:35px}.vbar{text-align:center;font-size:11px}.vbar i{display:block;width:48px;background:#32b879;border-radius:5px 5px 0 0}.vbar:nth-child(2) i{background:#ef6b6b}.row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:11px 0;border-bottom:1px solid #edf1ee}.mini{font-size:12px;color:#74827c}
-.expense-row{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:12px;padding:12px;border:1px solid #e7eee9;border-radius:12px;background:#fbfdfb}.expense-row input{width:100%}.expense-row .del{justify-self:end}.expense-row .edate{grid-row:1}.expense-row .ecat{grid-row:2}.expense-row .eamt{grid-row:3}.expense-row .enote{grid-row:4}.expense-row input{padding:9px}.history-filters{margin-bottom:12px}.history-detail-table td,.history-detail-table th{font-size:12px}.pending-profit{font-weight:700;color:#168653}.status-open{display:inline-block;padding:5px 9px;border-radius:999px;background:#ffe7e9;color:#c5303d;font-weight:800;font-size:11px}.status-cleared{display:inline-block;padding:5px 9px;border-radius:999px;background:#dff6e8;color:#168653;font-weight:800;font-size:11px}.clear-btn{background:#dff6e8;color:#168653;padding:7px 9px;border-radius:7px;font-weight:800}.calendarhead{display:flex;justify-content:space-between;align-items:center}.calendarhead button{background:#edf4ef;padding:7px 15px;border-radius:8px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:10px}.day{padding:10px 2px;text-align:center;border-radius:8px;background:#f6f8f6;font-size:12px}.day.biz{background:#dff4e7}.day.off{background:#fff0f2}.day button{background:transparent;font-weight:bold}.bottom{position:fixed;bottom:0;left:0;right:0;height:64px;background:#fff;border-top:1px solid #e4ebe6;display:flex;justify-content:center;z-index:20}.bottom button{min-width:85px;background:transparent;color:#788780}.bottom small{display:block;margin-top:3px}
-@media(max-width:700px){main{padding:16px 10px 90px}.charts{grid-template-columns:1fr}.calcbuttons{grid-template-columns:1fr}.product-form{grid-template-columns:1fr}.expense-row{grid-template-columns:1fr}.expense-row button{justify-self:end}}
+.expense-row{display:grid;grid-template-columns:130px 1fr 140px 1fr auto;gap:8px;margin-bottom:8px}.expense-row input{padding:9px}.history-filters{margin-bottom:12px}.history-detail-table td,.history-detail-table th{font-size:12px}.pending-profit{font-weight:700;color:#168653}.status-open{display:inline-block;padding:5px 9px;border-radius:999px;background:#ffe7e9;color:#c5303d;font-weight:800;font-size:11px}.status-cleared{display:inline-block;padding:5px 9px;border-radius:999px;background:#dff6e8;color:#168653;font-weight:800;font-size:11px}.clear-btn{background:#dff6e8;color:#168653;padding:7px 9px;border-radius:7px;font-weight:800}.calendarhead{display:flex;justify-content:space-between;align-items:center}.calendarhead button{background:#edf4ef;padding:7px 15px;border-radius:8px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:10px}.day{padding:10px 2px;text-align:center;border-radius:8px;background:#f6f8f6;font-size:12px}.day.biz{background:#dff4e7}.day.off{background:#fff0f2}.day button{background:transparent;font-weight:bold}.bottom{position:fixed;bottom:0;left:0;right:0;height:64px;background:#fff;border-top:1px solid #e4ebe6;display:flex;justify-content:center;z-index:20}.bottom button{min-width:85px;background:transparent;color:#788780}.bottom small{display:block;margin-top:3px}
+@media(max-width:700px){main{padding:16px 10px 90px}.charts{grid-template-columns:1fr}.calcbuttons{grid-template-columns:1fr}.product-form{grid-template-columns:1fr}.expense-row{grid-template-columns:1fr 1fr}.expense-row button{grid-column:1/-1}}
+.logic-note{margin:10px 0;color:#5d6d65;background:#f5faf7;padding:10px 12px;border-radius:10px}
 /* today dashboard */
 .today-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.today-head h2{margin:0}.today-head p{margin:4px 0 0;color:#77867f;font-size:12px}.today-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}.today-kpi{border-radius:16px;padding:16px;min-height:94px;box-shadow:0 4px 15px #0000000b}.today-kpi .klabel{font-size:12px;font-weight:700;opacity:.82}.today-kpi .kvalue{font-size:24px;font-weight:900;margin-top:7px}.today-chart-grid{display:grid;grid-template-columns:1.35fr .95fr;gap:14px;margin-top:14px}.today-card{background:#fff;border-radius:16px;padding:17px;box-shadow:0 4px 18px #0000000a;border:1px solid #edf1ee}.today-card h3{margin:0 0 4px;font-size:16px}.today-card .desc{font-size:11px;color:#7a8881;margin-bottom:12px}.today-hbar{margin:12px 0}.today-hbar-head{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:5px}.today-hbar-track{height:13px;background:#edf1ee;border-radius:20px;overflow:hidden}.today-hbar-fill{height:100%;border-radius:20px}.today-columns{height:235px;display:flex;align-items:flex-end;gap:14px;padding:8px 5px 0;border-bottom:1px solid #e5ece7;overflow-x:auto}.today-col{min-width:68px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px}.today-col-value{font-size:11px;font-weight:800}.today-col-fill{width:38px;min-height:8px;border-radius:7px 7px 2px 2px}.today-col-label{font-size:10px;max-width:75px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.today-donut-wrap{display:flex;align-items:center;justify-content:center;gap:22px;min-height:205px;flex-wrap:wrap}.today-donut{width:165px;height:165px;border-radius:50%;position:relative;flex:0 0 auto}.today-donut:after{content:"";position:absolute;inset:43px;background:#fff;border-radius:50%}.today-legend{font-size:12px;min-width:145px}.today-legend div{margin:9px 0}.today-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px}.today-empty{padding:45px 10px;text-align:center;color:#7a8881;font-size:12px}.today-save{margin-top:14px}.today-save button{display:block;margin:10px auto 0;padding:12px 28px;background:#168653;color:#fff;border-radius:10px;font-weight:800}
 @media(max-width:700px){.today-kpis{grid-template-columns:1fr 1fr}.today-chart-grid{grid-template-columns:1fr}}
-/* requested sales dashboard charts */
-.line-chart{width:100%;height:230px;position:relative;padding:8px 6px 30px}
-.line-chart svg{width:100%;height:185px;display:block;overflow:visible}
-.line-grid{stroke:#e8eeea;stroke-width:1}
-.line-path{fill:none;stroke:#168653;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.line-point{fill:#fff;stroke:#168653;stroke-width:3;cursor:pointer}
-.line-point:hover{r:6}
-.line-label{font-size:10px;fill:#65776e}
-.line-value{font-size:10px;fill:#173f32;font-weight:700}
 /* dashboard only */
 .dashboard-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}.dkpi{border-radius:16px;padding:16px;min-height:96px;box-shadow:0 4px 15px #0000000b}.dkpi .klabel{font-size:12px;font-weight:700;opacity:.8}.dkpi .kvalue{font-size:24px;font-weight:900;margin-top:7px}.k-green{background:#dff5e8}.k-blue{background:#e2f0ff}.k-red{background:#ffe3e6}.k-purple{background:#eee6ff}.k-orange{background:#ffedd2}.k-teal{background:#dcf6f2}.k-indigo{background:#e6e9ff}.k-yellow{background:#fff3bf}.dashboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.dcard{background:#fff;border-radius:16px;padding:16px;box-shadow:0 4px 18px #0000000a;border:1px solid #edf1ee}.dcard h3{margin:0 0 4px;font-size:16px}.dcard .desc{font-size:11px;color:#7a8881;margin-bottom:13px}.baritem{margin:10px 0}.barline{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;gap:8px}.bartrack{height:11px;border-radius:20px;background:#edf1ee;overflow:hidden}.barfill{height:100%;border-radius:20px}.fill1{background:#168653}.fill2{background:#278fe0}.fill3{background:#8a61d1}.fill4{background:#f0a52a}.fill5{background:#e8666e}.fill6{background:#16a89a}.donutwrap{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}.donut{width:155px;height:155px;border-radius:50%;position:relative}.donut:after{content:"";position:absolute;inset:36px;background:#fff;border-radius:50%}.legend{font-size:12px}.legend div{margin:7px 0}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}.money-summary{display:grid;gap:9px}.money-line{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #edf1ee;font-size:13px}.money-final{padding:13px;border-radius:11px;background:#e4f6eb;display:flex;justify-content:space-between;font-weight:900;font-size:17px}.rank{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #edf1ee}.rank-left{display:flex;align-items:center;gap:9px}.medal{font-size:20px}.place-table{width:100%;border-collapse:collapse}.place-table th,.place-table td{padding:9px 6px;border-bottom:1px solid #edf1ee;font-size:12px}.place-table th{text-align:left;color:#65776e}.dashboard-note{padding:12px;border-radius:12px;background:#f1f7f3;font-size:12px;color:#53665c;margin-top:14px}@media(max-width:850px){.dashboard-kpis{grid-template-columns:repeat(2,1fr)}.dashboard-grid{grid-template-columns:1fr}}
 .mini-chart.columns{height:205px;display:flex;align-items:flex-end;justify-content:space-around;gap:18px;padding:10px 8px 4px}.mini-chart.columns>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px}.mini-chart.columns span{display:block;width:42px;border-radius:8px 8px 2px 2px;background:linear-gradient(180deg,#278fe0,#168653);min-height:8px}.mini-chart.columns b{font-size:11px;text-align:center}.mini-chart.columns em{font-size:10px;color:#65776e;font-style:normal}.mini-chart.small{height:190px}.profile-menu{position:relative}.profile-trigger{display:flex;align-items:center;gap:8px;background:#edf7f0;color:#176b48;padding:8px 11px;border-radius:12px;font-weight:700}.profile-avatar{width:34px;height:34px;border-radius:50%;background:#168653;color:#fff;display:grid;place-items:center;font-weight:800}.profile-dropdown{position:absolute;right:0;top:48px;width:250px;background:#fff;border:1px solid #e4ebe6;border-radius:15px;box-shadow:0 12px 35px #0002;padding:10px;z-index:100}.profile-dropdown button{display:flex;width:100%;gap:10px;align-items:center;padding:11px;border-radius:10px;background:#fff;text-align:left;color:#214638}.profile-dropdown button:hover{background:#f2f8f4}.profile-mini{padding:10px;border-bottom:1px solid #edf1ee;margin-bottom:5px}.profile-mini b,.profile-mini small{display:block}.profile-mini small{color:#718078;margin-top:3px;font-size:11px}.profile-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.profile-summary>div{padding:14px;border-radius:12px;background:#f3f8f5;border:1px solid #e7eee9}.profile-summary span{display:block;font-size:11px;color:#6c7d74}.profile-summary b{display:block;font-size:19px;margin-top:5px}@media(max-width:700px){.profile-summary{grid-template-columns:repeat(2,1fr)}}
-.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#173f32;color:#fff;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:700;z-index:9999;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 20px #0002}.toast.show{opacity:1}
+
+.app-language{display:flex;align-items:center}.app-language select{padding:7px 9px;border-radius:9px;min-width:95px}.language-picker{display:flex;align-items:center;justify-content:center;gap:8px;margin:12px auto 0}.language-picker select{width:170px;padding:9px;border-radius:10px}.expense-row{display:grid;grid-template-columns:1fr;gap:10px;padding:14px;border:1px solid #e7eee9;border-radius:13px;background:#fbfdfb;margin-bottom:10px}.expense-field{display:flex;flex-direction:column;gap:5px}.expense-field span{font-size:12px;font-weight:800;color:#566a60}.expense-field input{width:100%;padding:11px}.expense-delete{width:100%;padding:10px}.today-full-card{width:100%}.line-chart-wrap{width:100%;overflow:auto}.line-chart{width:100%;min-width:420px;height:260px}.line-axis{stroke:#dbe6df;stroke-width:1}.trend-line{fill:none;stroke:#168653;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.line-point circle{fill:#fff;stroke:#168653;stroke-width:3;cursor:pointer}.line-point:hover circle{r:7}.line-label{font-size:10px;fill:#65776e}.chart-hint{text-align:center;font-size:11px;color:#74827c;margin:8px 0 0}.chart-empty{padding:45px 10px;text-align:center;color:#74827c}@media(max-width:700px){.line-chart{min-width:360px;height:230px}}
 </style>
 <link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#0f766e"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"></head>
 <body>
-<div id="toast" class="toast"></div>
-<div id="auth" class="auth"><div class="auth-card"><div class="brand">↗</div><h1>Vyapara Track</h1><p>Track Today • Grow Tomorrow</p><div style="display:flex;justify-content:flex-end;margin-bottom:10px"><select id="authLanguage" onchange="setLanguage(this.value)" aria-label="Language"><option value="te">తెలుగు</option><option value="en">English</option></select></div><div class="tabs"><button type="button" id="loginTab" class="active" onclick="authMode('login')">Login</button><button type="button" id="signupTab" onclick="authMode('signup')">Create Account</button></div><input id="authUser" value="" placeholder="Username"><input id="authPass" value="" type="password" placeholder="Password"><input id="authPass2" class="hidden" type="password" placeholder="Retype Password"><button type="button" id="authBtn" class="green wide" onclick="authSubmit()">Login</button>
+<div id="auth" class="auth"><div class="auth-card"><div class="brand">↗</div><h1>Vyapara Track</h1><p>Track Today • Grow Tomorrow</p><div class="tabs"><button id="loginTab" class="active" onclick="authMode('login')">Login</button><button id="signupTab" onclick="authMode('signup')">Create Account</button></div><input id="authUser" value="" placeholder="Username"><input id="authPass" value="" type="password" placeholder="Password"><input id="authPass2" class="hidden" type="password" placeholder="Retype Password"><button id="authBtn" class="green wide" onclick="authSubmit()">Login</button>
 <button class="back wide" onclick="openForgotPassword()">Forgot Password?</button>
+<div class="language-picker"><span>🌐</span><select id="languageSelect" onchange="setLanguage(this.value)" aria-label="Language"><option value="en">English</option><option value="te">తెలుగు</option></select></div>
 <small id="authHint">Enter your account details</small></div></div>
 <div id="app" class="hidden">
-<header><button class="icon" onclick="show('home')">‹</button><div class="brandtitle"><b>VYAPARA TRACK</b><small>Your Business Companion</small></div><button id="langToggle" class="chip" onclick="toggleLanguage()">ఇంగ్లీష్</button><div class="profile-menu"><button class="profile-trigger" onclick="toggleProfileDropdown()"><span class="profile-avatar" id="topAvatar">U</span><span id="topUserName">User</span>⌄</button><div id="profileDropdown" class="profile-dropdown hidden"><div class="profile-mini"><b id="dropDisplayName">User</b><small id="dropEmail">Email not added</small><small id="dropPhone">Phone not added</small></div><button onclick="show('profile');closeProfileDropdown()">👤 <span>My Profile</span></button><button onclick="openLoginEdit();closeProfileDropdown()">🔐 <span>Change Login</span></button><button onclick="logoutAccount();closeProfileDropdown()">↪ <span>Logout</span></button></div></div></header>
+<header><button class="icon" onclick="show('home')">‹</button><div class="brandtitle"><b>VYAPARA TRACK</b><small>Your Business Companion</small></div><div class="app-language"><select id="appLanguageSelect" onchange="setLanguage(this.value)" aria-label="Language"><option value="en">English</option><option value="te">తెలుగు</option></select></div><div class="profile-menu"><button class="profile-trigger" onclick="toggleProfileDropdown()"><span class="profile-avatar" id="topAvatar">U</span><span id="topUserName">User</span>⌄</button><div id="profileDropdown" class="profile-dropdown hidden"><div class="profile-mini"><b id="dropDisplayName">User</b><small id="dropEmail">Email not added</small><small id="dropPhone">Phone not added</small></div><button onclick="show('profile');closeProfileDropdown()">👤 <span>My Profile</span></button><button onclick="openLoginEdit();closeProfileDropdown()">🔐 <span>Change Login</span></button><button onclick="logoutAccount();closeProfileDropdown()">↪ <span>Logout</span></button></div></div></header>
 <main>
 <section id="home" class="screen"><div class="page-title"><div><h2 id="homeGreeting">Hello!</h2><p>Manage • Sell • Track • Grow</p></div><button class="back" onclick="show('profile')">👤 Profile</button></div><div class="home-menu">
 <button onclick="show('live')">🛒<span><b>Live Sales List</b><small>Add today's sales</small></span>›</button>
@@ -60,7 +50,7 @@ main{max-width:1050px;margin:auto;padding:20px 15px 90px}.page-title{display:fle
 <section id="live" class="screen hidden"><div class="page-title"><div><h2>Live Sales List</h2><p>Add sales and customer details</p></div><button class="chip">📅 <span id="liveDateText"></span></button></div>
 <div class="two"><label>Date<input id="liveDate" type="date" onchange="changeLiveDate(this.value)"></label><label>Place<input id="livePlace" placeholder="Enter place"></label></div>
 <div class="panel pending-panel"><div class="panel-head"><h3>👥 Baki / Pending <small>(If any)</small></h3><button class="blue" onclick="addBakiRow()">＋ Add Baki</button></div><div class="tablewrap"><table><thead><tr><th>S.No</th><th>Customer Name</th><th>Product Name</th><th>Quantity</th><th>Amount ₹</th><th>Place</th><th>Status</th><th>Action</th></tr></thead><tbody id="bakiRows"></tbody></table></div><button class="save-list" onclick="saveBaki()">✓ Save Baki</button><p id="bakiMsg" class="message"></p></div>
-<div class="panel"><div class="panel-head"><h3>🛒 Add Products Sold</h3><button class="blue" onclick="addSaleRow()">＋ Add Product</button></div><div class="tablewrap"><table><thead><tr><th>S.No</th><th>Product Name</th><th>Sale Type</th><th>Quantity</th><th>SP ₹</th><th>Amount ₹</th><th>Profit ₹</th><th>Action</th></tr></thead><tbody id="saleRows"></tbody></table></div><button class="calc" onclick="toggleCalculation()">▣ &nbsp; Calculation</button><div id="calcbox" class="calcbox hidden"><div class="calcbuttons"><div class="calcitem"><button onclick="calcValue('qty')">Total Quantities</button><div id="calcQty" class="calcsmallvalue">—</div></div><div class="calcitem"><button onclick="calcValue('amount')">Total Amount</button><div id="calcAmount" class="calcsmallvalue">—</div></div><div class="calcitem"><button onclick="calcValue('profit')">Total Profit</button><div id="calcProfit" class="calcsmallvalue">—</div></div></div><button class="money" onclick="moneyCalc()">₹ &nbsp; Money Calculation</button><div id="moneyresult" class="moneyresult hidden"></div></div>
+<div class="panel"><div class="panel-head"><h3>🛒 Add Products Sold</h3><button class="blue" onclick="addSaleRow()">＋ Add Product</button></div><div class="tablewrap"><table><thead><tr><th>S.No</th><th>Product Name</th><th>Sale Type</th><th>Quantity</th><th>SP ₹</th><th>Amount ₹</th><th>Profit ₹</th><th>Action</th></tr></thead><tbody id="saleRows"></tbody></table></div><p class="mini logic-note">Complete Set: enter the actual piece count (example 6). If Qty is 12, that means 2 sets. SP is the whole-set price. Amount = number of sets × SP and Profit = number of sets × (SP − set cost). Individual Piece: SP is per piece, so Amount = Qty × SP and Profit uses per-piece cost.</p><button class="calc" onclick="toggleCalculation()">▣ &nbsp; Calculation</button><div id="calcbox" class="calcbox hidden"><div class="calcbuttons"><div class="calcitem"><button onclick="calcValue('qty')">Total Quantities</button><div id="calcQty" class="calcsmallvalue">—</div></div><div class="calcitem"><button onclick="calcValue('amount')">Total Amount</button><div id="calcAmount" class="calcsmallvalue">—</div></div><div class="calcitem"><button onclick="calcValue('profit')">Total Profit</button><div id="calcProfit" class="calcsmallvalue">—</div></div></div><button class="money" onclick="moneyCalc()">₹ &nbsp; Money Calculation</button><div id="moneyresult" class="moneyresult hidden"></div></div>
 <button class="dash" onclick="todayDash()">▥ &nbsp; Today's Sales Dashboard</button></div><div class="panel"><h3>Saved Sales for This Date</h3><div id="savedSales"></div></div></section>
 
 <section id="expenses" class="screen hidden"><div class="page-title"><div><h2>Expenses</h2><p>Initial amount and expense list</p></div><button class="back" onclick="show('home')">Back</button></div><div class="panel"><h3>Initial Amount</h3><div class="two"><label>Date<input id="cashDate" type="date"></label><label>Initial Amount ₹<input id="initialAmount" type="number" min="0"></label><label>Notes<input id="cashNotes" placeholder="Optional"></label></div><button id="cashSaveBtn" class="green" onclick="saveCash()">Save Initial Amount</button><input id="cashEditId" type="hidden"></div><div class="panel"><div class="panel-head"><h3>Expenses List</h3><button class="green" onclick="addExpenseRow()">＋ Add Expense</button></div><div id="expenseEditor"></div><button class="save-list" onclick="saveExpenses()">✓ Save Expenses</button></div><div class="panel"><h3>Saved Expenses</h3><div id="expenseList"></div></div></section>
@@ -87,21 +77,56 @@ main{max-width:1050px;margin:auto;padding:20px 15px 90px}.page-title{display:fle
 <datalist id="productSuggestions"></datalist>
 <script>
 const KEY="VYAPARA_TRACK_FINAL";
-let db=JSON.parse(localStorage.getItem(KEY)||'{"products":[],"sales":[],"pending":[],"expenses":[],"cash":[],"drafts":{},"account":{"username":"admin","password":"1234"}}');db.products=(db.products||[]).map(p=>({...p,qty:Number(p.qty)||0}));db.sales=db.sales||[];db.pending=db.pending||[];db.expenses=db.expenses||[];db.cash=db.cash||[];db.drafts=db.drafts||{};
+let db=JSON.parse(localStorage.getItem(KEY)||'{"products":[],"sales":[],"pending":[],"expenses":[],"cash":[],"drafts":{},"account":{"username":"","password":"","displayName":"","email":"","phone":""}}');db.products=(db.products||[]).map(p=>({...p,qty:Number(p.qty)||0}));db.sales=db.sales||[];db.pending=db.pending||[];db.expenses=db.expenses||[];db.cash=db.cash||[];db.drafts=db.drafts||{};
 const $=id=>document.getElementById(id), today=()=>new Date().toISOString().slice(0,10), money=n=>"₹"+(Number(n)||0).toLocaleString("en-IN",{maximumFractionDigits:2});
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-function notify(message){
-  const toast=$("toast");
-  if(!toast)return;
-  toast.textContent=message;
-  toast.classList.add("show");
-  clearTimeout(window.__vtToastTimer);
-  window.__vtToastTimer=setTimeout(()=>toast.classList.remove("show"),2200);
+function persist(){
+  localStorage.setItem(KEY,JSON.stringify(db));
+  try{fetch("/api/state",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify(db),keepalive:true}).catch(()=>{})}catch(e){}
 }
-function persist(){localStorage.setItem(KEY,JSON.stringify(db));try{fetch("/api/state",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(db),keepalive:true}).catch(()=>{})}catch(e){}}
-async function loadServerState(){try{const r=await fetch("/api/state");if(!r.ok)return;const x=await r.json();if(x&&x.account){db=x;localStorage.setItem(KEY,JSON.stringify(db))}}catch(e){}}
+async function loadServerState(){
+  try{
+    const r=await fetch("/api/state",{credentials:"same-origin"});
+    if(!r.ok)return false;
+    const x=await r.json();
+    if(x&&x.account){db=x;localStorage.setItem(KEY,JSON.stringify(db));return true}
+  }catch(e){}
+  return false;
+}
 let auth="login",calDate=new Date(),editingProduct=null;
-async function start(){await loadServerState();$("auth").classList.add("hidden");$("app").classList.remove("hidden");["liveDate","cashDate","ds","de","hs","he"].forEach(id=>$(id).value=today());refresh();show("home");if("serviceWorker" in navigator)navigator.serviceWorker.register("/service-worker.js").catch(()=>{})}
+function authMode(m){auth=m;$("loginTab").classList.toggle("active",m==="login");$("signupTab").classList.toggle("active",m==="signup");$("authBtn").textContent=m==="login"?"Login":"Create Account"}
+async function authSubmit(){
+  const u=$("authUser").value.trim(), p=$("authPass").value;
+  if(!u||!p){return notify("Enter username and password.")}
+  if(auth==="signup"){
+    const p2=$("authPass2").value;
+    if(!p2)return notify("Retype your password.");
+    if(p!==p2)return notify("Passwords do not match.");
+    try{
+      const r=await fetch("/api/signup",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({username:u,password:p,displayName:u,email:"",phone:""})});
+      const x=await r.json();
+      if(!r.ok)return notify(x.error||"Could not create account.");
+      db=x.state||db;localStorage.setItem(KEY,JSON.stringify(db));sessionStorage.vt="1";
+      await start();
+    }catch(e){notify("Unable to connect to server.")}
+    return;
+  }
+  try{
+    const r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({username:u,password:p})});
+    const x=await r.json();
+    if(!r.ok)return notify(x.error||"Invalid username or password.");
+    db=x.state||db;localStorage.setItem(KEY,JSON.stringify(db));sessionStorage.vt="1";
+    await start();
+  }catch(e){notify("Unable to connect to server.")}
+}
+async function start(){
+  const ok=await loadServerState();
+  if(!ok){sessionStorage.removeItem("vt");return}
+  $("auth").classList.add("hidden");$("app").classList.remove("hidden");
+  ["liveDate","cashDate","ds","de","hs","he"].forEach(id=>$(id).value=today());
+  refresh();show("home");renderUserProfile();applyLanguage();
+  if("serviceWorker" in navigator)navigator.serviceWorker.register("/service-worker.js").catch(()=>{})
+}
 function show(id){if(document.querySelector("#live")&&!$("live").classList.contains("hidden")&&id!=="live")saveLiveDraft();document.querySelectorAll(".screen").forEach(x=>x.classList.add("hidden"));$(id).classList.remove("hidden");if(id==="products")renderProducts();if(id==="live")renderLive();if(id==="expenses")renderExpenses();if(id==="pending")renderPending();if(id==="dashboard")renderDashboard();if(id==="todayDashboard")renderTodayDashboard($("liveDate").value);if(id==="history")renderHistory();if(id==="historyDetail")renderHistoryDetail(currentHistoryDate);if(id==="summary")renderSummary();if(id==="calendar")show("summary")}
 function toggleProductForm(){$("productForm").classList.toggle("hidden");if(!$("productForm").classList.contains("hidden"))$("productName").focus()}
 function saveProduct(){try{const n=$("productName").value.trim(),q=Number($("productQty").value),c=Number($("productCost").value),s=Number($("productSP").value);if(!n)return notify("Product Name enter cheyyandi.");if(!Number.isFinite(q)||q<0)return notify("Quantity enter cheyyandi.");if(!Number.isFinite(c)||c<0)return notify("Original Cost enter cheyyandi.");if(!Number.isFinite(s)||s<0)return notify("Selling Price enter cheyyandi.");if(editingProduct!==null){const p=db.products.find(x=>String(x.id)===String(editingProduct));if(!p)return notify("Product not found.");if(db.products.some(x=>String(x.id)!==String(editingProduct)&&x.name.toLowerCase()===n.toLowerCase()))return notify("Same product already exists.");p.name=n;p.qty=q;p.cost=c;p.sp=s;editingProduct=null}else{if(db.products.some(x=>x.name.toLowerCase()===n.toLowerCase()))return notify("Same product already exists.");db.products.push({id:Date.now()+Math.random(),name:n,qty:q,cost:c,sp:s})}persist();$("productName").value="";$("productQty").value="";$("productCost").value="";$("productSP").value="";$("productForm").classList.add("hidden");renderProducts();datalist();notify("✓ Product saved successfully.")}catch(e){console.error(e);notify("Product save error: "+e.message)}}
@@ -179,7 +204,7 @@ function moneyCalc(){
  $("moneyresult").innerHTML=`<b>Net Cash Available: ${money(netCash)}</b><br><span class="mini">Initial Cash ${money(initial)} + Total Money ${money(totalMoney)} − Pending ${money(pendingToday)} + Old Baki Received ${money(clearedToday)} − Expenses ${money(expenses)} = Cash ${money(collection)} + Old Baki</span>`
 }
 function clearBaki(id){let x=db.pending.find(p=>String(p.id)===String(id));if(!x||x.status==="cleared")return;if(confirm(`Mark ${x.name} baki ${money(x.amount)} as Cleared?`)){x.status="cleared";x.clearedDate=today();x.clearedAmount=Number(x.amount)||0;persist();renderPending();renderLive();refresh();}}
-function saveSales(){notify("Today's progress is saved from the Sales Dashboard → Save Today's Progress.")}
+function saveSales(){let d=$("liveDate").value;saveTodaysProgress(d)}
 
 function collectLiveDraft(){
  let date=$("liveDate").value, place=$("livePlace").value.trim();
@@ -206,7 +231,7 @@ function saveCash(){
 }
 function editCash(id){let x=db.cash.find(c=>String(c.id)===String(id));if(!x)return;$("cashDate").value=x.date;$("initialAmount").value=x.total;$("cashNotes").value=x.notes||"";$("cashEditId").value=x.id;$("cashSaveBtn").textContent="Update Initial Amount";show("expenses");window.scrollTo({top:0,behavior:"smooth"})}
 function deleteCash(id){if(!confirm("Delete this initial amount record?"))return;db.cash=db.cash.filter(x=>String(x.id)!==String(id));persist();renderExpenses();refresh()}
-function addExpenseRow(x={}){let d=document.createElement("div");d.className="expense-row";d.innerHTML=`<label class="mini">Date<input class="edate" type="date" value="${x.date||$("cashDate").value||today()}"></label><label class="mini">Expense Type<input class="ecat" list="cats" placeholder="Petrol / Snacks / Lunch / Tea / Others" value="${esc(x.cat||"")}"></label><label class="mini">Amount ₹<input class="eamt" type="number" min="0" placeholder="Enter amount" value="${x.amount??""}"></label><label class="mini">Notes<input class="enote" placeholder="Optional" value="${esc(x.notes||"")}"></label><button class="del" onclick="this.parentElement.remove()">🗑 Remove</button>`;$("expenseEditor").appendChild(d)}
+function addExpenseRow(x={}){let d=document.createElement("div");d.className="expense-row";d.innerHTML=`<div class="expense-field"><span>Date</span><input class="edate" type="date" value="${x.date||$("cashDate").value||today()}"></div><div class="expense-field"><span>Expense Type</span><input class="ecat" list="cats" placeholder="Petrol / Snacks / Lunch / Tea / Air-Tyre / Others" value="${esc(x.cat||"")}"></div><div class="expense-field"><span>Amount ₹</span><input class="eamt" type="number" min="0" placeholder="Enter amount" value="${x.amount??""}"></div><div class="expense-field"><span>Notes</span><input class="enote" placeholder="Optional notes" value="${esc(x.notes||"")}"></div><button class="del expense-delete" onclick="this.parentElement.remove()">🗑 Delete</button>`;$("expenseEditor").appendChild(d)}
 function saveExpenses(){let a=[];for(const r of [...document.querySelectorAll(".expense-row")]){let d=r.querySelector(".edate").value,c=r.querySelector(".ecat").value.trim(),n=r.querySelector(".enote").value.trim(),v=+r.querySelector(".eamt").value;if(!c&&!v)continue;if(!d||!c||v<=0)return notify("Date, category and amount required.");a.push({id:Date.now()+Math.random(),date:d,cat:c,notes:n,amount:v})}if(!a.length)return notify("Add expense first.");db.expenses.push(...a);persist();$("expenseEditor").innerHTML="";addExpenseRow();renderExpenses();refresh()}
 function renderExpenses(){
  if(!$("expenseEditor").children.length)addExpenseRow();
@@ -220,286 +245,204 @@ function bars(o,raw=false){let max=Math.max(1,...Object.values(o));return Object
 function setDashRange(type){const now=new Date(),p=n=>String(n).padStart(2,"0");let s=new Date(now),e=new Date(now);if(type==="week"){let day=now.getDay();s.setDate(now.getDate()-(day===0?6:day-1))}else if(type==="month"){s=new Date(now.getFullYear(),now.getMonth(),1)}$("ds").value=`${s.getFullYear()}-${p(s.getMonth()+1)}-${p(s.getDate())}`;$("de").value=`${e.getFullYear()}-${p(e.getMonth()+1)}-${p(e.getDate())}`;renderDashboard()}
 function donutGradient(vals,cols){let total=Math.max(1,vals.reduce((a,b)=>a+b,0)),cur=0,a=[];vals.forEach((v,i)=>{a.push(`${cols[i]} ${cur/total*360}deg ${(cur+v)/total*360}deg`);cur+=v});return`conic-gradient(${a.join(",")})`}
 function dashboardBars(obj,fmt,fills=["fill1","fill2","fill3","fill4","fill5","fill6"]){let a=Object.entries(obj).sort((x,y)=>y[1]-x[1]);if(!a.length)return"<p class='mini'>No data available.</p>";let mx=Math.max(1,...a.map(x=>x[1]));return a.map(([k,v],i)=>`<div class="baritem"><div class="barline"><span>${esc(k)}</span><b>${fmt(v)}</b></div><div class="bartrack"><div class="barfill ${fills[i%fills.length]}" style="width:${Math.max(2,v/mx*100)}%"></div></div></div>`).join("")}
-function monthlySalesLine(items){
-  let m={};
-  items.forEach(i=>{
-    let key=(i.date||"").slice(0,7);
-    if(key)m[key]=(m[key]||0)+Number(i.amount||0);
-  });
-  let e=Object.entries(m).sort((a,b)=>a[0].localeCompare(b[0]));
-  if(!e.length)return "<p class='mini'>No monthly sales data.</p>";
-  let max=Math.max(1,...e.map(x=>x[1])),w=560,h=190,pad=28;
-  let pts=e.map((x,i)=>{
-    let X=pad+(e.length===1?(w-pad*2)/2:i*(w-pad*2)/(e.length-1));
-    let Y=h-pad-(x[1]/max)*(h-pad*2);
-    return {x:X,y:Y,label:x[0],value:x[1]};
-  });
-  let path=pts.map((p,i)=>(i?"L":"M")+p.x+" "+p.y).join(" ");
-  return `<div class="line-chart"><svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
-    <line class="line-grid" x1="${pad}" y1="${h-pad}" x2="${w-pad}" y2="${h-pad}"/>
-    <line class="line-grid" x1="${pad}" y1="${pad}" x2="${pad}" y2="${h-pad}"/>
-    <path class="line-path" d="${path}"/>
-    ${pts.map(p=>`<circle class="line-point" cx="${p.x}" cy="${p.y}" r="4" onclick="notify('${p.label}: ${money(p.value)} sales')"><title>${p.label}: ${money(p.value)} sales</title></circle>`).join("")}
-    ${pts.map(p=>`<text class="line-label" x="${p.x}" y="${h-7}" text-anchor="middle">${p.label}</text>`).join("")}
-  </svg></div>`;
+function dailySeries(s,e,field){
+ let out=[],cur=new Date(s+"T00:00:00"),last=new Date(e+"T00:00:00");
+ while(cur<=last){let d=cur.getFullYear()+"-"+String(cur.getMonth()+1).padStart(2,"0")+"-"+String(cur.getDate()).padStart(2,"0"),x=data(d,d);out.push({date:d,value:field==="sales"?x.salesA:x.profit});cur.setDate(cur.getDate()+1)}
+ return out;
 }
-function profitSalesLine(items){
-  let d={};
-  items.forEach(i=>{
-    let key=i.date||"";
-    if(key)d[key]=(d[key]||0)+Number(i.profit||0);
-  });
-  let e=Object.entries(d).sort((a,b)=>a[0].localeCompare(b[0]));
-  if(!e.length)return "<p class='mini'>No profit data.</p>";
-  let max=Math.max(1,...e.map(x=>x[1])),w=560,h=190,pad=28;
-  let pts=e.map((x,i)=>{
-    let X=pad+(e.length===1?(w-pad*2)/2:i*(w-pad*2)/(e.length-1));
-    let Y=h-pad-(x[1]/max)*(h-pad*2);
-    return {x:X,y:Y,label:x[0].slice(5),value:x[1],full:x[0]};
-  });
-  let path=pts.map((p,i)=>(i?"L":"M")+p.x+" "+p.y).join(" ");
-  return `<div class="line-chart"><svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
-    <line class="line-grid" x1="${pad}" y1="${h-pad}" x2="${w-pad}" y2="${h-pad}"/>
-    <line class="line-grid" x1="${pad}" y1="${pad}" x2="${pad}" y2="${h-pad}"/>
-    <path class="line-path" d="${path}" style="stroke:#8a61d1"/>
-    ${pts.map(p=>`<circle class="line-point" cx="${p.x}" cy="${p.y}" r="4" style="stroke:#8a61d1" onclick="notify('${p.full}: ${money(p.value)} profit')"><title>${p.full}: ${money(p.value)} profit</title></circle>`).join("")}
-    ${pts.map(p=>`<text class="line-label" x="${p.x}" y="${h-7}" text-anchor="middle">${p.label}</text>`).join("")}
-  </svg></div>`;
+function lineChart(series,mode="money"){
+ if(!series.length)return '<div class="chart-empty">No data available.</div>';
+ let w=700,h=260,p=42,max=Math.max(1,...series.map(x=>Number(x.value)||0)),min=Math.min(0,...series.map(x=>Number(x.value)||0)),range=Math.max(1,max-min),step=series.length===1?0:(w-p*2)/(series.length-1);
+ let pts=series.map((x,i)=>{let px=series.length===1?w/2:p+i*step,py=h-p-((Number(x.value)-min)/range)*(h-p*2);return {...x,px,py}});
+ let path=pts.map((x,i)=>(i?'L':'M')+x.px.toFixed(1)+','+x.py.toFixed(1)).join('');
+ let labels=pts.map((x,i)=>{if(series.length>14&&i%Math.ceil(series.length/10)!==0&&i!==series.length-1)return '';return `<text x="${x.px}" y="${h-10}" text-anchor="middle" class="line-label">${x.date.slice(5)}</text>`}).join('');
+ let dots=pts.map(x=>`<g class="line-point" onclick="openDate('${x.date}')"><circle cx="${x.px}" cy="${x.py}" r="5"></circle><title>${x.date} — ${mode==="money"?money(x.value):x.value}</title></g>`).join('');
+ return `<div class="line-chart-wrap"><svg viewBox="0 0 ${w} ${h}" class="line-chart" role="img" aria-label="Sales trend"><line x1="${p}" y1="${h-p}" x2="${w-p}" y2="${h-p}" class="line-axis"></line><line x1="${p}" y1="${p}" x2="${p}" y2="${h-p}" class="line-axis"></line><path d="${path}" class="trend-line"></path>${dots}${labels}</svg><p class="chart-hint">Click a date to open that day's sales. A day with no saved sales will show no sales.</p></div>`;
 }
-function renderDashboard(){
- let s=$("ds").value,e=$("de").value;
- if(!s||!e)return;
- if(s>e)return notify("Start Date must be before End Date.");
- let d=data(s,e),qty={},sales={},profit={},place={};
- d.items.forEach(i=>{
-   qty[i.name]=(qty[i.name]||0)+i.qty;
-   sales[i.name]=(sales[i.name]||0)+i.amount;
-   profit[i.name]=(profit[i.name]||0)+Number(i.profit||0);
-   place[i.place||"Unknown Place"]=(place[i.place||"Unknown Place"]||0)+i.amount;
- });
- let productSales=Object.entries(sales).sort((a,b)=>b[1]-a[1]);
- let productProfit=Object.entries(profit).sort((a,b)=>b[1]-a[1]);
- let productQty=Object.entries(qty).sort((a,b)=>b[1]-a[1]);
- let placeEntries=Object.entries(place).sort((a,b)=>b[1]-a[1]);
- let placeGrad=donutGradient(placeEntries.length?placeEntries.map(x=>x[1]):[1],["#16a89a","#278fe0","#8a61d1","#f0a52a","#e8666e","#168653"]);
- let coll=d.collection,pend=d.pend;
- $("dashboardContent").innerHTML=`
- <div class="dashboard-kpis">
- <div class="dkpi k-green"><div class="klabel">🟢 Total Sales</div><div class="kvalue">${money(d.salesA)}</div></div>
- <div class="dkpi k-blue"><div class="klabel">🔵 Total Collection</div><div class="kvalue">${money(coll)}</div></div>
- <div class="dkpi k-red"><div class="klabel">🔴 Pending / Baki</div><div class="kvalue">${money(pend)}</div></div>
- <div class="dkpi k-purple"><div class="klabel">🟣 Gross Profit</div><div class="kvalue">${money(d.profit)}</div></div>
- <div class="dkpi k-orange"><div class="klabel">🟠 Expenses</div><div class="kvalue">${money(d.exp)}</div></div>
- <div class="dkpi k-teal"><div class="klabel">🟢 Net Profit</div><div class="kvalue">${money(d.net)}</div></div>
- <div class="dkpi k-indigo"><div class="klabel">🔷 Quantity Sold</div><div class="kvalue">${d.q}</div></div>
- <div class="dkpi k-yellow"><div class="klabel">💰 Available Cash</div><div class="kvalue">${money(d.available)}</div></div>
- </div>
- <div class="dashboard-grid">
- <div class="dcard"><h3>📊 Sales by Product</h3><div class="desc">Sorted from highest sales to lowest.</div>${dashboardBars(sales,money)}</div>
- <div class="dcard"><h3>💰 Profit by Product</h3><div class="desc">Column chart sorted from highest profit to lowest.</div><div class="mini-chart columns small">${productProfit.map(([k,v])=>`<div><span style="height:${Math.max(8,v/(Math.max(1,...Object.values(profit)))*120)}px"></span><b>${esc(k)}</b><em>${money(v)}</em></div>`).join("")||"<p class='mini'>No data.</p>"}</div></div>
- <div class="dcard"><h3>📅 Sales by Month</h3><div class="desc">Click a point to see that month's sales.</div>${monthlySalesLine(d.items)}</div>
- <div class="dcard"><h3>📍 Sales by Place</h3><div class="desc">Place-wise sales contribution.</div><div class="donutwrap"><div class="donut" style="background:${placeGrad}"></div><div class="legend">${placeEntries.map((x,i)=>`<div><span class="dot" style="background:${["#16a89a","#278fe0","#8a61d1","#f0a52a","#e8666e","#168653"][i%6]}"></span>${esc(x[0])} <b>${money(x[1])}</b></div>`).join("")||"<div>No place data.</div>"}</div></div></div>
- <div class="dcard"><h3>📈 Profit by Sales</h3><div class="desc">Profit trend across saved sales dates.</div>${profitSalesLine(d.items)}</div>
- <div class="dcard"><h3>📦 Quantity</h3><div class="desc">Quantity sold by product, highest to lowest.</div>${dashboardBars(qty,v=>v+" qty",["fill2","fill6","fill3","fill4","fill5","fill1"])}</div>
- </div>
- <div class="dcard" style="margin-top:14px"><h3>🧾 Performance Summary</h3><div class="desc">Summary for the selected date range.</div><div class="profile-summary">
- <div><span>Total Sales Amount</span><b>${money(d.salesA)}</b></div><div><span>Total Quantities</span><b>${d.q}</b></div><div><span>Gross Profit</span><b>${money(d.profit)}</b></div><div><span>Expenses</span><b>${money(d.exp)}</b></div><div><span>Total Places Covered</span><b>${new Set(d.items.map(i=>i.place).filter(Boolean)).size}</b></div><div><span>Net Profit</span><b>${money(d.net)}</b></div>
- </div></div>`;
+function renderDashboard(){let s=$("ds").value,e=$("de").value;if(!s||!e)return;if(s>e){notify("Start Date must be before End Date.");return}let d=data(s,e),qty={},sales={},profit={},place={};d.items.forEach(i=>{qty[i.name]=(qty[i.name]||0)+i.qty;sales[i.name]=(sales[i.name]||0)+i.amount;profit[i.name]=(profit[i.name]||0)+Number(i.profit||0);place[i.place||"Unknown Place"]=(place[i.place||"Unknown Place"]||0)+i.amount});let salesSeries=dailySeries(s,e,"sales"),profitSeries=dailySeries(s,e,"profit"),pc=Object.entries(place).sort((a,b)=>b[1]-a[1]),pieVals=pc.length?pc.map(x=>x[1]):[1],pieColors=["#168653","#278fe0","#8a61d1","#f0a52a","#e8666e","#16a89a"];
+let pie=donutGradient(pieVals,pieColors),tp=Object.entries(profit).sort((a,b)=>b[1]-a[1]);
+$("dashboardContent").innerHTML=`
+<div class="dashboard-kpis"><div class="dkpi k-green"><div class="klabel">🟢 Total Sales</div><div class="kvalue">${money(d.salesA)}</div></div><div class="dkpi k-blue"><div class="klabel">🔵 Total Collection</div><div class="kvalue">${money(d.collection)}</div></div><div class="dkpi k-red"><div class="klabel">🔴 Pending / Baki</div><div class="kvalue">${money(d.pend)}</div></div><div class="dkpi k-purple"><div class="klabel">🟣 Gross Profit</div><div class="kvalue">${money(d.profit)}</div></div><div class="dkpi k-orange"><div class="klabel">🟠 Expenses</div><div class="kvalue">${money(d.exp)}</div></div><div class="dkpi k-teal"><div class="klabel">🟢 Net Profit</div><div class="kvalue">${money(d.net)}</div></div><div class="dkpi k-indigo"><div class="klabel">🔷 Quantity Sold</div><div class="kvalue">${d.q}</div></div><div class="dkpi k-yellow"><div class="klabel">💰 Available Cash</div><div class="kvalue">${money(d.available)}</div></div></div>
+<div class="dashboard-grid">
+<div class="dcard"><h3>🛍️ Sales by Product</h3><div class="desc">Bar chart — highest sales to lowest.</div>${dashboardBars(sales,money)}</div>
+<div class="dcard"><h3>💰 Profit by Product</h3><div class="desc">Column chart — product-wise profit.</div><div class="mini-chart columns small">${tp.map(([k,v])=>`<div><span style="height:${Math.max(8,v/(Math.max(1,...Object.values(profit)))*120)}px"></span><b>${esc(k)}</b><em>${money(v)}</em></div>`).join("")||"<p class='mini'>No data.</p>"}</div></div>
+<div class="dcard"><h3>📈 Sales by Month</h3><div class="desc">Line chart — shows whether sales are increasing or decreasing.</div>${lineChart(salesSeries,"money")}</div>
+<div class="dcard"><h3>📍 Sales by Place</h3><div class="desc">Pie chart — sales contribution by place.</div><div class="donutwrap"><div class="donut" style="background:${pie}"></div><div class="legend">${pc.map(([k,v],i)=>`<div><span class="dot" style="background:${pieColors[i%pieColors.length]}"></span>${esc(k)} <b>${money(v)}</b></div>`).join("")||"<div>No place data.</div>"}</div></div></div>
+<div class="dcard"><h3>📊 Profit by Sales</h3><div class="desc">Line chart — daily profit trend.</div>${lineChart(profitSeries,"money")}</div>
+<div class="dcard"><h3>📦 Quantity Sold</h3><div class="desc">Bar chart — quantity sold by product.</div>${dashboardBars(qty,v=>v,true)}</div>
+</div>
+<div class="dcard" style="margin-top:14px"><h3>🧾 Performance Summary</h3><div class="desc">Summary for the selected date range.</div><div class="profile-summary"><div><span>Total Sales Amount</span><b>${money(d.salesA)}</b></div><div><span>Total Quantities</span><b>${d.q}</b></div><div><span>Gross Profit</span><b>${money(d.profit)}</b></div><div><span>Expenses</span><b>${money(d.exp)}</b></div><div><span>Total Places Covered</span><b>${new Set(d.items.map(i=>i.place).filter(Boolean)).size}</b></div><div><span>Net Profit</span><b>${money(d.net)}</b></div></div></div>`;
+ applyLanguage();
 }
 
 function todayDash(){let d=$("liveDate").value;saveLiveDraft();document.querySelectorAll(".screen").forEach(x=>x.classList.add("hidden"));$("todayDashboard").classList.remove("hidden");renderTodayDashboard(d);window.scrollTo({top:0,behavior:"smooth"})}
 function todayBar(o,mode="qty"){let entries=Object.entries(o).filter(x=>Number(x[1])>0).sort((a,b)=>b[1]-a[1]);if(!entries.length)return`<div class="today-empty">No data for today.</div>`;let max=Math.max(1,...entries.map(x=>Number(x[1]))),fills=["#168653","#278fe0","#8a61d1","#f0a52a","#e8666e","#16a89a"];return entries.map(([k,v],i)=>`<div class="today-hbar"><div class="today-hbar-head"><span>${esc(k)}</span><b>${mode==="qty"?v+" qty":money(v)}</b></div><div class="today-hbar-track"><div class="today-hbar-fill" style="width:${Math.max(3,Number(v)/max*100)}%;background:${fills[i%fills.length]}"></div></div></div>`).join("")}
 function todayColumns(o){let entries=Object.entries(o).filter(x=>Number(x[1])>0).sort((a,b)=>b[1]-a[1]);if(!entries.length)return`<div class="today-empty">No profit data for today.</div>`;let max=Math.max(1,...entries.map(x=>Number(x[1]))),fills=["#8a61d1","#168653","#278fe0","#f0a52a","#e8666e","#16a89a"];return`<div class="today-columns">${entries.map(([k,v],i)=>`<div class="today-col"><div class="today-col-value">${money(v)}</div><div class="today-col-fill" style="height:${Math.max(8,Number(v)/max*165)}px;background:${fills[i%fills.length]}"></div><div class="today-col-label" title="${esc(k)}">${esc(k)}</div></div>`).join("")}</div>`}
 function todayDonut(items){let entries=Object.entries(items).filter(x=>Number(x[1])>0).sort((a,b)=>b[1]-a[1]);if(!entries.length)return`<div class="today-empty">No data for today.</div>`;let total=entries.reduce((a,x)=>a+Number(x[1]),0),colors=["#168653","#278fe0","#8a61d1","#f0a52a","#e8666e","#16a89a"],cur=0,segs=[];entries.forEach((x,i)=>{let a=cur/total*360,b=(cur+Number(x[1]))/total*360;segs.push(`${colors[i%colors.length]} ${a}deg ${b}deg`);cur+=Number(x[1])});return`<div class="today-donut-wrap"><div class="today-donut" style="background:conic-gradient(${segs.join(",")})"></div><div class="today-legend">${entries.map((x,i)=>`<div><span class="today-dot" style="background:${colors[i%colors.length]}"></span>${esc(x[0])} <b>${money(x[1])}</b></div>`).join("")}</div></div>`}
-function renderTodayDashboard(date){let d=liveData(date),pq={},pp={},pl={},ex={};d.items.forEach(i=>{pq[i.name]=(pq[i.name]||0)+i.qty;pp[i.name]=(pp[i.name]||0)+Number(i.profit||0);pl[i.place||"Unknown Place"]=(pl[i.place||"Unknown Place"]||0)+Number(i.amount||i.qty*i.sp)});d.expenses.forEach(x=>ex[x.cat]=(ex[x.cat]||0)+x.amount);let pendingCustomers=new Set((d.pending||[]).filter(x=>(x.status||"open")!=="cleared").map(x=>(x.name||"").trim().toLowerCase()).filter(Boolean)).size;let collectionPending={Collection:d.collection,Pending:d.pend};$("todayDashboardContent").innerHTML=`<div class="today-head"><div><h2>Today's Sales Dashboard</h2><p>Live sales performance for today</p></div><button class="back" onclick="show('live');renderLive()">Back</button></div><div class="today-kpis"><div class="today-kpi k-green"><div class="klabel">💰 Sales Amount</div><div class="kvalue">${money(d.salesA)}</div></div><div class="today-kpi k-blue"><div class="klabel">📦 Quantity Sold</div><div class="kvalue">${d.q}</div></div><div class="today-kpi k-purple"><div class="klabel">📈 Gross Profit</div><div class="kvalue">${money(d.profit)}</div></div><div class="today-kpi k-orange"><div class="klabel">💸 Today's Expenses</div><div class="kvalue">${money(d.exp)}</div></div><div class="today-kpi k-teal"><div class="klabel">💵 Collection Today</div><div class="kvalue">${money(d.collection)}</div></div><div class="today-kpi k-red"><div class="klabel">🔴 Pending Amount</div><div class="kvalue">${money(d.pend)}</div></div><div class="today-kpi k-indigo"><div class="klabel">✨ Net Profit</div><div class="kvalue">${money(d.net)}</div></div><div class="today-kpi k-yellow"><div class="klabel">💳 Cash Available</div><div class="kvalue">${money(d.available)}</div></div></div><div class="today-chart-grid"><div class="today-card"><h3>📦 Products Sold Today</h3><div class="desc">Highest quantity to lowest.</div>${todayBar(pq,"qty")}</div><div class="today-card"><h3>🏆 Highest Profit Products</h3><div class="desc">Highest profit to lowest.</div>${todayColumns(pp)}</div></div><div class="today-chart-grid"><div class="today-card"><h3>👥 Collection & Pending</h3><div class="desc">Today's collection versus outstanding customer credit.</div>${todayDonut(collectionPending)}<div class="mini" style="text-align:center">${pendingCustomers} pending customer${pendingCustomers===1?"":"s"}</div></div><div class="today-card"><h3>💸 Today's Expense Distribution</h3><div class="desc">Expense categories by share of today's spending.</div>${todayDonut(ex)}</div></div><div class="today-chart-grid"><div class="today-card"><h3>📍 Sales by Place</h3><div class="desc">Today's sales contribution by travelling place.</div>${todayColumns(pl)}</div></div><div class="today-card today-save"><h3>💾 Save Today's Progress</h3><p class="mini">Review today's live entries, then save them.</p><button onclick="saveTodaysProgress('${date}')">✓ Save Today's Progress</button><p id="dashboardSaveMsg" class="message"></p></div>`}
-function saveTodaysProgress(date){let items=draftItems(),place=$("livePlace").value.trim();if(!date||!place)return notify("Date and Place required.");if(!items.length)return notify("Add at least one completed product sale before saving.");db.sales.push({id:Date.now()+Math.random(),date,place,items});delete db.drafts[date];persist();$("dashboardSaveMsg").textContent="✓ Today's sales progress saved successfully.";refresh();renderTodayDashboard(date)}
+function renderTodayDashboard(date){let d=liveData(date),pq={},pp={},pl={},ex={};d.items.forEach(i=>{pq[i.name]=(pq[i.name]||0)+i.qty;pp[i.name]=(pp[i.name]||0)+Number(i.profit||0);pl[i.place||"Unknown Place"]=(pl[i.place||"Unknown Place"]||0)+Number(i.amount||i.qty*i.sp)});d.expenses.forEach(x=>ex[x.cat]=(ex[x.cat]||0)+x.amount);let pendingCustomers=new Set((d.pending||[]).filter(x=>(x.status||"open")!=="cleared").map(x=>(x.name||"").trim().toLowerCase()).filter(Boolean)).size;let collectionPending={Collection:d.collection,Pending:d.pend};$("todayDashboardContent").innerHTML=`<div class="today-head"><div><h2>Today's Sales Dashboard</h2><p>Live sales performance for today</p></div><button class="back" onclick="show('live');renderLive()">Back</button></div><div class="today-kpis"><div class="today-kpi k-green"><div class="klabel">💰 Sales Amount</div><div class="kvalue">${money(d.salesA)}</div></div><div class="today-kpi k-blue"><div class="klabel">📦 Quantity Sold</div><div class="kvalue">${d.q}</div></div><div class="today-kpi k-purple"><div class="klabel">📈 Gross Profit</div><div class="kvalue">${money(d.profit)}</div></div><div class="today-kpi k-orange"><div class="klabel">💸 Today's Expenses</div><div class="kvalue">${money(d.exp)}</div></div><div class="today-kpi k-teal"><div class="klabel">💵 Collection Today</div><div class="kvalue">${money(d.collection)}</div></div><div class="today-kpi k-red"><div class="klabel">🔴 Pending Amount</div><div class="kvalue">${money(d.pend)}</div></div><div class="today-kpi k-indigo"><div class="klabel">✨ Net Profit</div><div class="kvalue">${money(d.net)}</div></div><div class="today-kpi k-yellow"><div class="klabel">💳 Cash Available</div><div class="kvalue">${money(d.available)}</div></div></div><div class="today-chart-grid"><div class="today-card"><h3>📦 Products Sold Today</h3><div class="desc">Highest quantity to lowest.</div>${todayBar(pq,"qty")}</div><div class="today-card"><h3>🏆 Highest Profit Products</h3><div class="desc">Highest profit to lowest.</div>${todayColumns(pp)}</div></div><div class="today-chart-grid"><div class="today-card"><h3>👥 Collection & Pending</h3><div class="desc">Today's collection versus outstanding customer credit.</div>${todayDonut(collectionPending)}<div class="mini" style="text-align:center">${pendingCustomers} pending customer${pendingCustomers===1?"":"s"}</div></div><div class="today-card"><h3>💸 Today's Expense Distribution</h3><div class="desc">Expense categories by share of today's spending.</div>${todayDonut(ex)}</div></div><div class="today-chart-grid"><div class="today-card today-full-card"><h3>📍 Sales by Place</h3><div class="desc">Today's sales contribution by travelling place.</div>${todayColumns(pl)}</div></div><div class="today-card today-save"><h3>💾 Save Today's Progress</h3><p class="mini">Review today's live entries, then save them.</p><button onclick="saveTodaysProgress('${date}')">✓ Save Today's Progress</button><p id="dashboardSaveMsg" class="message"></p></div>`}
+function saveTodaysProgress(date){let items=draftItems(),place=$("livePlace").value.trim();if(!date||!place){notify("Date and Place required.");return}if(!items.length){notify("Add at least one completed product sale before saving.");return}db.sales.push({id:Date.now()+Math.random(),date,place,items});delete db.drafts[date];persist();if($("dashboardSaveMsg"))$("dashboardSaveMsg").textContent="✓ Today's sales progress saved successfully.";notify("✓ Today's progress saved successfully.");refresh();renderTodayDashboard(date)}
 
 function renderPending(){let open=db.pending.filter(x=>(x.status||"open")!=="cleared"),t=open.reduce((a,x)=>a+(Number(x.amount)||0),0),p=open.reduce((a,x)=>a+(Number(x.pendingProfit)||0),0);$("pendingSummary").innerHTML=`<div class="metricgrid"><div class="metric">Total Pending<b>${money(t)}</b></div><div class="metric">Pending Profit<b>${money(p)}</b></div><div class="metric">Customers<b>${new Set(open.map(x=>x.name.toLowerCase())).size}</b></div></div>`;$("pendingList").innerHTML=db.pending.map(x=>`<div class="row"><span><b>${esc(x.name)}</b><div class="mini">${x.date} · ${esc(x.product||"")} · Qty ${x.qty||"-"} · ${esc(x.place||"")} · Profit ${money(x.pendingProfit||0)}</div></span><span><b>${money(x.amount)}</b> ${x.status==="cleared"?'<span class="status-cleared">Cleared</span>':'<span class="status-open">Pending</span>'} ${x.status!=="cleared"?`<button class="clear-btn" onclick="clearBaki('${x.id}')">✓ Clear</button>`:""} <button class="edit" onclick="openDate('${x.date}')">✎</button><button class="del" onclick="deleteBaki('${x.id}')">🗑</button></span></div>`).join("")||"<p>No pending customers.</p>"}
 let currentHistoryDate="";function renderHistory(){let hs=$("hs")?.value||"",he=$("he")?.value||"";let ds=[...new Set([...db.sales.map(x=>x.date),...db.pending.map(x=>x.date),...db.expenses.map(x=>x.date),...db.cash.map(x=>x.date)])].sort().reverse().filter(d=>(!hs||d>=hs)&&(!he||d<=he));$("historyList").innerHTML=ds.map(d=>{let x=data(d,d);return `<div class="row"><button class="chip" onclick="openHistoryDate('${d}')">${d}</button><span>Sales ${money(x.salesA)} · Pending ${money(x.pend)} · Profit ${money(x.profit)} · Expenses ${money(x.exp)}</span></div>`}).join("")||"<p>No history for this date range.</p>"}
-function openDate(d){show("live");$("liveDate").value=d;let s=db.sales.find(x=>x.date===d),p=db.pending.find(x=>x.date===d);$("livePlace").value=s?.place||p?.place||"";renderLive()}
+function openDate(d){show("live");$("liveDate").value=d;let s=db.sales.find(x=>x.date===d),p=db.pending.find(x=>x.date===d);$("livePlace").value=s?.place||p?.place||"";renderLive();if(!s&&!p)notify("No sales recorded for "+d+".")}
 function openHistoryDate(d){currentHistoryDate=d;show("historyDetail");renderHistoryDetail(d)}
 function renderHistoryDetail(d){if(!d)return;let x=data(d,d);$("historyDetailDate").value=d;$("historyDetailPlace").value=[...new Set([...x.sales.map(s=>s.place),...x.pending.map(p=>p.place)].filter(Boolean))].join(", ");$("historyDetailText").textContent=`Saved sales for ${d}`;let rows=x.items.map((i,n)=>`<tr><td>${n+1}</td><td>${esc(i.name)}</td><td>${i.qty}</td><td>${money(i.sp)}</td><td>${money(i.profit)}</td></tr>`).join("");$("historySaleRows").innerHTML=rows||`<tr><td colspan="5">No sales saved.</td></tr>`;$("historyBakiRows").innerHTML=x.pending.map((p,n)=>`<tr><td>${n+1}</td><td>${esc(p.name)}</td><td>${esc(p.product||"")}</td><td>${p.qty||"-"}</td><td>${money(p.amount)}</td><td>${money(p.pendingProfit||0)}</td><td>${esc(p.place||"")}</td></tr>`).join("")||`<tr><td colspan="7">No pending entries.</td></tr>`;$("historyQty").textContent=x.q;$("historyAmount").textContent=money(x.salesA);$("historyProfit").textContent=money(x.profit);$("historyPending").textContent=money(x.pend)}
 function renderSummary(){renderSummaryCalendar()}
-function renderSummaryCalendar(){let y=calDate.getFullYear(),m=calDate.getMonth(),first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate(),biz=0,h=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(x=>`<div class="day"><b>${x}</b></div>`).join("");for(let i=0;i<first;i++)h+="<div></div>";for(let n=1;n<=days;n++){let d=y+"-"+String(m+1).padStart(2,"0")+"-"+String(n).padStart(2,"0"),yes=db.sales.some(x=>x.date===d)||db.pending.some(x=>x.date===d);if(yes)biz++;h+=`<div class="day ${yes?"biz":"off"}"><button onclick="openDate('${d}')">${n}</button></div>`}$("summaryCalendar").innerHTML=h;$("calTitle").textContent=calDate.toLocaleString(vtLanguage==="te"?"te-IN":"en-IN",{month:"long",year:"numeric"});$("calStats").innerHTML=`<b>Business Days: ${biz}</b> &nbsp; <b>No Business Days: ${days-biz}</b> &nbsp; <b>Total Days: ${days}</b>`}
+function renderSummaryCalendar(){let y=calDate.getFullYear(),m=calDate.getMonth(),first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate(),biz=0,h=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(x=>`<div class="day"><b>${x}</b></div>`).join("");for(let i=0;i<first;i++)h+="<div></div>";for(let n=1;n<=days;n++){let d=y+"-"+String(m+1).padStart(2,"0")+"-"+String(n).padStart(2,"0"),yes=db.sales.some(x=>x.date===d)||db.pending.some(x=>x.date===d);if(yes)biz++;h+=`<div class="day ${yes?"biz":"off"}"><button onclick="openDate('${d}')">${n}</button></div>`}$("summaryCalendar").innerHTML=h;$("calTitle").textContent=calDate.toLocaleString("en",{month:"long",year:"numeric"});$("calStats").innerHTML=`<b>Business Days: ${biz}</b> &nbsp; <b>No Business Days: ${days-biz}</b> &nbsp; <b>Total Days: ${days}</b>`}
 function moveMonth(n){calDate.setMonth(calDate.getMonth()+n);renderSummaryCalendar()}
 function refresh(){datalist();renderProducts();renderPending();renderExpenses();renderHistory();renderSummaryCalendar();let d=data(today(),today());$("homeStats").innerHTML=`<div class="metric">Today's Sales<b>${money(d.salesA)}</b></div><div class="metric">Collection<b>${money(d.collection)}</b></div><div class="metric">Pending<b>${money(d.pend)}</b></div><div class="metric">Profit<b>${money(d.profit)}</b></div>`}
-window.addEventListener("input",e=>{if(e.target.closest("#live")){if(e.target.closest("#bakiRows")) updateCalcCards(); clearTimeout(window._draftTimer);window._draftTimer=setTimeout(saveLiveDraft,150)}});window.addEventListener("change",e=>{if(e.target.closest("#live")){if(e.target.closest("#bakiRows")) updateCalcCards(); clearTimeout(window._draftTimer);window._draftTimer=setTimeout(saveLiveDraft,100)}});window.addEventListener("load", async ()=>{
-  if(typeof applySavedLanguage === "function") applySavedLanguage();
-  try{
-    const r=await fetch("/api/me",{credentials:"same-origin"});
-    const x=await r.json();
-    if(r.ok && x.ok){ await start(); }
-    else { showAuth(); }
-  }catch(e){ showAuth(); }
-})
+window.addEventListener("input",e=>{if(e.target.closest("#live")){if(e.target.closest("#bakiRows")) updateCalcCards(); clearTimeout(window._draftTimer);window._draftTimer=setTimeout(saveLiveDraft,150)}});window.addEventListener("change",e=>{if(e.target.closest("#live")){if(e.target.closest("#bakiRows")) updateCalcCards(); clearTimeout(window._draftTimer);window._draftTimer=setTimeout(saveLiveDraft,100)}});
 </script>
 <datalist id="cats"><option>Petrol</option><option>Snacks</option><option>Lunch</option><option>Tea</option><option>Air/Tyre</option><option>Others</option></datalist>
 
-
-<!-- Bilingual UI -->
-<script>
-/* Full UI language switch: Telugu mode translates the complete application UI.
-   User-entered names/product names are intentionally kept as entered. */
-const VT_TE={
-  "Vyapara Track":"వ్యాపార ట్రాక్","VYAPARA TRACK":"వ్యాపార ట్రాక్","Track Today • Grow Tomorrow":"ట్రాక్ టుడే • గ్రో టుమారో",
-  "Login":"లాగిన్","Create Account":"క్రియేట్ అకౌంట్","Forgot Password?":"ఫర్గాట్ పాస్‌వర్డ్?",
-  "Username":"యూజర్ నేమ్","Password":"పాస్‌వర్డ్","Retype Password":"రీటైప్ పాస్‌వర్డ్",
-  "Current Password":"కరెంట్ పాస్‌వర్డ్","New Username":"న్యూ యూజర్ నేమ్","New Password":"న్యూ పాస్‌వర్డ్","Confirm New Password":"కన్ఫర్మ్ న్యూ పాస్‌వర్డ్",
-  "Enter your account details":"ఎంటర్ యువర్ అకౌంట్ డీటెయిల్స్","Create your Vyapara Track account":"క్రియేట్ యువర్ వ్యాపార ట్రాక్ అకౌంట్",
-  "Your Business Companion":"యువర్ బిజినెస్ కంపానియన్","Profile":"ప్రొఫైల్","My Profile":"మై ప్రొఫైల్","Change Login":"చేంజ్ లాగిన్","Logout":"లాగ్ అవుట్",
-  "Live Sales List":"లైవ్ సేల్స్ లిస్ట్","Product Info":"ప్రొడక్ట్ ఇన్ఫో","Expenses":"ఎక్స్‌పెన్సెస్","Customer Pending":"కస్టమర్ పెండింగ్",
-  "Sales Dashboard":"సేల్స్ డ్యాష్‌బోర్డ్","History":"హిస్టరీ","Summary":"సమ్మరీ",
-  "Add today's sales":"యాడ్ టుడేస్ సేల్స్","Manage products and prices":"మేనేజ్ ప్రొడక్ట్స్ అండ్ ప్రైసెస్","Track daily expenses":"ట్రాక్ డైలీ ఎక్స్‌పెన్సెస్",
-  "View pending amounts":"వ్యూ పెండింగ్ అమౌంట్స్","View reports & analysis":"వ్యూ రిపోర్ట్స్ అండ్ అనాలిసిస్","Past records":"పాస్ట్ రికార్డ్స్","Business calendar & days":"బిజినెస్ క్యాలెండర్ అండ్ డేస్",
-  "Track every sale, build a better tomorrow!":"ట్రాక్ ఎవరీ సేల్, బిల్డ్ ఎ బెటర్ టుమారో!",
-  "Back":"బ్యాక్","Save":"సేవ్","Edit":"ఎడిట్","Delete":"డిలీట్","Add":"యాడ్","Update":"అప్‌డేట్","Cancel":"క్యాన్సెల్","Search":"సెర్చ్",
-  "Product Name":"ప్రొడక్ట్ నేమ్","Quantity":"క్వాంటిటీ","Original Cost":"ఒరిజినల్ కాస్ట్","Selling Price":"సెల్లింగ్ ప్రైస్","Profit":"ప్రాఫిట్","Save Product":"సేవ్ ప్రొడక్ట్","Add Product":"యాడ్ ప్రొడక్ట్",
-  "Search product...":"సెర్చ్ ప్రొడక్ట్...","Sales Type":"సేల్స్ టైప్","Complete Set":"కంప్లీట్ సెట్","Individual Piece":"ఇండివిడ్యువల్ పీస్","Amount":"అమౌంట్","Profit ₹":"ప్రాఫిట్ ₹",
-  "Date":"డేట్","Place":"ప్లేస్","Customer Name":"కస్టమర్ నేమ్","Status":"స్టేటస్","Action":"యాక్షన్","Pending":"పెండింగ్","Cleared":"క్లియర్డ్","Clear":"క్లియర్",
-  "Add Baki":"యాడ్ బాకీ","Save Baki":"సేవ్ బాకీ","Baki":"బాకీ","Pending Amount":"పెండింగ్ అమౌంట్",
-  "Initial Amount":"ఇనిషియల్ అమౌంట్","Notes":"నోట్స్","Save Initial Amount":"సేవ్ ఇనిషియల్ అమౌంట్","Update Initial Amount":"అప్‌డేట్ ఇనిషియల్ అమౌంట్",
-  "Expenses List":"ఎక్స్‌పెన్సెస్ లిస్ట్","Add Expense":"యాడ్ ఎక్స్‌పెన్స్","Save Expenses":"సేవ్ ఎక్స్‌పెన్సెస్","Saved Expenses":"సేవ్డ్ ఎక్స్‌పెన్సెస్",
-  "Expense Type":"ఎక్స్‌పెన్స్ టైప్","Amount ₹":"అమౌంట్ ₹","Optional":"ఆప్షనల్","Remove":"రిమూవ్","Enter amount":"ఎంటర్ అమౌంట్",
-  "Petrol":"పెట్రోల్","Snacks":"స్నాక్స్","Lunch":"లంచ్","Tea":"టీ","Air/Tyre":"ఎయిర్ / టైర్","Others":"అదర్స్",
-  "Petrol / Snacks / Lunch / Tea / Others":"పెట్రోల్ / స్నాక్స్ / లంచ్ / టీ / అదర్స్",
-  "Total Expenses":"టోటల్ ఎక్స్‌పెన్సెస్","Initial Amount Records":"ఇనిషియల్ అమౌంట్ రికార్డ్స్","No initial amount records.":"నో ఇనిషియల్ అమౌంట్ రికార్డ్స్.",
-  "No pending customers.":"నో పెండింగ్ కస్టమర్స్.","No history for this date range.":"నో హిస్టరీ ఫర్ దిస్ డేట్ రేంజ్.","No sales saved.":"నో సేల్స్ సేవ్డ్.","No pending entries.":"నో పెండింగ్ ఎంట్రీస్.","No data.":"నో డేటా.","No place data.":"నో ప్లేస్ డేటా.",
-  "Start Date":"స్టార్ట్ డేట్","End Date":"ఎండ్ డేట్","Generate Dashboard":"జెనరేట్ డ్యాష్‌బోర్డ్","Today":"టుడే","This Week":"దిస్ వీక్","This Month":"దిస్ మంత్",
-  "Total Sales":"టోటల్ సేల్స్","Total Collection":"టోటల్ కలెక్షన్","Pending / Baki":"పెండింగ్ / బాకీ","Gross Profit":"గ్రాస్ ప్రాఫిట్","Net Profit":"నెట్ ప్రాఫిట్","Quantity Sold":"క్వాంటిటీ సోల్డ్","Available Cash":"అవైలబుల్ క్యాష్",
-  "Sales by Product":"సేల్స్ బై ప్రొడక్ట్","Profit by Product":"ప్రాఫిట్ బై ప్రొడక్ట్","Sales by Month":"సేల్స్ బై మంత్","Sales by Place":"సేల్స్ బై ప్లేస్","Profit by Sales":"ప్రాఫిట్ బై సేల్స్",
-  "Sorted from highest sales to lowest.":"సార్టెడ్ ఫ్రం హయ్యెస్ట్ సేల్స్ టు లోవెస్ట్.","Column chart sorted from highest profit to lowest.":"కాలమ్ చార్ట్ సార్టెడ్ ఫ్రం హయ్యెస్ట్ ప్రాఫిట్ టు లోవెస్ట్.",
-  "Click a point to see that month's sales.":"క్లిక్ ఎ పాయింట్ టు సీ దట్ మంత్స్ సేల్స్.","Place-wise sales contribution.":"ప్లేస్-వైజ్ సేల్స్ కాంట్రిబ్యూషన్.","Profit trend across saved sales dates.":"సేవ్డ్ సేల్స్ డేట్స్ అక్రాస్ ప్రాఫిట్ ట్రెండ్.","Quantity sold by product, highest to lowest.":"క్వాంటిటీ సోల్డ్ బై ప్రొడక్ట్, హయ్యెస్ట్ టు లోవెస్ట్.",
-  "Best Selling Products":"బెస్ట్ సెల్లింగ్ ప్రొడక్ట్స్","Highest Profit Products":"హయ్యెస్ట్ ప్రాఫిట్ ప్రొడక్ట్స్","Place Performance":"ప్లేస్ పెర్ఫార్మెన్స్","Performance Summary":"పెర్ఫార్మెన్స్ సమ్మరీ",
-  "Sales Amount":"సేల్స్ అమౌంట్","Collection":"కలెక్షన్","Gross":"గ్రాస్","Net":"నెట్","Total Sales Amount":"టోటల్ సేల్స్ అమౌంట్","Total Quantities":"టోటల్ క్వాంటిటీస్","Total Places Covered":"టోటల్ ప్లేసెస్ కవర్డ్",
-  "Today's Sales Dashboard":"టుడేస్ సేల్స్ డ్యాష్‌బోర్డ్","Live sales performance for today":"లైవ్ సేల్స్ పెర్ఫార్మెన్స్ ఫర్ టుడే","Products Sold Today":"ప్రొడక్ట్స్ సోల్డ్ టుడే",
-  "Today's Expenses":"టుడేస్ ఎక్స్‌పెన్సెస్","Collection Today":"కలెక్షన్ టుడే","Pending Amount":"పెండింగ్ అమౌంట్","Cash Available":"క్యాష్ అవైలబుల్",
-  "Collection & Pending":"కలెక్షన్ & పెండింగ్","Today's Expense Distribution":"టుడేస్ ఎక్స్‌పెన్స్ డిస్ట్రిబ్యూషన్","Save Today's Progress":"సేవ్ టుడేస్ ప్రోగ్రెస్",
-  "Highest quantity to lowest.":"హయ్యెస్ట్ క్వాంటిటీ టు లోవెస్ట్.","Highest profit to lowest.":"హయ్యెస్ట్ ప్రాఫిట్ టు లోవెస్ట్.","Today's collection versus outstanding customer credit.":"టుడేస్ కలెక్షన్ వెర్సస్ అవుట్‌స్టాండింగ్ కస్టమర్ క్రెడిట్.","Expense categories by share of today's spending.":"టుడేస్ స్పెండింగ్ ఎక్స్‌పెన్స్ కేటగిరీస్ బై షేర్.","Today's sales contribution by travelling place.":"టుడేస్ సేల్స్ కాంట్రిబ్యూషన్ బై ట్రావెలింగ్ ప్లేస్.",
-  "Review today's live entries, then save them.":"రివ్యూ టుడేస్ లైవ్ ఎంట్రీస్, దెన్ సేవ్ దెమ్.","No data for today.":"నో డేటా ఫర్ టుడే.","No profit data for today.":"నో ప్రాఫిట్ డేటా ఫర్ టుడే.",
-  "History Detail":"హిస్టరీ డీటెయిల్","Saved sales for":"సేవ్డ్ సేల్స్ ఫర్","Business Days":"బిజినెస్ డేస్","No Business Days":"నో బిజినెస్ డేస్","Total Days":"టోటల్ డేస్",
-  "Sun":"సన్","Mon":"మన్","Tue":"ట్యూ","Wed":"వెడ్","Thu":"థర్స్","Fri":"ఫ్రై","Sat":"శాట్",
-  "Name":"నేమ్","Email":"ఈమెయిల్","Phone Number":"ఫోన్ నంబర్","Save Profile":"సేవ్ ప్రొఫైల్",
-  "Change Login Details":"చేంజ్ లాగిన్ డీటెయిల్స్","Save Changes":"సేవ్ చేంజెస్","Forgot Password":"ఫర్గాట్ పాస్‌వర్డ్",
-  "Enter your username and create a new password.":"ఎంటర్ యువర్ యూజర్ నేమ్ అండ్ క్రియేట్ ఎ న్యూ పాస్‌వర్డ్.","Reset Password":"రీసెట్ పాస్‌వర్డ్",
-  "Logging in...":"లాగింగ్ ఇన్...","Creating...":"క్రియేటింగ్...","Unknown Place":"అన్‌నోన్ ప్లేస్","No expenses":"నో ఎక్స్‌పెన్సెస్","Collected":"కలెక్టెడ్","Sales":"సేల్స్",
-  "Expense Breakdown":"ఎక్స్‌పెన్స్ బ్రేక్‌డౌన్","Profit vs Expenses":"ప్రాఫిట్ వర్సెస్ ఎక్స్‌పెన్సెస్","Sales vs Collection vs Pending":"సేల్స్ వర్సెస్ కలెక్షన్ వర్సెస్ పెండింగ్",
-  "Collection vs Pending":"కలెక్షన్ వర్సెస్ పెండింగ్","Quantity Sold by Product":"క్వాంటిటీ సోల్డ్ బై ప్రొడక్ట్","Place":"ప్లేస్","Profit":"ప్రాఫిట్","1st":"1వ","2nd":"2వ","3rd":"3వ","4th":"4వ","5th":"5వ",
-  "Hello!":"హలో!","Hello,":"హలో,","Manage • Sell • Track • Grow":"మేనేజ్ • సెల్ • ట్రాక్ • గ్రో",
-  "Email not added":"ఈమెయిల్ యాడ్ చేయలేదు","Phone not added":"ఫోన్ నంబర్ యాడ్ చేయలేదు",
-  "Date and Initial Amount required.":"డేట్ మరియు ఇనిషియల్ అమౌంట్ అవసరం.","Date, category and amount required.":"డేట్, కేటగిరీ మరియు అమౌంట్ అవసరం.",
-  "Add expense first.":"ఫస్ట్ ఎక్స్‌పెన్స్ యాడ్ చేయండి.","Expense deleted.":"ఎక్స్‌పెన్స్ డిలీట్ అయింది.","Delete expense?":"ఎక్స్‌పెన్స్ డిలీట్ చేయాలా?",
-  "Logout from Vyapara Track?":"వ్యాపార ట్రాక్ నుంచి లాగ్ అవుట్ చేయాలా?"
-};
-
-let vtLanguage=localStorage.getItem("VT_LANGUAGE")||"te";
-let vtBusy=false;
-
-function vtTranslateText(text){
-  if(vtLanguage!=="te"||!text)return text;
-  let out=text;
-  const keys=Object.keys(VT_TE).sort((a,b)=>b.length-a.length);
-  for(const k of keys){
-    if(out.includes(k)) out=out.split(k).join(VT_TE[k]);
-  }
-  return out;
-}
-
-function vtTranslateNode(node){
-  if(vtLanguage!=="te")return;
-  if(node.nodeType===Node.TEXT_NODE){
-    const p=node.parentElement;
-    if(!p||["SCRIPT","STYLE","NOSCRIPT"].includes(p.tagName))return;
-    const old=node.nodeValue;
-    const next=vtTranslateText(old);
-    if(old!==next)node.nodeValue=next;
-    return;
-  }
-  if(node.nodeType===Node.ELEMENT_NODE){
-    if(node.matches("script,style,noscript"))return;
-    if(node.placeholder){node.placeholder=vtTranslateText(node.placeholder);}
-    if(node.title){node.title=vtTranslateText(node.title);}
-    if(node.getAttribute("aria-label"))node.setAttribute("aria-label",vtTranslateText(node.getAttribute("aria-label")));
-    for(const c of node.childNodes)vtTranslateNode(c);
-  }
-}
-
-function vtTranslateAll(){
-  if(vtBusy)return;
-  vtBusy=true;
-  try{
-    if(vtLanguage==="te"){
-      vtTranslateNode(document.body);
-      document.title="వ్యాపార ట్రాక్";
-      document.documentElement.lang="te";document.documentElement.classList.remove("vt-startup");document.documentElement.classList.add("vt-ready");
-      const b=$("langToggle");if(b)b.textContent="ఇంగ్లీష్";
-    }else{
-      location.reload();
-    }
-  }finally{vtBusy=false;}
-}
-
-function toggleLanguage(){
-  vtLanguage=vtLanguage==="en"?"te":"en";
-  localStorage.setItem("VT_LANGUAGE",vtLanguage);
-  if(vtLanguage==="en"){
-    location.reload();
-  }else{
-    vtTranslateAll();
-  }
-}
-
-/* Translate dynamically rendered dashboard/sales/expense text too. */
-const vtObserver=new MutationObserver(mutations=>{
-  if(vtLanguage!=="te"||vtBusy)return;
-  vtBusy=true;
-  try{
-    for(const m of mutations){
-      for(const n of m.addedNodes)vtTranslateNode(n);
-    }
-  }finally{vtBusy=false;}
-});
-
-window.addEventListener("DOMContentLoaded",()=>{
-  if(vtLanguage==="te"){
-    vtTranslateAll();
-    vtObserver.observe(document.body,{childList:true,subtree:true});
-  }else{
-    document.documentElement.classList.remove("vt-startup");document.documentElement.classList.add("vt-ready");
-  }
-});
-
-/* Native confirmation messages also follow Telugu mode. */
-const vtNativeConfirm=window.confirm.bind(window);
-window.confirm=function(message){
-  return vtNativeConfirm(vtLanguage==="te"?vtTranslateText(message):message);
-};
-
-const vtBaseNotify=notify;
-notify=function(message){
-  return vtBaseNotify(vtLanguage==="te"?vtTranslateText(String(message)):message);
-};
-</script>
-<!-- Account Features -->
 <div id="loginEditBox" class="hidden" style="position:fixed;inset:0;background:#0008;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;"><div style="background:#fff;width:100%;max-width:380px;padding:22px;border-radius:18px;box-shadow:0 10px 40px #0004;"><h2 style="margin-top:0">🔐 Change Login Details</h2><input id="oldLoginPass" type="password" placeholder="Current Password" style="width:100%;margin:7px 0"><input id="newLoginUser" type="text" placeholder="New Username" style="width:100%;margin:7px 0"><input id="newLoginPass" type="password" placeholder="New Password" style="width:100%;margin:7px 0"><input id="confirmLoginPass" type="password" placeholder="Confirm New Password" style="width:100%;margin:7px 0"><button class="green wide" onclick="saveLoginDetails()">Save Changes</button><button class="back wide" onclick="closeLoginEdit()">Cancel</button></div></div>
 <div id="forgotPasswordBox" class="hidden" style="position:fixed;inset:0;background:#0008;z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;"><div style="background:#fff;width:100%;max-width:380px;padding:22px;border-radius:18px;box-shadow:0 10px 40px #0004;"><h2 style="margin-top:0">🔑 Forgot Password</h2><p class="mini">Enter your username and create a new password.</p><input id="forgotUser" type="text" placeholder="Username" style="width:100%;margin:7px 0"><input id="forgotNewPass" type="password" placeholder="New Password" style="width:100%;margin:7px 0"><input id="forgotConfirmPass" type="password" placeholder="Retype New Password" style="width:100%;margin:7px 0"><button class="green wide" onclick="resetForgotPassword()">Reset Password</button><button class="back wide" onclick="closeForgotPassword()">Cancel</button></div></div>
 <script>
-function ensureAccountFields(){db.account=db.account||{};if(!db.account.username)db.account.username="";if(!db.account.displayName)db.account.displayName=db.account.username||"User";if(db.account.email===undefined)db.account.email="";if(db.account.phone===undefined)db.account.phone="";}
-function authMode(m){auth=m;$('"'"'loginTab'"'"').classList.toggle('"'"'active'"'"',m==="login");$('"'"'signupTab'"'"').classList.toggle('"'"'active'"'"',m==="signup");const loginText=vtLanguage==="te"?"లాగిన్":"Login",signupText=vtLanguage==="te"?"క్రియేట్ అకౌంట్":"Create Account";const hint=vtLanguage==="te"?(m==="login"?"ఎంటర్ యువర్ అకౌంట్ డీటెయిల్స్":"క్రియేట్ యువర్ వ్యాపార ట్రాక్ అకౌంట్"):(m==="login"?"Enter your account details":"Create your Vyapara Track account");$('"'"'loginTab'"'"').textContent=loginText;$('"'"'signupTab'"'"').textContent=signupText;$('"'"'authBtn'"'"').textContent=m==="login"?loginText:signupText;$('"'"'authPass2'"'"').classList.toggle('"'"'hidden'"'"',m!=="signup");$('"'"'authHint'"'"').textContent=hint;$('"'"'authUser'"'"').placeholder=vtLanguage==="te"?"యూజర్ నేమ్":"Username";$('"'"'authPass'"'"').placeholder=vtLanguage==="te"?"పాస్‌వర్డ్":"Password";$('"'"'authPass2'"'"').placeholder=vtLanguage==="te"?"రీటైప్ పాస్‌వర్డ్":"Retype Password";}
-async function authSubmit(){const btn=$("authBtn");if(btn.dataset.busy==="1")return;let u=$("authUser").value.trim(),p=$("authPass").value;if(auth==="signup"){let p2=$("authPass2").value;if(!u||!p||!p2)return notify("Enter username, password and retype password.");if(p!==p2)return notify("Passwords do not match.");btn.dataset.busy="1";btn.disabled=true;try{const r=await fetch("/api/signup",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({username:u,password:p,confirm:p2})});const x=await r.json();if(!r.ok)return notify(x.error||"Account creation failed.");$("authUser").value=u;$("authPass").value="";$("authPass2").value="";authMode("login");return notify("Account created successfully. Please login.");}catch(e){console.error(e);return notify("Unable to connect to server. Please try again.");}finally{btn.dataset.busy="0";btn.disabled=false;authMode(auth);}}if(!u||!p)return notify("Enter username and password.");btn.dataset.busy="1";btn.disabled=true;try{const r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({username:u,password:p})});const x=await r.json();if(!r.ok)return notify(x.error||"Invalid username or password.");if(x.state){db=x.state;localStorage.setItem(KEY,JSON.stringify(db));}await start();}catch(e){console.error(e);notify("Unable to connect to server. Please try again.");}finally{btn.dataset.busy="0";btn.disabled=false;authMode(auth);}}
-function renderUserProfile(){ensureAccountFields();let n=String(db.account.displayName||db.account.username||"User").trim(),u=String(db.account.username||"").trim(),email=db.account.email||"Email not added",phone=db.account.phone||"Phone not added";if($("homeGreeting"))$("homeGreeting").textContent="Hello, "+n+"!";if($("profileNameText"))$("profileNameText").textContent=n;if($("profileUserText"))$("profileUserText").textContent=u;if($("profileLoggedUser"))$("profileLoggedUser").textContent=u;if($("profileName")&&document.activeElement!==$("profileName"))$("profileName").value=n;if($("profileEmail")&&document.activeElement!==$("profileEmail"))$("profileEmail").value=db.account.email||"";if($("profilePhone")&&document.activeElement!==$("profilePhone"))$("profilePhone").value=db.account.phone||"";if($("topUserName"))$("topUserName").textContent=n;if($("dropDisplayName"))$("dropDisplayName").textContent=n;if($("dropEmail"))$("dropEmail").textContent=email;if($("dropPhone"))$("dropPhone").textContent=phone;if($("topAvatar"))$("topAvatar").textContent=(n.charAt(0)||"U").toUpperCase();}
-async function saveProfile(){ensureAccountFields();let n=$("profileName").value.trim(),email=$("profileEmail").value.trim(),phone=$("profilePhone").value.trim();if(!n)return notify("Enter your name.");if(email&&!/^\S+@\S+\.\S+$/.test(email))return notify("Enter a valid email address.");if(phone&&!/^[0-9+()\- ]{7,15}$/.test(phone))return notify("Enter a valid phone number.");try{const r=await fetch("/api/profile",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({displayName:n,email,phone})});const x=await r.json();if(!r.ok)return notify(x.error||"Profile update failed.");db=x.state||db;localStorage.setItem(KEY,JSON.stringify(db));renderUserProfile();notify("✓ Profile updated successfully.");}catch(e){notify("Profile update failed.");}}
-function toggleProfileDropdown(){$("profileDropdown").classList.toggle("hidden");renderUserProfile();}function closeProfileDropdown(){$("profileDropdown").classList.add("hidden");}document.addEventListener("click",function(e){if(!e.target.closest(".profile-menu"))closeProfileDropdown();});
-function openLoginEdit(){ensureAccountFields();$("loginEditBox").classList.remove("hidden");$("newLoginUser").value=db.account.username||"";}function closeLoginEdit(){$("loginEditBox").classList.add("hidden");["oldLoginPass","newLoginUser","newLoginPass","confirmLoginPass"].forEach(id=>{if($(id))$(id).value=""});}
-async function saveLoginDetails(){ensureAccountFields();let old=$("oldLoginPass").value,u=$("newLoginUser").value.trim(),p=$("newLoginPass").value,p2=$("confirmLoginPass").value;if(!old||!u||!p||!p2)return notify("Fill all fields.");if(p!==p2)return notify("New passwords do not match.");try{const r=await fetch("/api/change-login",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({oldPassword:old,newUsername:u,newPassword:p,confirm:p2})});const x=await r.json();if(!r.ok)return notify(x.error||"Login details update failed.");db=x.state||db;localStorage.setItem(KEY,JSON.stringify(db));renderUserProfile();closeLoginEdit();notify("✓ Login details updated successfully.");}catch(e){notify("Login details update failed.");}}
-function openForgotPassword(){$("forgotPasswordBox").classList.remove("hidden");["forgotUser","forgotNewPass","forgotConfirmPass"].forEach(id=>$(id).value="");$("forgotUser").focus();}function closeForgotPassword(){$("forgotPasswordBox").classList.add("hidden");}
-async function resetForgotPassword(){let u=$("forgotUser").value.trim(),p=$("forgotNewPass").value,p2=$("forgotConfirmPass").value;if(!u||!p||!p2)return notify("Fill all fields.");if(p!==p2)return notify("Passwords do not match.");try{const r=await fetch("/api/forgot-password",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({username:u,password:p,confirm:p2})});const x=await r.json();if(!r.ok)return notify(x.error||"Password reset failed.");closeForgotPassword();$("authUser").value=u;$("authPass").value="";authMode("login");notify("✓ Password reset successfully. Please login.");}catch(e){notify("Password reset failed.");}}
-async function logoutAccount(){if(!confirm("Logout from Vyapara Track?"))return;try{await fetch("/api/logout",{method:"POST",credentials:"same-origin"});}catch(e){}sessionStorage.removeItem("vt");localStorage.removeItem(KEY);closeProfileDropdown();showAuth();}
-function showAuth(){$("app").classList.add("hidden");$("auth").classList.remove("hidden");$("authUser").value="";$("authPass").value="";$("authPass2").value="";authMode("login");if(typeof applySavedLanguage==="function")applySavedLanguage();}
-function setLanguage(lang){vtLanguage=lang==="en"?"en":"te";localStorage.setItem("VT_LANGUAGE",vtLanguage);location.reload();}
-function applySavedLanguage(){const sel=$("authLanguage");if(sel)sel.value=vtLanguage;authMode(auth||"login");if(vtLanguage==="te"){vtTranslateAll();}else{document.documentElement.lang="en";document.documentElement.classList.remove("vt-startup");document.documentElement.classList.add("vt-ready");}}
-const __baseStart=start;
-start=async function(){await __baseStart();ensureAccountFields();renderUserProfile();};
-const __baseShow=show;
-show=function(id){__baseShow(id);if(id==="home"||id==="profile")renderUserProfile();};
+function ensureAccountFields(){
+  db.account=db.account||{};
+  if(db.account.displayName===undefined)db.account.displayName=db.account.username||"";
+  if(db.account.email===undefined)db.account.email="";
+  if(db.account.phone===undefined)db.account.phone="";
+}
+function authMode(m){
+  auth=m;
+  $("loginTab").classList.toggle("active",m==="login");
+  $("signupTab").classList.toggle("active",m==="signup");
+  $("authBtn").textContent=m==="login"?"Login":"Create Account";
+  $("authPass2").classList.toggle("hidden",m!=="signup");
+  $("authHint").textContent=m==="login"?"Enter your account details":"Create your Vyapara Track account";
+  applyLanguage();
+}
+function renderUserProfile(){
+  ensureAccountFields();
+  const n=String(db.account.displayName||db.account.username||"User").trim(),u=String(db.account.username||"").trim();
+  const email=db.account.email||"Email not added",phone=db.account.phone||"Phone not added";
+  if($("homeGreeting"))$("homeGreeting").textContent="Hello, "+(n||"User")+"!";
+  if($("profileNameText"))$("profileNameText").textContent=n||"—";
+  if($("profileUserText"))$("profileUserText").textContent=u||"—";
+  if($("profileLoggedUser"))$("profileLoggedUser").textContent=u||"—";
+  if($("profileName")&&document.activeElement!==$("profileName"))$("profileName").value=db.account.displayName||"";
+  if($("profileEmail")&&document.activeElement!==$("profileEmail"))$("profileEmail").value=db.account.email||"";
+  if($("profilePhone")&&document.activeElement!==$("profilePhone"))$("profilePhone").value=db.account.phone||"";
+  if($("topUserName"))$("topUserName").textContent=n||"User";
+  if($("dropDisplayName"))$("dropDisplayName").textContent=n||"User";
+  if($("dropEmail"))$("dropEmail").textContent=email;
+  if($("dropPhone"))$("dropPhone").textContent=phone;
+  if($("topAvatar"))$("topAvatar").textContent=(n.charAt(0)||"U").toUpperCase();
+}
+async function saveProfile(){
+  ensureAccountFields();
+  const n=$("profileName").value.trim(),email=$("profileEmail").value.trim(),phone=$("profilePhone").value.trim();
+  if(!n)return notify("Enter your name.");
+  if(email&&!/^\S+@\S+\.\S+$/.test(email))return notify("Enter a valid email address.");
+  if(phone&&!/^[0-9+()\- ]{7,15}$/.test(phone))return notify("Enter a valid phone number.");
+  try{
+    const r=await fetch("/api/profile",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({displayName:n,email,phone})});
+    const x=await r.json();if(!r.ok)return notify(x.error||"Profile update failed.");
+    db=x.state||db;localStorage.setItem(KEY,JSON.stringify(db));renderUserProfile();notify("✓ Profile updated successfully.");
+  }catch(e){notify("Unable to connect to server.")}
+}
+function toggleProfileDropdown(){if($("profileDropdown"))$("profileDropdown").classList.toggle("hidden");renderUserProfile()}
+function closeProfileDropdown(){if($("profileDropdown"))$("profileDropdown").classList.add("hidden")}
+document.addEventListener("click",function(e){if(!e.target.closest(".profile-menu"))closeProfileDropdown()});
+function openLoginEdit(){ensureAccountFields();$("loginEditBox").classList.remove("hidden");$("newLoginUser").value=db.account.username||""}
+function closeLoginEdit(){$("loginEditBox").classList.add("hidden");["oldLoginPass","newLoginUser","newLoginPass","confirmLoginPass"].forEach(id=>{if($(id))$(id).value=""})}
+async function saveLoginDetails(){
+  const old=$("oldLoginPass").value,u=$("newLoginUser").value.trim(),p=$("newLoginPass").value,p2=$("confirmLoginPass").value;
+  if(!old)return notify("Enter current password.");if(!u)return notify("Enter new username.");if(!p)return notify("Enter new password.");if(p!==p2)return notify("New passwords do not match.");
+  try{
+    const r=await fetch("/api/change-login",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({oldPassword:old,newUsername:u,newPassword:p})});
+    const x=await r.json();if(!r.ok)return notify(x.error||"Could not change login details.");
+    db=x.state||db;localStorage.setItem(KEY,JSON.stringify(db));renderUserProfile();closeLoginEdit();notify("✓ Login details updated successfully.");
+  }catch(e){notify("Unable to connect to server.")}
+}
+function openForgotPassword(){$("forgotPasswordBox").classList.remove("hidden");["forgotUser","forgotNewPass","forgotConfirmPass"].forEach(id=>$(id).value="");$("forgotUser").focus()}
+function closeForgotPassword(){$("forgotPasswordBox").classList.add("hidden")}
+async function resetForgotPassword(){
+  const u=$("forgotUser").value.trim(),p=$("forgotNewPass").value,p2=$("forgotConfirmPass").value;
+  if(!u||!p)return notify("Enter username and new password.");if(p!==p2)return notify("Passwords do not match.");
+  try{
+    const r=await fetch("/api/forgot-password",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({username:u,newPassword:p})});
+    const x=await r.json();if(!r.ok)return notify(x.error||"Username not found.");
+    closeForgotPassword();notify("✓ Password reset successfully. Please login.");
+  }catch(e){notify("Unable to connect to server.")}
+}
+async function logoutAccount(){
+  if(!confirm("Logout from Vyapara Track?"))return;
+  try{await fetch("/api/logout",{method:"POST",credentials:"same-origin"})}catch(e){}
+  sessionStorage.removeItem("vt");localStorage.removeItem(KEY);closeProfileDropdown();$("app").classList.add("hidden");$("auth").classList.remove("hidden");$("authUser").value="";$("authPass").value="";$("authPass2").value="";authMode("login");
+}
+// =========================
+// LANGUAGE SYSTEM
+// =========================
+const LANGUAGE_KEY="VYAPARA_LANGUAGE";
+let currentLanguage=localStorage.getItem(LANGUAGE_KEY)||"en";
+const TE={
+"Track Today • Grow Tomorrow":"ఈరోజును నమోదు చేయండి • రేపటిని అభివృద్ధి చేయండి",
+"Login":"లాగిన్","Create Account":"ఖాతా సృష్టించండి","Forgot Password?":"పాస్‌వర్డ్ మర్చిపోయారా?",
+"Enter your account details":"మీ ఖాతా వివరాలను నమోదు చేయండి","Create your Vyapara Track account":"మీ వ్యాపార ఖాతాను సృష్టించండి",
+"Username":"వినియోగదారు పేరు","Password":"పాస్‌వర్డ్","Retype Password":"పాస్‌వర్డ్‌ను మళ్లీ నమోదు చేయండి",
+"Your Business Companion":"మీ వ్యాపార సహాయకుడు","Email not added":"ఈమెయిల్ జోడించలేదు","Phone not added":"ఫోన్ నంబర్ జోడించలేదు",
+"My Profile":"నా ప్రొఫైల్","Change Login":"లాగిన్ వివరాలు మార్చండి","Logout":"లాగ్ అవుట్",
+"Hello!":"హలో!","Manage • Sell • Track • Grow":"నిర్వహించండి • అమ్మండి • నమోదు చేయండి • అభివృద్ధి చేయండి","Profile":"ప్రొఫైల్",
+"Live Sales List":"ప్రత్యక్ష అమ్మకాల జాబితా","Add today's sales":"ఈరోజు అమ్మకాలను నమోదు చేయండి","Product Info":"ఉత్పత్తి వివరాలు","Manage products":"ఉత్పత్తులను నిర్వహించండి",
+"Expenses":"ఖర్చులు","Track daily expenses":"రోజువారీ ఖర్చులను నమోదు చేయండి","Customer Pending":"కస్టమర్ బకాయిలు","View pending amounts":"బకాయి మొత్తాలను చూడండి",
+"Sales Dashboard":"అమ్మకాల డాష్‌బోర్డ్","View reports & analysis":"నివేదికలు మరియు విశ్లేషణ","History":"చరిత్ర","Past records":"గత రికార్డులు",
+"Summary":"సారాంశం","Business calendar & days":"వ్యాపార క్యాలెండర్ మరియు రోజులు","Track every sale, build a better tomorrow!":"ప్రతి అమ్మకాన్ని నమోదు చేసి, రేపటిని మరింత మెరుగ్గా తీర్చిదిద్దండి!",
+"Manage your products and prices":"మీ ఉత్పత్తులు మరియు ధరలను నిర్వహించండి","Back":"వెనక్కి","Add Product":"ఉత్పత్తిని జోడించండి","Save Product":"ఉత్పత్తిని సేవ్ చేయండి",
+"S.No":"క్రమ సంఖ్య","Product Name":"ఉత్పత్తి పేరు","Quantity":"పరిమాణం","Original Cost ₹":"అసలు ధర ₹","Selling Price ₹":"అమ్మకపు ధర ₹","Profit ₹":"లాభం ₹","Action":"చర్య",
+"Add sales and customer details":"అమ్మకాలు మరియు కస్టమర్ వివరాలను నమోదు చేయండి","Date":"తేదీ","Place":"ప్రదేశం","Baki / Pending":"బకాయి / పెండింగ్","(If any)":"(ఉంటే)","Add Baki":"బకాయి జోడించండి",
+"Customer Name":"కస్టమర్ పేరు","Amount ₹":"మొత్తం ₹","Status":"స్థితి","Save Baki":"బకాయిని సేవ్ చేయండి","Add Products Sold":"అమ్మిన ఉత్పత్తులు",
+"Sale Type":"అమ్మకం రకం","Complete Set":"పూర్తి సెట్","Individual Piece":"ఒక్కొక్క ముక్క","SP ₹":"అమ్మకపు ధర ₹","Selling Price":"అమ్మకపు ధర","Calculation":"లెక్కింపు",
+"Total Quantities":"మొత్తం పరిమాణం","Total Amount":"మొత్తం మొత్తం","Total Profit":"మొత్తం లాభం","Money Calculation":"డబ్బు లెక్కింపు","Today's Sales Dashboard":"ఈరోజు అమ్మకాల డాష్‌బోర్డ్",
+"Saved Sales for This Date":"ఈ తేదీకి సేవ్ చేసిన అమ్మకాలు","Initial amount and expense list":"ప్రారంభ మొత్తం మరియు ఖర్చుల జాబితా","Initial Amount":"ప్రారంభ మొత్తం","Initial Amount ₹":"ప్రారంభ మొత్తం ₹",
+"Notes":"గమనికలు","Save Initial Amount":"ప్రారంభ మొత్తాన్ని సేవ్ చేయండి","Expenses List":"ఖర్చుల జాబితా","Add Expense":"ఖర్చును జోడించండి","Save Expenses":"ఖర్చులను సేవ్ చేయండి","Saved Expenses":"సేవ్ చేసిన ఖర్చులు",
+"All outstanding amounts":"మొత్తం బకాయి మొత్తాలు","Business performance & analysis":"వ్యాపార పనితీరు మరియు విశ్లేషణ","Start Date":"ప్రారంభ తేదీ","End Date":"ముగింపు తేదీ",
+"Today":"ఈరోజు","This Week":"ఈ వారం","This Month":"ఈ నెల","Generate Dashboard":"డాష్‌బోర్డ్ రూపొందించండి",
+"Select a date range, then click a date to view that day's saved sales list.":"తేదీ పరిధిని ఎంచుకుని, ఆ రోజు సేవ్ చేసిన అమ్మకాల జాబితాను చూడటానికి తేదీపై క్లిక్ చేయండి.",
+"Sales History":"అమ్మకాల చరిత్ర","Saved sales for selected date":"ఎంచుకున్న తేదీకి సేవ్ చేసిన అమ్మకాలు","Products Sold":"అమ్మిన ఉత్పత్తులు","Customer":"కస్టమర్","Product":"ఉత్పత్తి","Qty":"పరిమాణం",
+"Total Pending":"మొత్తం బకాయి","User Profile":"వినియోగదారు ప్రొఫైల్","Your Vyapara Track account":"మీ వ్యాపార ఖాతా","Name":"పేరు","Account":"ఖాతా","Active":"క్రియాశీలం",
+"Profile Details":"ప్రొఫైల్ వివరాలు","Email":"ఈమెయిల్","Phone Number":"ఫోన్ నంబర్","Save Profile":"ప్రొఫైల్ సేవ్ చేయండి","Login Account":"లాగిన్ ఖాతా","Change Login Details":"లాగిన్ వివరాలు మార్చండి",
+"Business calendar and working days":"వ్యాపార క్యాలెండర్ మరియు పని రోజులు","🟢 Business day 🔴 No business":"🟢 వ్యాపారం జరిగిన రోజు 🔴 వ్యాపారం లేని రోజు",
+"Home":"హోమ్","Products":"ఉత్పత్తులు","Live Sales":"ప్రత్యక్ష అమ్మకాలు","More":"మరిన్ని","Save Changes":"మార్పులను సేవ్ చేయండి","Cancel":"రద్దు చేయండి",
+"Forgot Password":"పాస్‌వర్డ్ మర్చిపోయారా","Enter your username and create a new password.":"మీ వినియోగదారు పేరును నమోదు చేసి కొత్త పాస్‌వర్డ్‌ను సృష్టించండి.","Reset Password":"పాస్‌వర్డ్‌ను రీసెట్ చేయండి",
+"Petrol":"పెట్రోల్","Snacks":"స్నాక్స్","Lunch":"మధ్యాహ్న భోజనం","Tea":"టీ","Air/Tyre":"గాలి / టైర్","Others":"ఇతరాలు",
+"Expense Type":"ఖర్చు రకం","Enter amount":"మొత్తాన్ని నమోదు చేయండి","Optional notes":"అవసరమైతే గమనికలు","Delete":"తొలగించండి",
+"Total Sales":"మొత్తం అమ్మకాలు","Total Collection":"మొత్తం వసూలు","Pending / Baki":"బకాయి / పెండింగ్","Gross Profit":"మొత్తం లాభం","Net Profit":"నికర లాభం","Available Cash":"అందుబాటులో ఉన్న నగదు","Quantity Sold":"అమ్మిన పరిమాణం",
+"Sales by Product":"ఉత్పత్తి వారీగా అమ్మకాలు","Profit by Product":"ఉత్పత్తి వారీగా లాభం","Sales by Month":"నెల వారీగా అమ్మకాలు","Sales by Place":"ప్రదేశం వారీగా అమ్మకాలు","Profit by Sales":"అమ్మకాల వారీగా లాభం","Quantity Sold":"అమ్మిన పరిమాణం",
+"Bar chart — highest sales to lowest.":"బార్ చార్ట్ — ఎక్కువ అమ్మకాల నుంచి తక్కువ అమ్మకాల వరకు.","Column chart — product-wise profit.":"కాలమ్ చార్ట్ — ఉత్పత్తి వారీగా లాభం.","Line chart — shows whether sales are increasing or decreasing.":"లైన్ చార్ట్ — అమ్మకాలు పెరుగుతున్నాయా లేదా తగ్గుతున్నాయా చూపిస్తుంది.","Pie chart — sales contribution by place.":"పై చార్ట్ — ప్రదేశం వారీగా అమ్మకాల వాటా.","Line chart — daily profit trend.":"లైన్ చార్ట్ — రోజువారీ లాభ ధోరణి.","Bar chart — quantity sold by product.":"బార్ చార్ట్ — ఉత్పత్తి వారీగా అమ్మిన పరిమాణం.",
+"Performance Summary":"పనితీరు సారాంశం","Summary for the selected date range.":"ఎంచుకున్న తేదీ పరిధికి సంబంధించిన సారాంశం.","Total Sales Amount":"మొత్తం అమ్మకాల మొత్తం","Total Places Covered":"సందర్శించిన మొత్తం ప్రదేశాలు",
+"Products Sold Today":"ఈరోజు అమ్మిన ఉత్పత్తులు","Highest Profit Products":"ఎక్కువ లాభం ఇచ్చిన ఉత్పత్తులు","Collection & Pending":"వసూలు మరియు బకాయి","Today's Expense Distribution":"ఈరోజు ఖర్చుల పంపిణీ",
+"Highest quantity to lowest.":"ఎక్కువ పరిమాణం నుంచి తక్కువ పరిమాణం వరకు.","Highest profit to lowest.":"ఎక్కువ లాభం నుంచి తక్కువ లాభం వరకు.","Today's collection versus outstanding customer credit.":"ఈరోజు వసూలు మరియు కస్టమర్ల బకాయి.","Expense categories by share of today's spending.":"ఈరోజు ఖర్చుల రకం వారీగా పంపిణీ.","Today's sales contribution by travelling place.":"ఈరోజు ప్రదేశం వారీగా అమ్మకాల వాటా.",
+"Sales Amount":"అమ్మకాల మొత్తం","Today's Expenses":"ఈరోజు ఖర్చులు","Collection Today":"ఈరోజు వసూలు","Pending Amount":"బకాయి మొత్తం","Cash Available":"అందుబాటులో ఉన్న నగదు","Save Today's Progress":"ఈరోజు పురోగతిని సేవ్ చేయండి","Review today's live entries, then save them.":"ఈరోజు నమోదు చేసిన వివరాలను పరిశీలించి సేవ్ చేయండి.",
+"Click a date to open that day's sales. A day with no saved sales will show no sales.":"ఆ రోజు అమ్మకాలను చూడటానికి తేదీపై క్లిక్ చేయండి. అమ్మకాలు లేకపోతే ఆ రోజు అమ్మకాలు లేవని చూపిస్తుంది.",
+"No data available.":"డేటా అందుబాటులో లేదు.","No data.":"డేటా లేదు.","No place data.":"ప్రదేశ వివరాలు లేవు.","No sales recorded for":"ఈ తేదీన అమ్మకాలు నమోదు కాలేదు:",
+"No pending customers.":"బకాయి కస్టమర్లు లేరు.","No products yet. Add a product above.":"ఇంకా ఉత్పత్తులు లేవు. పై నుంచి ఉత్పత్తిని జోడించండి.","No initial amount records.":"ప్రారంభ మొత్తం రికార్డులు లేవు.","Pending":"బకాయి","Cleared":"చెల్లించారు","No sales saved.":"అమ్మకాలు సేవ్ కాలేదు.","No pending entries.":"బకాయి వివరాలు లేవు.","Enter username and password.":"వినియోగదారు పేరు మరియు పాస్‌వర్డ్ నమోదు చేయండి.","Retype your password.":"పాస్‌వర్డ్‌ను మళ్లీ నమోదు చేయండి.","Passwords do not match.":"పాస్‌వర్డ్‌లు సరిపోలడం లేదు.","Could not create account.":"ఖాతాను సృష్టించలేకపోయాము.","Invalid username or password.":"వినియోగదారు పేరు లేదా పాస్‌వర్డ్ తప్పుగా ఉంది.","Unable to connect to server.":"సర్వర్‌కు కనెక్ట్ కాలేకపోయాము.","Enter your name.":"మీ పేరు నమోదు చేయండి.","Enter a valid email address.":"సరైన ఈమెయిల్ చిరునామా నమోదు చేయండి.","Enter a valid phone number.":"సరైన ఫోన్ నంబర్ నమోదు చేయండి.","Profile update failed.":"ప్రొఫైల్ నవీకరణ విఫలమైంది.","Current password is incorrect.":"ప్రస్తుత పాస్‌వర్డ్ తప్పుగా ఉంది.","New passwords do not match.":"కొత్త పాస్‌వర్డ్‌లు సరిపోలడం లేదు.","Login details update failed.":"లాగిన్ వివరాల నవీకరణ విఫలమైంది.","Enter current password.":"ప్రస్తుత పాస్‌వర్డ్ నమోదు చేయండి.","Enter new username.":"కొత్త వినియోగదారు పేరు నమోదు చేయండి.","Enter new password.":"కొత్త పాస్‌వర్డ్ నమోదు చేయండి.","Username not found.":"వినియోగదారు పేరు కనబడలేదు.","Password reset successfully. Please login.":"పాస్‌వర్డ్ విజయవంతంగా మార్చబడింది. దయచేసి లాగిన్ చేయండి.","Date and Place required.":"తేదీ మరియు ప్రదేశం తప్పనిసరి.","Add at least one completed product sale before saving.":"సేవ్ చేయడానికి కనీసం ఒక పూర్తి చేసిన ఉత్పత్తి అమ్మకాన్ని నమోదు చేయండి.","Today's progress saved successfully.":"ఈరోజు పురోగతి విజయవంతంగా సేవ్ చేయబడింది.","Start Date must be before End Date.":"ప్రారంభ తేదీ ముగింపు తేదీకి ముందు ఉండాలి.","Product Name enter cheyyandi.":"ఉత్పత్తి పేరు నమోదు చేయండి.","Quantity enter cheyyandi.":"పరిమాణం నమోదు చేయండి.","Original Cost enter cheyyandi.":"అసలు ధర నమోదు చేయండి.","Selling Price enter cheyyandi.":"అమ్మకపు ధర నమోదు చేయండి.","Product not found.":"ఉత్పత్తి కనబడలేదు.","Same product already exists.":"అదే ఉత్పత్తి ఇప్పటికే ఉంది.","Product save error:":"ఉత్పత్తి సేవ్ లోపం:","Customer Name and Amount required. Other fields optional.":"కస్టమర్ పేరు మరియు మొత్తం తప్పనిసరి. ఇతర వివరాలు ఐచ్ఛికం.","For Baki profit, select a Product Info product and enter Quantity.":"బకాయి లాభం కోసం ఉత్పత్తి వివరాల నుంచి ఉత్పత్తిని ఎంచుకుని పరిమాణం నమోదు చేయండి.","Add expense first.":"ముందుగా ఖర్చును జోడించండి.","Date, category and amount required.":"తేదీ, ఖర్చు రకం మరియు మొత్తం తప్పనిసరి.","Delete expense?":"ఖర్చును తొలగించాలా?","Delete product?":"ఉత్పత్తిని తొలగించాలా?","Delete expense?":"ఖర్చును తొలగించాలా?","Delete baki?":"బకాయిని తొలగించాలా?","Logout from Vyapara Track?":"వ్యాపార ట్రాక్ నుంచి లాగ్ అవుట్ కావాలా?",
+"Demo:":"డెమో:","✓":"✓"
+};
+const EN=Object.fromEntries(Object.entries(TE).map(([k,v])=>[v,k]));
+function replaceLanguageText(value,map){let out=value;Object.keys(map).sort((a,b)=>b.length-a.length).forEach(k=>{out=out.split(k).join(map[k])});return out}
+function applyLanguage(){let map=currentLanguage==="te"?TE:EN;document.documentElement.lang=currentLanguage==="te"?"te":"en";const root=document.body;const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let nodes=[];while(walker.nextNode()){let n=walker.currentNode;if(!n.parentElement||["SCRIPT","STYLE","OPTION"].includes(n.parentElement.tagName))continue;if(n.nodeValue.trim())nodes.push(n)}nodes.forEach(n=>{n.nodeValue=replaceLanguageText(n.nodeValue,map)});document.querySelectorAll("input[placeholder],select[aria-label],button[title]").forEach(el=>{let attrs=["placeholder","aria-label","title"];attrs.forEach(a=>{if(el.hasAttribute(a))el.setAttribute(a,replaceLanguageText(el.getAttribute(a),map))})});let sel=$("languageSelect");if(sel)sel.value=currentLanguage;let appSel=$("appLanguageSelect");if(appSel)appSel.value=currentLanguage}
+function setLanguage(lang){currentLanguage=lang==="te"?"te":"en";localStorage.setItem(LANGUAGE_KEY,currentLanguage);applyLanguage();notify(currentLanguage==="te"?"✓ తెలుగు భాష ఎంచుకున్నారు.":"✓ English language selected.")}
+const langObserver=new MutationObserver(()=>{if(window.__translating)return;clearTimeout(window.__langTimer);window.__langTimer=setTimeout(()=>{window.__translating=true;langObserver.disconnect();applyLanguage();window.__translating=false;langObserver.observe(document.body,{subtree:true,childList:true,characterData:true});},0)});
+
+// =========================
+// LOGIN RELIABILITY
+// =========================
+const originalAuthSubmit=authSubmit;
+authSubmit=async function(){
+ const btn=$("authBtn");if(btn?.disabled)return;
+ if(btn){btn.disabled=true;btn.dataset.oldText=btn.textContent;btn.textContent=auth==="login"?"Logging in…":"Creating account…"}
+ try{await originalAuthSubmit()}finally{if(btn&&!$("app").classList.contains("hidden")){btn.disabled=false}else if(btn){btn.disabled=false;btn.textContent=btn.dataset.oldText||btn.textContent}}
+};
+
+// Restore a valid server session on page load; no duplicate start/show wrappers.
+window.addEventListener("load",async function(){
+  const sel=$("languageSelect");if(sel)sel.value=currentLanguage;applyLanguage();langObserver.observe(document.body,{subtree:true,childList:true,characterData:true});
+  fetch("/health",{cache:"no-store"}).catch(()=>{});
+  const ok=await loadServerState();
+  if(ok){sessionStorage.vt="1";await start();}
+  else {sessionStorage.removeItem("vt");authMode("login");applyLanguage();}
+});
 </script>
 </body></html>
