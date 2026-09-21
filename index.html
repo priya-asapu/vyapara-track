@@ -93,19 +93,70 @@ const KEY="VYAPARA_TRACK_FINAL";
 let db=JSON.parse(localStorage.getItem(KEY)||'{"products":[],"sales":[],"pending":[],"expenses":[],"cash":[],"drafts":{},"account":{"username":"","password":"","displayName":"","email":"","phone":""}}');db.products=(db.products||[]).map(p=>({...p,qty:Number(p.qty)||0}));db.sales=db.sales||[];db.pending=db.pending||[];db.expenses=db.expenses||[];db.cash=db.cash||[];db.drafts=db.drafts||{};
 const $=id=>document.getElementById(id), today=()=>new Date().toISOString().slice(0,10), money=n=>"₹"+(Number(n)||0).toLocaleString("en-IN",{maximumFractionDigits:2});
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const SYNC_PREFIX="VYAPARA_PENDING_SYNC_";
+let syncTimer=null;
+function syncKey(username){return SYNC_PREFIX+String(username||db?.account?.username||"guest").trim().toLowerCase()}
+function markPendingSync(){
+  try{localStorage.setItem(syncKey(),JSON.stringify(db));}catch(e){}
+}
+function clearPendingSync(username){try{localStorage.removeItem(syncKey(username));}catch(e){}}
+function getPendingSync(username){
+  try{const raw=localStorage.getItem(syncKey(username));return raw?JSON.parse(raw):null}catch(e){return null}
+}
+async function syncPendingState(showStatus=true){
+  const username=db?.account?.username||"";
+  if(!username)return false;
+  const pending=getPendingSync(username);
+  if(!pending)return true;
+  try{
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),20000);
+    const r=await fetch("/api/state",{
+      method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",
+      body:JSON.stringify(pending),signal:controller.signal,keepalive:true
+    });
+    clearTimeout(timer);
+    const x=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(x.error||x.details||`Server returned ${r.status}`);
+    clearPendingSync(username);
+    if(showStatus && $("dashboardSaveMsg")){
+      $("dashboardSaveMsg").className="save-status ok";
+      $("dashboardSaveMsg").textContent="✓ Saved successfully to your account.";
+    }
+    return true;
+  }catch(e){
+    if(showStatus && $("dashboardSaveMsg")){
+      $("dashboardSaveMsg").className="save-status sync";
+      $("dashboardSaveMsg").textContent="✓ Saved on this device. Will sync automatically when the server responds.";
+    }
+    return false;
+  }
+}
+function scheduleServerSync(){
+  markPendingSync();
+  clearTimeout(syncTimer);
+  syncTimer=setTimeout(()=>syncPendingState(true),800);
+}
 function persist(){
   localStorage.setItem(KEY,JSON.stringify(db));
-  try{
-    return fetch("/api/state",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify(db),keepalive:true}).catch(()=>null);
-  }catch(e){return Promise.resolve(null)}
+  scheduleServerSync();
+  return Promise.resolve(true);
 }
 async function loadServerState(){
   const localDrafts=(db&&db.drafts)?JSON.parse(JSON.stringify(db.drafts)):{};
+  const username=db?.account?.username||sessionStorage.getItem("vtUser")||"";
   try{
     const r=await fetch("/api/state",{credentials:"same-origin",cache:"no-store"});
     if(!r.ok)return false;
     const x=await r.json();
     if(x&&x.account){
+      const pending=getPendingSync(x.account.username||username);
+      if(pending && pending.account && String(pending.account.username||"").toLowerCase()===String(x.account.username||username).toLowerCase()){
+        db=pending;
+        localStorage.setItem(KEY,JSON.stringify(db));
+        scheduleServerSync();
+        return true;
+      }
       x.drafts=x.drafts||{};
       Object.keys(localDrafts).forEach(date=>{
         if(localDrafts[date] && !x.drafts[date]) x.drafts[date]=localDrafts[date];
@@ -175,8 +226,16 @@ async function authSubmit(){
     }
 
     db=x.state;
-    localStorage.setItem(KEY,JSON.stringify(db));
+    const pendingAfterLogin=getPendingSync(u);
+    if(pendingAfterLogin && pendingAfterLogin.account){
+      db=pendingAfterLogin;
+      localStorage.setItem(KEY,JSON.stringify(db));
+      scheduleServerSync();
+    }else{
+      localStorage.setItem(KEY,JSON.stringify(db));
+    }
     sessionStorage.vt="1";
+    sessionStorage.vtUser=u;
 
     $("auth").classList.add("hidden");
     $("app").classList.remove("hidden");
@@ -414,27 +473,28 @@ async function saveTodaysProgress(date){
 
     delete db.drafts[date];
     localStorage.setItem(KEY,JSON.stringify(db));
-
-    const controller=new AbortController();
-    const timeout=setTimeout(()=>controller.abort(),5000);
-    let response;
-    try{
-      response=await fetch("/api/state",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify(db),signal:controller.signal});
-    }finally{clearTimeout(timeout)}
-
-    const result=await response.json().catch(()=>({}));
-    if(!response.ok)throw new Error(result.error||result.details||`Server returned ${response.status}`);
+    markPendingSync();
 
     refresh();
     renderLive();
     renderTodayDashboard(date);
-    if($("dashboardSaveMsg"))$("dashboardSaveMsg").textContent="✓ Today's Live Sales List saved successfully.";
-    notify("✓ Today's Live Sales List saved successfully.");
+    if($("dashboardSaveMsg")){
+      $("dashboardSaveMsg").className="save-status sync";
+      $("dashboardSaveMsg").textContent="✓ Saved on this device. Syncing to your account…";
+    }
+    notify("✓ Today's progress saved.");
+
+    // Never block the Save button on Render/Supabase response.
+    syncPendingState(true);
   }catch(e){
     console.error("Today's save failed:",e);
     localStorage.setItem(KEY,JSON.stringify(db));
-    if($("dashboardSaveMsg"))$("dashboardSaveMsg").textContent="⚠ Saved on this device. Server sync failed: "+(e.name==="AbortError"?"Server took too long to respond.":(e.message||"Unknown error"));
-    notify("Saved on this device, but server sync failed. Please try Save again.");
+    markPendingSync();
+    if($("dashboardSaveMsg")){
+      $("dashboardSaveMsg").className="save-status error";
+      $("dashboardSaveMsg").textContent="⚠ Save failed locally: "+(e?.message||"Unknown error");
+    }
+    notify("⚠ Save failed: "+(e?.message||"Unknown error"));
   }finally{
     const b=document.querySelector(".today-save button");
     if(b){b.disabled=false;b.textContent=b.dataset.oldText||"✓ Save Today's Progress";}
