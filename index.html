@@ -95,16 +95,27 @@ const $=id=>document.getElementById(id), today=()=>new Date().toISOString().slic
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function persist(){
   localStorage.setItem(KEY,JSON.stringify(db));
-  try{fetch("/api/state",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify(db),keepalive:true}).catch(()=>{})}catch(e){}
+  try{
+    return fetch("/api/state",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify(db),keepalive:true}).catch(()=>null);
+  }catch(e){return Promise.resolve(null)}
 }
 async function loadServerState(){
+  const localDrafts=(db&&db.drafts)?JSON.parse(JSON.stringify(db.drafts)):{};
   try{
-    const r=await fetch("/api/state",{credentials:"same-origin"});
+    const r=await fetch("/api/state",{credentials:"same-origin",cache:"no-store"});
     if(!r.ok)return false;
     const x=await r.json();
-    if(x&&x.account){db=x;localStorage.setItem(KEY,JSON.stringify(db));return true}
+    if(x&&x.account){
+      x.drafts=x.drafts||{};
+      Object.keys(localDrafts).forEach(date=>{
+        if(localDrafts[date] && !x.drafts[date]) x.drafts[date]=localDrafts[date];
+      });
+      db=x;
+      localStorage.setItem(KEY,JSON.stringify(db));
+      return true;
+    }
   }catch(e){}
-  return false;
+  return false
 }
 let auth="login",calDate=new Date(),editingProduct=null;
 function authMode(m){auth=m;$("loginTab").classList.toggle("active",m==="login");$("signupTab").classList.toggle("active",m==="signup");$("authBtn").textContent=m==="login"?"Login":"Create Account"}
@@ -124,11 +135,9 @@ async function authSubmit(){
         credentials:"same-origin",
         body:JSON.stringify({username:u,password:p,confirm:p2})
       });
-      const x=await r.json();
+      const x=await r.json().catch(()=>({}));
       if(!r.ok)return notify(x.error||"Could not create account.");
 
-      // Account is created on the server. Stay on the login screen.
-      // Do not automatically log in or copy another account's data.
       localStorage.removeItem(KEY);
       sessionStorage.removeItem("vt");
       $("authUser").value=u;
@@ -136,11 +145,12 @@ async function authSubmit(){
       $("authPass2").value="";
       authMode("login");
       notify("✓ Account created successfully. Please login.");
+      return;
     }catch(e){
       console.error(e);
-      notify("Unable to connect to server.");
+      notify("Unable to connect to server. Please try again.");
+      return;
     }
-    return;
   }
 
   try{
@@ -150,26 +160,53 @@ async function authSubmit(){
       credentials:"same-origin",
       body:JSON.stringify({username:u,password:p})
     });
-    const x=await r.json();
+    const x=await r.json().catch(()=>({}));
     if(!r.ok)return notify(x.error||"Invalid username or password.");
 
-    db=x.state||db;
+    /*
+      IMPORTANT:
+      /api/login already returns this user's state.
+      Do NOT immediately call /api/state again here.
+      That second request was causing a successful login to fall back
+      to the login screen when the session cookie was not yet available.
+    */
+    if(!x.state || !x.state.account){
+      return notify("Login failed: account data was not returned by the server.");
+    }
+
+    db=x.state;
     localStorage.setItem(KEY,JSON.stringify(db));
     sessionStorage.vt="1";
-    await start();
-    notify("✓ Login successful. Welcome, "+(db.account?.displayName||u)+"!");
+
+    $("auth").classList.add("hidden");
+    $("app").classList.remove("hidden");
+    ["liveDate","cashDate","ds","de","hs","he"].forEach(id=>{
+      if($(id))$(id).value=today();
+    });
+    refresh();
+    show("home");
+    renderUserProfile();
+    applyLanguage();
+
+    if("serviceWorker" in navigator){
+      navigator.serviceWorker.register("/service-worker.js").catch(()=>{});
+    }
+
+    notify("✓ Login successful. Welcome, "+(db.account.displayName||u)+"!");
   }catch(e){
     console.error(e);
-    notify("Unable to connect to server.");
+    notify("Login failed: Unable to connect to server.");
   }
 }
+
 async function start(){
   const ok=await loadServerState();
-  if(!ok){sessionStorage.removeItem("vt");return}
+  if(!ok){sessionStorage.removeItem("vt");return false}
   $("auth").classList.add("hidden");$("app").classList.remove("hidden");
-  ["liveDate","cashDate","ds","de","hs","he"].forEach(id=>$(id).value=today());
+  ["liveDate","cashDate","ds","de","hs","he"].forEach(id=>{if($(id))$(id).value=today()});
   refresh();show("home");renderUserProfile();applyLanguage();
-  if("serviceWorker" in navigator)navigator.serviceWorker.register("/service-worker.js").catch(()=>{})
+  if("serviceWorker" in navigator)navigator.serviceWorker.register("/service-worker.js").catch(()=>{});
+  return true;
 }
 function show(id){if(document.querySelector("#live")&&!$("live").classList.contains("hidden")&&id!=="live")saveLiveDraft();document.querySelectorAll(".screen").forEach(x=>x.classList.add("hidden"));$(id).classList.remove("hidden");if(id==="products")renderProducts();if(id==="live")renderLive();if(id==="expenses")renderExpenses();if(id==="pending")renderPending();if(id==="dashboard")renderDashboard();if(id==="todayDashboard")renderTodayDashboard($("liveDate").value);if(id==="history")renderHistory();if(id==="historyDetail")renderHistoryDetail(currentHistoryDate);if(id==="summary")renderSummary();if(id==="calendar")show("summary")}
 function toggleProductForm(){$("productForm").classList.toggle("hidden");if(!$("productForm").classList.contains("hidden"))$("productName").focus()}
@@ -350,13 +387,15 @@ async function saveTodaysProgress(date){
   const items=draft.sales||[];
   const place=formatPlaceName(draft.place||$("livePlace").value||"");
   const baki=draft.baki||[];
-  if(!date||!place){notify("Date and Place required.");return}
-  if(!items.length&&!baki.length){notify("Add at least one sale or pending entry before saving.");return}
+
+  if(!date){notify("Save failed: Date is missing.");return}
+  if(!place){notify("Save failed: Please enter the Place.");return}
+  if(!items.length&&!baki.length){notify("Save failed: Add at least one sale or pending entry.");return}
 
   const btn=document.querySelector(".today-save button");
-  if(btn){btn.disabled=true;btn.dataset.oldText=btn.textContent;btn.textContent="Saving…"}
+  if(btn){btn.disabled=true;btn.dataset.oldText=btn.dataset.oldText||btn.textContent;btn.textContent="Saving…";}
+
   try{
-    // Save today's sales as one date record without creating duplicates.
     const existingSales=db.sales.filter(x=>x.date===date);
     db.sales=db.sales.filter(x=>x.date!==date);
     if(items.length){
@@ -365,39 +404,40 @@ async function saveTodaysProgress(date){
       db.sales.push(...existingSales);
     }
 
-    // Save the pending/baki entries from the same Live Sales List.
-    const oldPending=db.pending.filter(x=>x.date===date&&x.status==="cleared");
+    const cleared=db.pending.filter(x=>x.date===date&&x.status==="cleared");
     const newPending=baki.filter(x=>x.name||x.amount||x.product||x.qty).map(x=>({
       id:x.id||Date.now()+Math.random(),date,name:x.name||"",product:x.product||"",qty:Number(x.qty)||0,
       amount:Number(x.amount)||0,place:formatPlaceName(x.place||place),pendingProfit:Number(x.pendingProfit)||0,
       mode:x.mode||"piece",status:"open",clearedDate:null,clearedAmount:0
     }));
-    db.pending=db.pending.filter(x=>x.date!==date).concat(oldPending,newPending);
+    db.pending=db.pending.filter(x=>x.date!==date).concat(cleared,newPending);
 
     delete db.drafts[date];
     localStorage.setItem(KEY,JSON.stringify(db));
 
-    // Wait for the server save so the success message is shown only after persistence.
-    const r=await fetch("/api/state",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      credentials:"same-origin",
-      body:JSON.stringify(db)
-    });
-    const x=await r.json().catch(()=>({}));
-    if(!r.ok)throw new Error(x.error||"Server save failed");
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),5000);
+    let response;
+    try{
+      response=await fetch("/api/state",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify(db),signal:controller.signal});
+    }finally{clearTimeout(timeout)}
+
+    const result=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(result.error||result.details||`Server returned ${response.status}`);
 
     refresh();
     renderLive();
     renderTodayDashboard(date);
-    if($("dashboardSaveMsg"))$("dashboardSaveMsg").textContent="✓ Today's sales and pending details saved successfully.";
+    if($("dashboardSaveMsg"))$("dashboardSaveMsg").textContent="✓ Today's Live Sales List saved successfully.";
     notify("✓ Today's Live Sales List saved successfully.");
   }catch(e){
-    console.error(e);
-    notify("Save failed. Please try again.");
+    console.error("Today's save failed:",e);
+    localStorage.setItem(KEY,JSON.stringify(db));
+    if($("dashboardSaveMsg"))$("dashboardSaveMsg").textContent="⚠ Saved on this device. Server sync failed: "+(e.name==="AbortError"?"Server took too long to respond.":(e.message||"Unknown error"));
+    notify("Saved on this device, but server sync failed. Please try Save again.");
   }finally{
     const b=document.querySelector(".today-save button");
-    if(b){b.disabled=false;b.textContent=b.dataset.oldText||"✓ Save Today's Progress"}
+    if(b){b.disabled=false;b.textContent=b.dataset.oldText||"✓ Save Today's Progress";}
   }
 }
 
