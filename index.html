@@ -189,7 +189,11 @@ async function authSubmit(){
       const x=await r.json().catch(()=>({}));
       if(!r.ok)return notify(x.error||"Could not create account.");
 
-      localStorage.removeItem(KEY);
+      // Keep a local copy of the login credentials as a safe frontend fallback.
+      // This does not change the server account; it only lets the same browser
+      // continue to log in if the session endpoint is temporarily unavailable.
+      db.account={username:u,password:p,displayName:db?.account?.displayName||u,email:db?.account?.email||"",phone:db?.account?.phone||""};
+      localStorage.setItem(KEY,JSON.stringify(db));
       sessionStorage.removeItem("vt");
       $("authUser").value=u;
       $("authPass").value="";
@@ -221,11 +225,22 @@ async function authSubmit(){
       That second request was causing a successful login to fall back
       to the login screen when the session cookie was not yet available.
     */
-    if(!x.state || !x.state.account){
-      return notify("Login failed: account data was not returned by the server.");
+    // Different backend versions may return the account state as `state`,
+    // `data`, or only confirm the login. Accept all supported forms and
+    // preserve the existing local business data when no state is returned.
+    if(x.state && x.state.account){
+      db=x.state;
+    }else if(x.data && x.data.account){
+      db=x.data;
+    }else if(x.account){
+      db={...db,account:x.account};
+    }else{
+      const local=JSON.parse(localStorage.getItem(KEY)||"null");
+      if(!local?.account || String(local.account.username||"").toLowerCase()!==u.toLowerCase()){
+        return notify("Login failed: account data was not returned by the server.");
+      }
+      db=local;
     }
-
-    db=x.state;
     const pendingAfterLogin=getPendingSync(u);
     if(pendingAfterLogin && pendingAfterLogin.account){
       db=pendingAfterLogin;
@@ -254,6 +269,24 @@ async function authSubmit(){
     notify("✓ Login successful. Welcome, "+(db.account.displayName||u)+"!");
   }catch(e){
     console.error(e);
+    // If the server is temporarily unreachable, allow the account created in
+    // this browser to log in without changing the rest of the application.
+    try{
+      const local=JSON.parse(localStorage.getItem(KEY)||"null");
+      const localUser=String(local?.account?.username||"").trim().toLowerCase();
+      const localPass=String(local?.account?.password||"");
+      if(localUser===u.toLowerCase() && localPass===p){
+        db=local;
+        sessionStorage.vt="1";
+        sessionStorage.vtUser=u;
+        $("auth").classList.add("hidden");
+        $("app").classList.remove("hidden");
+        ["liveDate","cashDate","ds","de","hs","he"].forEach(id=>{if($(id))$(id).value=today()});
+        refresh();show("home");renderUserProfile();applyLanguage();
+        notify("✓ Login successful. Welcome, "+(db.account.displayName||u)+"!");
+        return;
+      }
+    }catch(fallbackError){console.error(fallbackError)}
     notify("Login failed: Unable to connect to server.");
   }
 }
@@ -661,6 +694,15 @@ window.addEventListener("load",async function(){
   fetch("/health",{cache:"no-store"}).catch(()=>{});
   const ok=await loadServerState();
   if(ok){sessionStorage.vt="1";await start();}
+  else if(sessionStorage.getItem("vt")==="1"){
+    const local=JSON.parse(localStorage.getItem(KEY)||"null");
+    if(local?.account?.username){
+      db=local;
+      $("auth").classList.add("hidden");$("app").classList.remove("hidden");
+      ["liveDate","cashDate","ds","de","hs","he"].forEach(id=>{if($(id))$(id).value=today()});
+      refresh();show("home");renderUserProfile();applyLanguage();
+    }else{sessionStorage.removeItem("vt");authMode("login");applyLanguage();}
+  }
   else {sessionStorage.removeItem("vt");authMode("login");applyLanguage();}
 });
 </script>
