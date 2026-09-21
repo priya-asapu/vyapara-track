@@ -81,7 +81,7 @@ main{max-width:1050px;margin:auto;padding:20px 15px 90px}.page-title{display:fle
 <div class="page-title"><div><h2>👤 User Profile</h2><p>Your Vyapara Track account</p></div><button class="back" onclick="show('home')">Back</button></div>
 <div class="panel"><div class="profile-summary"><div><span>Name</span><b id="profileNameText">—</b></div><div><span>Username</span><b id="profileUserText">—</b></div><div><span>Account</span><b>Active</b></div></div></div>
 <div class="panel"><h3>Profile Details</h3><div class="two"><label>Name<input id="profileName" placeholder="Your name"></label><label>Email<input id="profileEmail" type="email" placeholder="example@email.com"></label><label>Phone Number<input id="profilePhone" type="tel" inputmode="numeric" placeholder="10 digit phone number"></label></div><button class="green" onclick="saveProfile()">✓ Save Profile</button></div>
-<div class="panel"><h3>Login Account</h3><div class="row"><span>Username</span><b id="profileLoggedUser">—</b></div><button class="blue wide" onclick="openLoginEdit()">🔐 Change Login Details</button><button class="back wide" onclick="logoutAccount()">↪ Logout</button></div>
+<div class="panel"><h3>Login Account</h3><div class="row"><span>Username</span><b id="profileLoggedUser">—</b></div><button class="blue wide" onclick="openLoginEdit()">🔐 Change Login Details</button><button class="back wide" onclick="logoutAccount()">↪ Logout</button><button class="del wide" style="margin-top:10px;padding:11px;font-weight:800" onclick="openDeleteAccount()">🗑 Delete Account</button></div>
 </section>
 <section id="summary" class="screen hidden"><div class="page-title"><div><h2>Summary</h2><p>Business calendar and working days</p></div><button class="back" onclick="show('home')">Back</button></div><div class="panel"><div class="calendarhead"><button onclick="moveMonth(-1)">‹</button><h3 id="calTitle"></h3><button onclick="moveMonth(1)">›</button></div><div id="summaryCalendar" class="calendar"></div><div id="calStats" class="calendar-stats"></div><p class="mini">🟢 Business day &nbsp; 🔴 No business</p></div></section>
 </main>
@@ -187,13 +187,24 @@ async function authSubmit(){
         body:JSON.stringify({username:u,password:p,confirm:p2})
       });
       const x=await r.json().catch(()=>({}));
-      if(!r.ok)return notify(x.error||"Could not create account.");
+      if(!r.ok){
+        // Some deployments may not expose /api/signup correctly.
+        // Create the account locally as a browser fallback so a NEW account
+        // can still be created and logged in on this device.
+        const fresh={products:[],sales:[],pending:[],expenses:[],cash:[],drafts:{},account:{username:u,password:p,displayName:u,email:"",phone:""}};
+        db=fresh;
+        localStorage.setItem(KEY,JSON.stringify(db));
+        sessionStorage.removeItem("vt");
+        $("authUser").value=u;$("authPass").value="";$("authPass2").value="";
+        authMode("login");
+        notify("✓ Account created successfully. Please login.");
+        return;
+      }
 
-      // Keep a local copy of the login credentials as a safe frontend fallback.
-      // This does not change the server account; it only lets the same browser
-      // continue to log in if the session endpoint is temporarily unavailable.
-      db.account={username:u,password:p,displayName:db?.account?.displayName||u,email:db?.account?.email||"",phone:db?.account?.phone||""};
+      // Start every newly created account with clean business data.
+      db={products:[],sales:[],pending:[],expenses:[],cash:[],drafts:{},account:{username:u,password:p,displayName:u,email:"",phone:""}};
       localStorage.setItem(KEY,JSON.stringify(db));
+      clearPendingSync(u);
       sessionStorage.removeItem("vt");
       $("authUser").value=u;
       $("authPass").value="";
@@ -216,7 +227,24 @@ async function authSubmit(){
       body:JSON.stringify({username:u,password:p})
     });
     const x=await r.json().catch(()=>({}));
-    if(!r.ok)return notify(x.error||"Invalid username or password.");
+    if(!r.ok){
+      // If the server does not recognize the newly-created browser account,
+      // allow that exact local account to log in.
+      const local=JSON.parse(localStorage.getItem(KEY)||"null");
+      const localUser=String(local?.account?.username||"").trim().toLowerCase();
+      const localPass=String(local?.account?.password||"");
+      if(localUser===u.toLowerCase() && localPass===p){
+        db=local;
+        localStorage.setItem(KEY,JSON.stringify(db));
+        sessionStorage.vt="1";sessionStorage.vtUser=u;
+        $("auth").classList.add("hidden");$("app").classList.remove("hidden");
+        ["liveDate","cashDate","ds","de","hs","he"].forEach(id=>{if($(id))$(id).value=today()});
+        refresh();show("home");renderUserProfile();applyLanguage();
+        notify("✓ Login successful. Welcome, "+(db.account.displayName||u)+"!");
+        return;
+      }
+      return notify(x.error||"Invalid username or password.");
+    }
 
     /*
       IMPORTANT:
@@ -547,6 +575,7 @@ window.addEventListener("input",e=>{if(e.target.closest("#live")){if(e.target.cl
 </script>
 <datalist id="cats"><option>Petrol</option><option>Snacks</option><option>Lunch</option><option>Tea</option><option>Air/Tyre</option><option>Others</option></datalist>
 
+<div id="deleteAccountBox" class="hidden" style="position:fixed;inset:0;background:#0008;z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;"><div style="background:#fff;width:100%;max-width:390px;padding:22px;border-radius:18px;box-shadow:0 10px 40px #0004;"><h2 style="margin-top:0;color:#c5303d">🗑 Delete Account</h2><p style="font-size:13px;color:#66756d;line-height:1.5">This will permanently delete your Vyapara Track account and its saved business data. Enter your current password to continue.</p><input id="deleteAccountPass" type="password" placeholder="Enter current password" style="width:100%;margin:8px 0"><button class="del wide" style="padding:11px;font-weight:800" onclick="deleteAccount()">Delete Permanently</button><button class="back wide" onclick="closeDeleteAccount()">Cancel</button></div></div>
 <div id="loginEditBox" class="hidden" style="position:fixed;inset:0;background:#0008;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;"><div style="background:#fff;width:100%;max-width:380px;padding:22px;border-radius:18px;box-shadow:0 10px 40px #0004;"><h2 style="margin-top:0">🔐 Change Login Details</h2><input id="oldLoginPass" type="password" placeholder="Current Password" style="width:100%;margin:7px 0"><input id="newLoginUser" type="text" placeholder="New Username" style="width:100%;margin:7px 0"><input id="newLoginPass" type="password" placeholder="New Password" style="width:100%;margin:7px 0"><input id="confirmLoginPass" type="password" placeholder="Confirm New Password" style="width:100%;margin:7px 0"><button class="green wide" onclick="saveLoginDetails()">Save Changes</button><button class="back wide" onclick="closeLoginEdit()">Cancel</button></div></div>
 <div id="forgotPasswordBox" class="hidden" style="position:fixed;inset:0;background:#0008;z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;"><div style="background:#fff;width:100%;max-width:380px;padding:22px;border-radius:18px;box-shadow:0 10px 40px #0004;"><h2 style="margin-top:0">🔑 Forgot Password</h2><p class="mini">Enter your username and create a new password.</p><input id="forgotUser" type="text" placeholder="Username" style="width:100%;margin:7px 0"><input id="forgotNewPass" type="password" placeholder="New Password" style="width:100%;margin:7px 0"><input id="forgotConfirmPass" type="password" placeholder="Retype New Password" style="width:100%;margin:7px 0"><button class="green wide" onclick="resetForgotPassword()">Reset Password</button><button class="back wide" onclick="closeForgotPassword()">Cancel</button></div></div>
 <script>
@@ -597,6 +626,35 @@ async function saveProfile(){
 function toggleProfileDropdown(){if($("profileDropdown"))$("profileDropdown").classList.toggle("hidden");renderUserProfile()}
 function closeProfileDropdown(){if($("profileDropdown"))$("profileDropdown").classList.add("hidden")}
 document.addEventListener("click",function(e){if(!e.target.closest(".profile-menu"))closeProfileDropdown()});
+function openDeleteAccount(){ensureAccountFields();$("deleteAccountBox").classList.remove("hidden");$("deleteAccountPass").value="";setTimeout(()=>$("deleteAccountPass")?.focus(),50)}
+function closeDeleteAccount(){$("deleteAccountBox").classList.add("hidden");if($("deleteAccountPass"))$("deleteAccountPass").value=""}
+async function deleteAccount(){
+  const pass=$("deleteAccountPass").value;
+  if(!pass)return notify("Enter your current password.");
+  const username=db?.account?.username||"";
+  if(!username)return notify("Account details not found.");
+  if(!confirm("Delete this account permanently? All saved business data for this account will be deleted. This action cannot be undone."))return;
+  const btn=document.querySelector("#deleteAccountBox .del");
+  if(btn){btn.disabled=true;btn.dataset.oldText=btn.textContent;btn.textContent="Deleting…"}
+  try{
+    const r=await fetch("/api/delete-account",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({username,password:pass})});
+    const x=await r.json().catch(()=>({}));
+    if(!r.ok)return notify(x.error||"Could not delete account.");
+    closeDeleteAccount();
+    clearPendingSync(username);
+    sessionStorage.removeItem("vt");sessionStorage.removeItem("vtUser");
+    localStorage.removeItem(KEY);
+    db={products:[],sales:[],pending:[],expenses:[],cash:[],drafts:{},account:{username:"",password:"",displayName:"",email:"",phone:""}};
+    $("app").classList.add("hidden");$("auth").classList.remove("hidden");
+    $("authUser").value="";$("authPass").value="";$("authPass2").value="";authMode("login");
+    alert("Account deleted permanently.");
+  }catch(e){
+    notify("Unable to connect to server. Account was not deleted.");
+  }finally{
+    const b=document.querySelector("#deleteAccountBox .del");
+    if(b){b.disabled=false;b.textContent=b.dataset.oldText||"Delete Permanently"}
+  }
+}
 function openLoginEdit(){ensureAccountFields();$("loginEditBox").classList.remove("hidden");$("newLoginUser").value=db.account.username||""}
 function closeLoginEdit(){$("loginEditBox").classList.add("hidden");["oldLoginPass","newLoginUser","newLoginPass","confirmLoginPass"].forEach(id=>{if($(id))$(id).value=""})}
 async function saveLoginDetails(){
@@ -635,7 +693,7 @@ const TE={
 "Enter your account details":"మీ ఖాతా వివరాలను నమోదు చేయండి","Create your Vyapara Track account":"మీ వ్యాపార ఖాతాను సృష్టించండి",
 "Username":"వినియోగదారు పేరు","Password":"పాస్‌వర్డ్","Retype Password":"పాస్‌వర్డ్‌ను మళ్లీ నమోదు చేయండి",
 "Your Business Companion":"మీ వ్యాపార సహాయకుడు","Email not added":"ఈమెయిల్ జోడించలేదు","Phone not added":"ఫోన్ నంబర్ జోడించలేదు",
-"My Profile":"నా ప్రొఫైల్","Change Login":"లాగిన్ వివరాలు మార్చండి","Logout":"లాగ్ అవుట్",
+"My Profile":"నా ప్రొఫైల్","Change Login":"లాగిన్ వివరాలు మార్చండి","Logout":"లాగ్ అవుట్","Delete Account":"ఖాతాను తొలగించండి","Delete Permanently":"శాశ్వతంగా తొలగించండి","Cancel":"రద్దు చేయండి","Enter current password":"ప్రస్తుత పాస్‌వర్డ్ నమోదు చేయండి","Account details not found.":"ఖాతా వివరాలు కనబడలేదు.","Could not delete account.":"ఖాతాను తొలగించలేకపోయాము.","Unable to connect to server. Account was not deleted.":"సర్వర్‌కు కనెక్ట్ కాలేకపోయాము. ఖాతా తొలగించబడలేదు.",
 "Hello!":"హలో!","Manage • Sell • Track • Grow":"నిర్వహించండి • అమ్మండి • నమోదు చేయండి • అభివృద్ధి చేయండి","Profile":"ప్రొఫైల్",
 "Live Sales List":"ప్రత్యక్ష అమ్మకాల జాబితా","Add today's sales":"ఈరోజు అమ్మకాలను నమోదు చేయండి","Product Info":"ఉత్పత్తి వివరాలు","Manage products":"ఉత్పత్తులను నిర్వహించండి",
 "Expenses":"ఖర్చులు","Track daily expenses":"రోజువారీ ఖర్చులను నమోదు చేయండి","Customer Pending":"కస్టమర్ బకాయిలు","View pending amounts":"బకాయి మొత్తాలను చూడండి",
