@@ -688,10 +688,16 @@ async function resetForgotPassword(){
   // change ONLY the password in that local account. Do not replace/reset
   // products, sales, pending, expenses, cash, history, or drafts.
   const local=JSON.parse(localStorage.getItem(KEY)||"null");
-  const localUser=String(local?.account?.username||"").trim().toLowerCase();
-  if(local && localUser===u.toLowerCase()){
+  const pendingLocal=getPendingSync(u);
+  // Use either the normal local account OR the protected pending-sync copy.
+  // Logout may remove KEY, while the pending-sync copy can still contain the
+  // user's complete business data. Never create a blank account here.
+  const recovery=
+    (local && String(local?.account?.username||"").trim().toLowerCase()===u.toLowerCase()) ? local :
+    (pendingLocal && String(pendingLocal?.account?.username||"").trim().toLowerCase()===u.toLowerCase()) ? pendingLocal : null;
+  if(recovery){
     try{
-      db=local;
+      db=recovery;
       db.account=db.account||{};
       db.account.password=p;
       localStorage.setItem(KEY,JSON.stringify(db));
@@ -723,7 +729,7 @@ async function resetForgotPassword(){
   try{
     const r=await fetch("/api/forgot-password",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({username:u,newPassword:p})});
     const x=await r.json().catch(()=>({}));
-    if(!r.ok)return notify(x.error||"Username not found.");
+    if(!r.ok)return notify("⚠ Password reset was not completed: "+(x.error||"Username not found or server recovery is unavailable.")+" Your saved business data was NOT changed." );
     closeForgotPassword();
     $("authUser").value=u;
     $("authPass").value="";
