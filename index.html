@@ -681,12 +681,57 @@ function openForgotPassword(){$("forgotPasswordBox").classList.remove("hidden");
 function closeForgotPassword(){$("forgotPasswordBox").classList.add("hidden")}
 async function resetForgotPassword(){
   const u=$("forgotUser").value.trim(),p=$("forgotNewPass").value,p2=$("forgotConfirmPass").value;
-  if(!u||!p)return notify("Enter username and new password.");if(p!==p2)return notify("Passwords do not match.");
+  if(!u||!p)return notify("Enter username and new password.");
+  if(p!==p2)return notify("Passwords do not match.");
+
+  // SAFETY FIRST: if this browser already has the user's business account,
+  // change ONLY the password in that local account. Do not replace/reset
+  // products, sales, pending, expenses, cash, history, or drafts.
+  const local=JSON.parse(localStorage.getItem(KEY)||"null");
+  const localUser=String(local?.account?.username||"").trim().toLowerCase();
+  if(local && localUser===u.toLowerCase()){
+    try{
+      db=local;
+      db.account=db.account||{};
+      db.account.password=p;
+      localStorage.setItem(KEY,JSON.stringify(db));
+      markPendingSync();
+
+      // Try the server reset too, but NEVER let a server failure block the
+      // local recovery or touch the user's existing business data.
+      fetch("/api/forgot-password",{
+        method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",
+        body:JSON.stringify({username:u,newPassword:p})
+      }).then(async r=>{
+        if(r.ok){
+          clearPendingSync(u);
+        }
+      }).catch(()=>{});
+
+      closeForgotPassword();
+      $("authUser").value=u;
+      $("authPass").value="";
+      authMode("login");
+      notify("✓ Password reset successfully. Your saved sales and business data are safe. Please login.");
+      return;
+    }catch(e){
+      return notify("⚠ Password was not changed. Your saved business data was not touched.");
+    }
+  }
+
+  // If this browser does not contain the account, use the server recovery.
   try{
     const r=await fetch("/api/forgot-password",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({username:u,newPassword:p})});
-    const x=await r.json();if(!r.ok)return notify(x.error||"Username not found.");
-    closeForgotPassword();notify("✓ Password reset successfully. Please login.");
-  }catch(e){notify("Unable to connect to server.")}
+    const x=await r.json().catch(()=>({}));
+    if(!r.ok)return notify(x.error||"Username not found.");
+    closeForgotPassword();
+    $("authUser").value=u;
+    $("authPass").value="";
+    authMode("login");
+    notify("✓ Password reset successfully. Please login.");
+  }catch(e){
+    notify("⚠ Unable to reset password. Your saved business data was not touched.");
+  }
 }
 async function logoutAccount(){
   if(!confirm("Logout from Vyapara Track?"))return;
